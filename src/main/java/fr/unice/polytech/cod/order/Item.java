@@ -1,40 +1,39 @@
 package fr.unice.polytech.cod.order;
-import fr.unice.polytech.cod.recipe;
+
+import fr.unice.polytech.cod.recipe.Recipe;
 
 public class Item {
 
-	private int quantity;
-	private int price;
+    private int quantity;
+    private int price;
 
-	/**
-	 * 
-	 * @param recipe
-	 * @param quantity
-	 */
-	public Item(Recipe recipe, int quantity) {
-		// TODO - implement Item.Item
-		throw new UnsupportedOperationException();
-	}
+    /**
+     * @param recipe
+     * @param quantity
+     */
+    public Item(Recipe recipe, int quantity) {
+        // TODO - implement Item.Item
+        throw new UnsupportedOperationException();
+    }
 
-	/**
-	 * 
-	 * @param quantity
-	 */
-	public void setQuantity(int quantity) {
-		this.quantity = quantity;
-	}
+    /**
+     * @param quantity
+     */
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
 
-	public int getQuantity() {
-		return this.quantity;
-	}
+    public int getQuantity() {
+        return this.quantity;
+    }
 
-	public Recipe getRecipe() {
-		// TODO - implement Item.getRecipe
-		throw new UnsupportedOperationException();
-	}
+    public Recipe getRecipe() {
+        // TODO - implement Item.getRecipe
+        throw new UnsupportedOperationException();
+    }
 
-	public int getPrice() {
-		return this.price;
-	}
+    public int getPrice() {
+        return this.price;
+    }
 
 }
