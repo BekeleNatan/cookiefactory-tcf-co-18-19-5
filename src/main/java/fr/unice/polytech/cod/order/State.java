@@ -1,4 +1,4 @@
-package order;
+package fr.unice.polytech.cod.order;
 
 public enum State {
 	toPay,

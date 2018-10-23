@@ -1,5 +1,7 @@
-import order.Item;
-import recipe.Recipe;
+package fr.unice.polytech.cod;
+
+import fr.unice.polytech.cod.order.Item;
+import fr.unice.polytech.cod.recipe.Recipe;
 
 import java.util.List;
 
@@ -58,7 +60,7 @@ public class Store {
 	 * @param items
 	 * @param hasDiscount
 	 */
-	public boolean takeOrder(List<Item> items, boolen hasDiscount) {
+	public boolean takeOrder(List<Item> items, boolean hasDiscount) {
 		// TODO - implement Store.takeOrder
 		throw new UnsupportedOperationException();
 	}
@@ -67,7 +69,7 @@ public class Store {
 	 * 
 	 * @param orderId
 	 */
-	public void collectOrder(id orderId) {
+	public void collectOrder(int orderId) {
 		// TODO - implement Store.collectOrder
 		throw new UnsupportedOperationException();
 	}

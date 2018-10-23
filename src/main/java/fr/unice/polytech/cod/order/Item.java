@@ -1,4 +1,5 @@
-package order;
+package fr.unice.polytech.cod.order;
+import fr.unice.polytech.cod.recipe;
 
 public class Item {
 

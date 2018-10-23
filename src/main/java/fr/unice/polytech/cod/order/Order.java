@@ -1,4 +1,7 @@
-package order;
+package fr.unice.polytech.cod.order;
+
+import java.util.Date;
+import java.util.List;
 
 public class Order {
 
