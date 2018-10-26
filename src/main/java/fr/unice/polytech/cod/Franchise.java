@@ -1,22 +1,20 @@
 package fr.unice.polytech.cod;
 
 import fr.unice.polytech.cod.recipe.Recipe;
-
-
 import java.util.*;
 
 
 public class Franchise {
 
     Collection<Recipe> generalRecipe;
+    HashMap<Integer,Store> stores;
     private String name;
 
     /**
      * @param storeId
      */
-    public void chooseStore(int storeId) {
-        // TODO - implement Franchise.chooseStore
-        throw new UnsupportedOperationException();
+    public Store chooseStore(int storeId) {
+        return stores.get(storeId);
     }
 
     public List<Recipe> getMenu() {
