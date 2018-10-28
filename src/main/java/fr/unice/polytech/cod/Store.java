@@ -12,6 +12,10 @@ public class Store {
 	private int taxeRate;
 	Recipe recipeOfTheMonth;
 
+	public Store() {
+
+	}
+
 	public List<Recipe> getMenu() {
 		// TODO - implement Store.getMenu
 		throw new UnsupportedOperationException();

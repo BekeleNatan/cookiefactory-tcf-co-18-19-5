@@ -6,9 +6,10 @@ import java.util.*;
 
 public class Franchise {
 
-    Collection<Recipe> generalRecipe;
-    HashMap<Integer,Store> stores;
+    private Collection<Recipe> generalRecipe;
+    private HashMap<Integer, Store> stores = new HashMap<>();
     private String name;
+    private Integer lastID = 0;
 
     /**
      * @param storeId
@@ -23,8 +24,18 @@ public class Franchise {
     }
 
     public List<Store> getStores() {
-        // TODO - implement Franchise.getStores
-        throw new UnsupportedOperationException();
+        if (stores.isEmpty()) return new ArrayList<>();
+        List<Store> toReturn = new ArrayList<Store>();
+        Collection<Store> values = stores.values();
+        for (Store store : values) {
+            toReturn.add(store);
+        }
+        return toReturn;
     }
 
+    public void addStore() {
+        Store store = new Store();
+        stores.put(lastID, store);
+        lastID++;
+    }
 }
