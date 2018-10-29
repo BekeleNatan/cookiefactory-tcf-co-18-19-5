@@ -7,12 +7,15 @@ import java.util.*;
 
 public class Franchise {
 
-    private HashMap<Integer,Recipe> generalRecipe = new HashMap<>();
+    private HashMap<Integer,Recipe> generalRecipe = new HashMap<>();    //TODO review this hashmap because the recipe of the month is added at key 0
     private HashMap<Integer, Store> stores = new HashMap<>();
     private String name;
     private Integer storesID = 0;
     private Integer recipeId = 1;
 
+    public Franchise(String name){
+        this.name = name;
+    }
     /**
      * @param storeId
      */

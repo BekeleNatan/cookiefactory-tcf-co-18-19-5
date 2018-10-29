@@ -21,15 +21,17 @@ public class OrderCreationStepDefs implements En {
 
     private Order order;
     private Store storeToCommand;
-    Franchise franchise = new Franchise();
+    Franchise franchise;
     List<Store> stores = new ArrayList<>();
     HashMap<Integer,Recipe> menu = new HashMap<>();
     List<Item> items = new ArrayList<>();
 
     public OrderCreationStepDefs() { // implementation des steps dans le constructeur (aussi possible dans des méthodes)
-        Given("^Une franchise avec (\\d+) magasins$",
-                (Integer nbrStore) -> // besoin de refactorer int en Integer car utilisation de la généricité par Cucumber Java 8
-                        FeaturesTest.initialiseStores(franchise,nbrStore));
+        Given("^La franchise \"([^\"]*)\" avec (\\d+) magasins$",
+                (String name, Integer nbrStore) -> {// besoin de refactorer int en Integer car utilisation de la généricité par Cucumber Java 8
+                        franchise = new Franchise(name);
+                        FeaturesTest.initialiseStores(franchise,nbrStore);
+        });
 
         When("Un client veut voir les magasins ou il peut commander$", () -> {
             stores = franchise.getStores();

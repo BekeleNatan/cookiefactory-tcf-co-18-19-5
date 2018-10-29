@@ -38,12 +38,9 @@ public class Order {
 
     private void computeFinalPrice() {
         double taxeRate = store.getTaxeRate();
-        System.out.print("*********"+taxeRate);
         for (Item item : items){
-            System.out.print("*********"+item.getPrice());
             finalPrice += item.getPrice()*taxeRate;
         }
-        System.out.print("*********"+finalPrice);
         if(hasDiscount){
             finalPrice *= discountRate;
         }

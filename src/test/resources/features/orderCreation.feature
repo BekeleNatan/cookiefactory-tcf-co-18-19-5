@@ -4,7 +4,7 @@
 Feature: Creation of an order by the client
 
 Background:
-    Given Une franchise avec 20 magasins
+    Given La franchise "CoD" avec 20 magasins
     And La franchise contient une recette "hardChocolate" avec Dough : "Plain", Flavour : "Vanilla", Topping : "MandMs", Cooking : "Crunchy", Mix : "Mixed", Price : 3.4
     And La franchise contient une recette "whiteChocolate" avec Dough : "Oatmeal", Flavour : "Cinnamon", Topping : "MandMs", Cooking : "Crunchy", Mix : "Mixed", Price : 3.5
 

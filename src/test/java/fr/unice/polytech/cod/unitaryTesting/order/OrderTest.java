@@ -15,7 +15,7 @@ import java.util.List;
 import static org.junit.Assert.*;
 
 public class OrderTest {
-    Franchise franchise = new Franchise();
+    Franchise franchise = new Franchise("Cod");
     Store store;
     Recipe recipe1;
     Recipe recipe2;
