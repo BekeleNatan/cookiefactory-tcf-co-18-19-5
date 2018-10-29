@@ -2,23 +2,34 @@ package fr.unice.polytech.cod;
 
 import fr.unice.polytech.cod.Franchise;
 import fr.unice.polytech.cod.order.Item;
-import fr.unice.polytech.cod.recipe.Recipe;
+import fr.unice.polytech.cod.recipe.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Store {
 
-	Franchise Stores;
+	private Franchise franchise;
+	private String name;
 	private int taxeRate;
-	Recipe recipeOfTheMonth;
+	private Recipe recipeOfTheMonth = null;
 
-	public Store() {
-
+	public Store(Franchise franchise, String name) {
+		this.franchise = franchise;
 	}
 
 	public List<Recipe> getMenu() {
-		// TODO - implement Store.getMenu
-		throw new UnsupportedOperationException();
+		List<Recipe> toReturn = new ArrayList<>();
+		if (recipeOfTheMonth!=null) {
+			toReturn.add(recipeOfTheMonth);
+		}
+		toReturn.addAll(franchise.getMenu());
+		return toReturn;
+	}
+
+	public void setRecipeOfTheMonth(String recipeName, Dough dough, Flavour flavours, Topping topping, Cooking cooking, Mix mix){
+		Recipe recipe = new Recipe(recipeName, dough, flavours, topping, cooking, mix);
+		recipeOfTheMonth = recipe;
 	}
 
 	/**

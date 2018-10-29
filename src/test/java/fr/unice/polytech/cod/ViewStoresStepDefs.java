@@ -15,20 +15,15 @@ public class ViewStoresStepDefs implements En {
     List<Store> stores = new ArrayList<>();
 
     public ViewStoresStepDefs() { // implementation des steps dans le constructeur (aussi possible dans des méthodes)
-
-        Given("^Une franchise contenant (\\d+) magasins$",
+        Given("^Une franchise avec (\\d+) magasins$",
                 (Integer nbrStore) -> // besoin de refactorer int en Integer car utilisation de la généricité par Cucumber Java 8
-                {
-                    for (int i =0 ; i < nbrStore ; i++){
-                        franchise.addStore();
-                    }
-                });
+                        FeaturesTest.initialiseStores(franchise,nbrStore));
 
         When("Un client veut voir les magasins ou il peut commander$", () -> {
             stores = franchise.getStores();
         });
 
-        Then("^Il en trouve (\\d+)$", (Integer nbrStore) -> {
+        Then("^Il trouve (\\d+) magasins$", (Integer nbrStore) -> {
             assertEquals((int)nbrStore ,stores.size());
         });
     }

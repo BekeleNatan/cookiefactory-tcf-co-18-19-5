@@ -4,14 +4,14 @@
   Background:
 
   Scenario: il n'y a pas de magasin
-    Given Une franchise contenant 0 magasins
+    Given Une franchise avec 0 magasins
     When Un client veut voir les magasins ou il peut commander
-    Then Il en trouve 0
+    Then Il trouve 0 magasins
 
   Scenario: on peut voir les magasins
-    Given Une franchise contenant 5 magasins
+    Given Une franchise avec 5 magasins
     When Un client veut voir les magasins ou il peut commander
-    Then Il en trouve 5
+    Then Il trouve 5 magasins
 
 
 
