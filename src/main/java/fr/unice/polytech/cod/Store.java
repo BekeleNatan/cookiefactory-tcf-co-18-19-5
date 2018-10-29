@@ -24,12 +24,10 @@ public class Store {
 		this.franchise = franchise;
 	}
 
-	public List<Recipe> getMenu() {
-		List<Recipe> toReturn = new ArrayList<>();
-		if (recipeOfTheMonth!=null) {
-			toReturn.add(recipeOfTheMonth);
-		}
-		toReturn.addAll(franchise.getMenu());
+	public HashMap<Integer, Recipe> getMenu() {
+		HashMap<Integer, Recipe> toReturn = new HashMap<>();
+		toReturn.putAll(franchise.getMenu());
+		if(recipeOfTheMonth!=null){toReturn.put(0,recipeOfTheMonth);}
 		return toReturn;
 	}
 
@@ -62,10 +60,10 @@ public class Store {
 	 * @param items
 	 * @param hasDiscount
 	 */
-	public boolean takeOrder(List<Item> items, Date orderTime, String phoneNumber, boolean hasDiscount) {
-		new Order(this,lastId,items,orderTime, phoneNumber, hasDiscount);
+	public Order takeOrder(List<Item> items, Date orderTime, String phoneNumber, boolean hasDiscount) {
+		Order order = new Order(this,lastId,items,orderTime, phoneNumber, hasDiscount);
 		lastId++;
-		return true;
+		return order;
 	}
 
 	/**

@@ -7,10 +7,11 @@ import java.util.*;
 
 public class Franchise {
 
-    private Collection<Recipe> generalRecipe = new HashSet<>();
+    private HashMap<Integer,Recipe> generalRecipe = new HashMap<>();
     private HashMap<Integer, Store> stores = new HashMap<>();
     private String name;
-    private Integer lastID = 0;
+    private Integer storesID = 0;
+    private Integer recipeId = 1;
 
     /**
      * @param storeId
@@ -21,16 +22,12 @@ public class Franchise {
 
     public void addRecipe(String recipeName, Dough dough, Flavour flavours, Topping topping, Cooking cooking, Mix mix, double price){
         Recipe recipe = new Recipe(recipeName, dough, flavours, topping, cooking, mix, price);
-        generalRecipe.add(recipe);
+        generalRecipe.put(recipeId,recipe);
+        recipeId++;
     }
 
-    public List<Recipe> getMenu() {
-        List<Recipe> toReturn = new ArrayList<>();
-        toReturn.addAll(generalRecipe);
-        if (toReturn==null){
-            return new ArrayList<>();
-        }
-        return toReturn;
+    public HashMap<Integer,Recipe> getMenu() {
+        return generalRecipe;
     }
 
     public List<Store> getStores() {
@@ -45,7 +42,7 @@ public class Franchise {
 
     public void addStore(String name) {
         Store store = new Store(this,name);
-        stores.put(lastID, store);
-        lastID++;
+        stores.put(storesID, store);
+        storesID++;
     }
 }

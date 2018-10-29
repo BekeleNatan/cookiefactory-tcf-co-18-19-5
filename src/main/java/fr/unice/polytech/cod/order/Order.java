@@ -29,31 +29,34 @@ public class Order {
         this.hasDiscount = hasDiscount;
         currentState = State.toPay;
         computeFinalPrice();
-        if(makePayement()){
-            currentState = State.toDo;
-            store.collectOrder(this);
-        }else{
-            alertClient("the payment has not be done, the command is canceled");
-            currentState = State.paymentProblem;
-        }
+        store.collectOrder(this);
     }
 
     private void alertClient(String message) {
-        //TODO figure out what to do in this case
+        customer.sendMessage(message);
     }
 
     private void computeFinalPrice() {
         double taxeRate = store.getTaxeRate();
+        System.out.print("*********"+taxeRate);
         for (Item item : items){
+            System.out.print("*********"+item.getPrice());
             finalPrice += item.getPrice()*taxeRate;
         }
+        System.out.print("*********"+finalPrice);
         if(hasDiscount){
             finalPrice *= discountRate;
         }
     }
 
-    public boolean makePayement() {
-        // TODO figure out what to do
+    public boolean makePayement(boolean success) {
+        if(success){
+            currentState = State.toDo;
+            alertClient("payment done, the command is treated");
+        }else{
+            alertClient("payment failure, the command is canceled");
+            currentState = State.paymentProblem;
+        }
         bankTransactionNumber = 0;
         return true;
     }
@@ -69,5 +72,13 @@ public class Order {
 
     public double getPrice() {
         return finalPrice;
+    }
+
+    public State getState() {
+        return currentState;
+    }
+
+    public Customer getCustomer() {
+        return customer;
     }
 }
