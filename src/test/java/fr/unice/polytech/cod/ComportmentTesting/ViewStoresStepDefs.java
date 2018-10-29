@@ -1,5 +1,7 @@
-package fr.unice.polytech.cod;
+package fr.unice.polytech.cod.ComportmentTesting;
 import cucumber.api.java8.En;
+import fr.unice.polytech.cod.Franchise;
+import fr.unice.polytech.cod.Store;
 
 import java.util.ArrayList;
 import java.util.List;

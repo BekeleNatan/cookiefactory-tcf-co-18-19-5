@@ -19,8 +19,8 @@ public class Franchise {
         return stores.get(storeId);
     }
 
-    public void addRecipe(String recipeName, Dough dough, Flavour flavours, Topping topping, Cooking cooking, Mix mix){
-        Recipe recipe = new Recipe(recipeName, dough, flavours, topping, cooking, mix);
+    public void addRecipe(String recipeName, Dough dough, Flavour flavours, Topping topping, Cooking cooking, Mix mix, double price){
+        Recipe recipe = new Recipe(recipeName, dough, flavours, topping, cooking, mix, price);
         generalRecipe.add(recipe);
     }
 

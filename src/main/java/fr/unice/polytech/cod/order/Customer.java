@@ -4,6 +4,10 @@ public class Customer {
 
     private String phoneNumber;
 
+    public Customer(String phoneNumber){
+        this.phoneNumber = phoneNumber;
+    }
+
     public String getPhoneNumber() {
         return this.phoneNumber;
     }

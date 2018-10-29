@@ -5,15 +5,21 @@ import fr.unice.polytech.cod.recipe.Recipe;
 public class Item {
 
     private int quantity;
-    private int price;
+    private double price;
+    private Recipe recipe;
 
     /**
      * @param recipe
      * @param quantity
      */
     public Item(Recipe recipe, int quantity) {
-        // TODO - implement Item.Item
-        throw new UnsupportedOperationException();
+        this.recipe = recipe;
+        this.quantity = quantity;
+        computePrice();
+    }
+
+    private void computePrice() {
+        price = recipe.getPrice() * quantity;
     }
 
     /**
@@ -21,6 +27,7 @@ public class Item {
      */
     public void setQuantity(int quantity) {
         this.quantity = quantity;
+        computePrice();
     }
 
     public int getQuantity() {
@@ -32,7 +39,7 @@ public class Item {
         throw new UnsupportedOperationException();
     }
 
-    public int getPrice() {
+    public double getPrice() {
         return this.price;
     }
 

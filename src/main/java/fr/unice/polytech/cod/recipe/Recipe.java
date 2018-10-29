@@ -8,18 +8,19 @@ public class Recipe {
     private Topping topping;
     private Cooking cooking;
     private Mix mix;
-    private int price;
+    private double price;
 
-    public Recipe(String recipeName, Dough dough, Flavour flavours, Topping topping, Cooking cooking, Mix mix) {
+    public Recipe(String recipeName, Dough dough, Flavour flavours, Topping topping, Cooking cooking, Mix mix, double price) {
         name = recipeName;
         this.dough = dough;
         this.flavours = flavours;
         this.topping = topping;
         this.cooking = cooking;
         this.mix = mix;
+        this.price = price;
     }
 
-    public int getPrice() {
+    public double getPrice() {
         return this.price;
     }
 

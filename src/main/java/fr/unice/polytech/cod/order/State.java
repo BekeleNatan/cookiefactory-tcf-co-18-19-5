@@ -6,5 +6,6 @@ public enum State {
     Done,
     collected,
     notCollected,
+    paymentProblem,
     refused
 }
