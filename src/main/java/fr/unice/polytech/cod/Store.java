@@ -1,6 +1,7 @@
 package fr.unice.polytech.cod;
 
 import fr.unice.polytech.cod.Franchise;
+import fr.unice.polytech.cod.WorkingHours.WorkingHours;
 import fr.unice.polytech.cod.order.Item;
 import fr.unice.polytech.cod.order.Order;
 import fr.unice.polytech.cod.recipe.*;
@@ -18,6 +19,7 @@ public class Store {
 	private int lastId = 0;
 	private Recipe recipeOfTheMonth = null;
 	private HashMap<Integer,Order> orders = new HashMap();
+	private WorkingHours workingHours = new WorkingHours();
 
 	public Store(Franchise franchise, String name) {
 		this.name = name;
@@ -83,4 +85,8 @@ public class Store {
 		toReturn.addAll(orders.values());
         return toReturn;
     }
+
+	public WorkingHours getWorkingHours() {
+		return workingHours;
+	}
 }

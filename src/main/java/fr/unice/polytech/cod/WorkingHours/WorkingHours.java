@@ -11,7 +11,7 @@ public class WorkingHours {
 
 
 	// constructor without initial list
-	WorkingHours() {
+	public WorkingHours() {
 	}
 
     // ok (util function)
@@ -46,7 +46,7 @@ public class WorkingHours {
 	}
 
 	// ok
-	boolean isOpenOn(DayOfWeek day, LocalTime at) {
+	public boolean isOpenOn(DayOfWeek day, LocalTime at) {
 	    for (OpeningFragment of : this.openingFragments){
 	        if(day.equals(of.getDay()) && (inBetween(at, of.getOpening(), of.getClosing()))){
 	            return true;

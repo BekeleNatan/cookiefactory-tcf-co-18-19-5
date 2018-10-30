@@ -2,9 +2,12 @@ package fr.unice.polytech.cod.order;
 
 import com.sun.deploy.Environment;
 import fr.unice.polytech.cod.Store;
+import fr.unice.polytech.cod.WorkingHours.WorkingHours;
 
 import java.text.SimpleDateFormat;
+import java.time.*;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -35,9 +38,22 @@ public class Order {
         store.collectOrder(this);
 
         Date date = new Date();                                 //TODO define a time to make the command
-        if(store==null || items == null || date.before(orderTime) || !customerPhoneNumber.matches("[0-9]*")){
+
+        if(store==null || items == null || dateIsCorrect(orderTime) || !customerPhoneNumber.matches("[0-9]*")){
             this.currentState = State.refused;
         };
+    }
+
+    private boolean dateIsCorrect(Date orderTime) {
+        Date date = new Date();
+        WorkingHours wo = store.getWorkingHours();
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(orderTime);
+
+        Instant instant = Instant.ofEpochMilli(calendar.getTimeInMillis());
+        LocalTime convert = LocalDateTime.ofInstant(instant, ZoneId.systemDefault()).toLocalTime();
+
+        return orderTime.after(date) && wo.isOpenOn(DayOfWeek.of(calendar.get(Calendar.DAY_OF_WEEK)),convert);
     }
 
     private void alertClient(String message) {
