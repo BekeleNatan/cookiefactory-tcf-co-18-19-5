@@ -26,7 +26,7 @@ public class OrderCreationStepDefs implements En {
     private Store storeToCommand;
     Franchise franchise;
     List<Store> stores = new ArrayList<>();
-    HashMap<Integer,Recipe> menu = new HashMap<>();
+    List<Recipe> menu = new ArrayList<>();
     List<Item> items = new ArrayList<>();
     Date date = null;
     Boolean loyaltyDiscount = false;
@@ -64,7 +64,7 @@ public class OrderCreationStepDefs implements En {
             storeToCommand = franchise.chooseStore(idStore);
         });
         And("^Le client commande (\\d+) fois le cookie (\\d+)$", (Integer nbrCookies, Integer cookieID) -> {
-            addItem(nbrCookies,cookieID);
+            addItem(nbrCookies,cookieID-1);
         });
 
         And("^Le client valide la commande$", () -> {

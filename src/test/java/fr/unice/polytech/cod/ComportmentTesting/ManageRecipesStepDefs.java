@@ -41,8 +41,8 @@ public class ManageRecipesStepDefs implements En {
             assertEquals(franchise.getMenu().size(), 1);
         });
         And("^The recipe name is \"([^\"]*)\"$", (String arg0) -> {
-            Map.Entry<Integer, Recipe> entry = franchise.getMenu().entrySet().iterator().next();
-            assertEquals(entry.getValue().getName(), arg0);
+
+            assertEquals(franchise.getMenu().get(0).getName(), arg0);
         });
 
 

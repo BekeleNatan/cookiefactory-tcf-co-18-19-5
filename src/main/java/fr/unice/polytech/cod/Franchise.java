@@ -7,13 +7,15 @@ import java.util.*;
 
 public class Franchise {
 
-    private HashMap<Integer,Recipe> franchiseMenu = new HashMap<>();    //TODO review this hashmap because the recipe of the month is added at key 0
-    private HashMap<Integer, Store> stores = new HashMap<>();
+    private List<Recipe> franchiseMenu ;    //TODO review this hashmap because the recipe of the month is added at key 0
+    private List<Store> stores ;
     private String name;
     private Integer storesID = 0;
     private Integer recipeId = 1;
 
     public Franchise(String name){
+        stores = new ArrayList<>();
+        franchiseMenu = new ArrayList<>();
         this.name = name;
     }
     /**
@@ -25,27 +27,28 @@ public class Franchise {
 
     public void addRecipe(String recipeName, Dough dough, Flavour flavours, Topping topping, Cooking cooking, Mix mix, double price){
         Recipe recipe = new Recipe(recipeName, dough, flavours, topping, cooking, mix, price);
-        franchiseMenu.put(recipeId,recipe);
-        recipeId++;
+        franchiseMenu.add(recipe);
+
     }
 
-    public HashMap<Integer,Recipe> getMenu() {
+    public List<Recipe> getMenu() {
         return franchiseMenu;
     }
 
+    public Optional<Recipe> getRecipeByName(String name){
+        return getMenu().stream().filter(recipe -> recipe.getName().equals(name)).findFirst();
+    }
+
     public List<Store> getStores() {
-        if (stores.isEmpty()) return new ArrayList<>();
-        List<Store> toReturn = new ArrayList<Store>();
-        Collection<Store> values = stores.values();
-        for (Store store : values) {
-            toReturn.add(store);
-        }
-        return toReturn;
+       return stores;
+    }
+
+    public Optional<Store> getStoreByName(String name){
+        return getStores().stream().filter(store -> store.getName().equals(name)).findFirst();
     }
 
     public void addStore(String name) {
-        Store store = new Store(this,name);
-        stores.put(storesID, store);
-        storesID++;
+        stores.add(new Store(this,name));
+
     }
 }
