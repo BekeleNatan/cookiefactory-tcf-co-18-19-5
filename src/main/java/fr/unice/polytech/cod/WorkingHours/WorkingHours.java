@@ -2,48 +2,57 @@ package fr.unice.polytech.cod.WorkingHours;
 
 import java.time.DayOfWeek;
 import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
 
 public class WorkingHours {
 
-	/**
-	 * 
-	 * @param day
-	 * @param from
-	 * @param to
-	 */
-	public OpeningTime getOpeningTime(DayOfWeek day, LocalTime from, LocalTime to) {
-		// TODO - implement WorkingHour.getOpeningTime
-		throw new UnsupportedOperationException();
+	List<OpeningFragment> openingFragments = new ArrayList<>();
+
+
+	// constructor without initial list
+	WorkingHours() {
 	}
 
-	/**
-	 * 
-	 * @param day
-	 * @param from
-	 * @param to
-	 */
-	public boolean addOpeningTime(DayOfWeek day, LocalTime from, LocalTime to) {
-		// TODO - implement WorkingHour.addOpeningTime
-		throw new UnsupportedOperationException();
+    // ok (util function)
+	private boolean inBetween(LocalTime actual, LocalTime from, LocalTime to){
+        return !actual.isBefore(from) && actual.isBefore(to);  // inclusive beginning but exclusive ending (half-open)
+    }
+
+    // ok
+	boolean addOpeningFragement(OpeningFragment openingFragment) {
+	    for(OpeningFragment of : this.openingFragments){
+	        if(of.getDay().equals(openingFragment.getDay())){
+	            if(inBetween(openingFragment.getOpening(), of.getOpening(), of.getClosing())){
+	                return false;
+                }
+                this.openingFragments.add(openingFragment);
+                return true;
+            }
+        }
+        this.openingFragments.add(openingFragment);
+        return true;
 	}
 
-	/**
-	 * 
-	 * @param openingTime
-	 */
-	public boolean deleteOpeningTime(OpeningTime openingTime) {
-		// TODO - implement WorkingHour.deleteOpeningTime
-		throw new UnsupportedOperationException();
+	// ok
+	boolean deleteOpeningFragement(DayOfWeek day, LocalTime from, LocalTime to) {
+        for(OpeningFragment of : this.openingFragments){
+            if(of.getDay().equals(day) && of.getOpening().equals(from) && of.getClosing().equals(to)){
+                this.openingFragments.remove(of);
+                return true;
+            }
+        }
+        return false;
 	}
 
-	/**
-	 * 
-	 * @param day
-	 * @param at
-	 */
-	public boolean isOpenOn(DayOfWeek day, LocalTime at) {
-		// TODO - implement WorkingHour.isOpenOn
-		throw new UnsupportedOperationException();
+	// ok
+	boolean isOpenOn(DayOfWeek day, LocalTime at) {
+	    for (OpeningFragment of : this.openingFragments){
+	        if(day.equals(of.getDay()) && (inBetween(at, of.getOpening(), of.getClosing()))){
+	            return true;
+            }
+        }
+		return false;
 	}
 
 }
