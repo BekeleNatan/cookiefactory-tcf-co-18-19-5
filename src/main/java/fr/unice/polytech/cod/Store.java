@@ -93,4 +93,8 @@ public class Store {
 	public WorkingHours getWorkingHours() {
 		return workingHours;
 	}
+
+	public String getName() {
+		return name;
+	}
 }

@@ -20,11 +20,11 @@ public class WorkingHours {
     }
 
     // ok
-	public boolean addOpeningFragement(OpeningFragment openingFragment) {
+	public boolean addOpeningFragement(OpeningFragment openingFragment) throws RuntimeException{
 	    for(OpeningFragment of : this.openingFragments){
 	        if(of.getDay().equals(openingFragment.getDay())){
 	            if(inBetween(openingFragment.getOpening(), of.getOpening(), of.getClosing())){
-	                return false;
+	                throw new RuntimeException("You can't add an Opening Fragment that overlaps another one");
                 }
                 this.openingFragments.add(openingFragment);
                 return true;

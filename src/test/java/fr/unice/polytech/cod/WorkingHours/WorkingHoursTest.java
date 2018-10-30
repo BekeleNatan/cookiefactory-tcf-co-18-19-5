@@ -40,9 +40,6 @@ public class WorkingHoursTest {
         OpeningFragment newOpeningFragemnt = new OpeningFragment(DayOfWeek.FRIDAY, LocalTime.of(9,0), LocalTime.of(12, 00));
         assertTrue(workingHours.addOpeningFragement(newOpeningFragemnt));
 
-        // the manager adds (by mistake) a fragment that overlaps another openingFragment
-        OpeningFragment anotherOpeningFragemnt = new OpeningFragment(DayOfWeek.FRIDAY, LocalTime.of(11,0), LocalTime.of(18, 0));
-        assertFalse(workingHours.addOpeningFragement(newOpeningFragemnt));
 
         // the manager adds two fragments to get one continous fragement (to test half inclusive)
         OpeningFragment openingFragmentOne = new OpeningFragment(DayOfWeek.SATURDAY, LocalTime.of(9,0), LocalTime.of(12, 0));
@@ -73,8 +70,15 @@ public class WorkingHoursTest {
     }
 
     // the manager put by mistake the opening hour at 19:00 and closing on 12:00 (he wanted to put 9:00) an exception is raised
-    @Test(expected=IllegalArgumentException.class)
+    @Test(expected=RuntimeException.class)
     public void openingAfterClosingException() {
         workingHours.addOpeningFragement(new OpeningFragment(DayOfWeek.SUNDAY, LocalTime.of(19,00), LocalTime.of(12,0)));
     }
+
+    // the manager adds (by mistake) a fragment that overlaps another openingFragment
+    @Test(expected=RuntimeException.class)
+    public void openingThatOverlapsException() {
+        workingHours.addOpeningFragement(new OpeningFragment(DayOfWeek.MONDAY, LocalTime.of(11,0), LocalTime.of(15, 0)));
+    }
+
 }

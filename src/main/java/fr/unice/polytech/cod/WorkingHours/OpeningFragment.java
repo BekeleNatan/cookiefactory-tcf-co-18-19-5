@@ -9,11 +9,11 @@ public class OpeningFragment {
     private LocalTime opening;
     private LocalTime closing;
 
-    public OpeningFragment(DayOfWeek day, LocalTime opening, LocalTime closing) throws IllegalArgumentException {
+    public OpeningFragment(DayOfWeek day, LocalTime opening, LocalTime closing) throws RuntimeException {
         this.day = day;
 
         if(opening.isAfter(closing)){
-            throw new IllegalArgumentException("Opening time must be after closing time");
+            throw new RuntimeException("Opening time must be after closing time");
         }
         this.opening = opening;
         this.closing = closing;
