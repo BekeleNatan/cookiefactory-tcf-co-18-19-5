@@ -36,3 +36,15 @@ Scenario: On créer correctement une commande puis il y a un probleme de payemen
         And Le statut de la commmande est "paymentProblem"
         And On envoie au client "payment failure, the command is canceled"
 
+Scenario: On créer correctement une commande avec une mauvaise date( et elle passe l'ihm )
+    When Le client commande dans la boutique 1
+        And Le client commande 4 fois le cookie 1
+        And Le client commande 3 fois le cookie 2
+        And Le client rentre une date passée
+        And Le client valide la commande
+        And Le client paye
+        Then Le prix est de 24.1
+        And Le statut de la commmande est "refused"
+        And On envoie au client "payment done but command canceled"
+
+
