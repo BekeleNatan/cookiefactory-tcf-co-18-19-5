@@ -31,20 +31,13 @@ public class OrderTest {
     Item item2;
     Item item3;
     Item item4;
+    WorkingHours workingHours;
 
     @Before
     public void initialisation(){
         franchise.addStore("robertCookies");
         store = franchise.chooseStore(0);
-        WorkingHours workingHours = store.getWorkingHours();
-
-        workingHours.addOpeningFragement(new OpeningFragment(DayOfWeek.MONDAY, LocalTime.of(0,00), LocalTime.of(23,59)));
-        workingHours.addOpeningFragement(new OpeningFragment(DayOfWeek.TUESDAY, LocalTime.of(0,00), LocalTime.of(23,59)));
-        workingHours.addOpeningFragement(new OpeningFragment(DayOfWeek.WEDNESDAY, LocalTime.of(0,00), LocalTime.of(23,59)));
-        workingHours.addOpeningFragement(new OpeningFragment(DayOfWeek.THURSDAY, LocalTime.of(0,00), LocalTime.of(23,59)));
-        workingHours.addOpeningFragement(new OpeningFragment(DayOfWeek.FRIDAY, LocalTime.of(0,00), LocalTime.of(23,59)));
-        workingHours.addOpeningFragement(new OpeningFragment(DayOfWeek.SATURDAY, LocalTime.of(0,00), LocalTime.of(23,59)));
-        workingHours.addOpeningFragement(new OpeningFragment(DayOfWeek.SUNDAY, LocalTime.of(0,00), LocalTime.of(23,59)));
+        workingHours = store.getWorkingHours();
 
         store.setTaxeRate(1.2);
         recipe1 = new Recipe("cookie1", Dough.Chocolate, Flavour.Chili, Topping.MandMs, Cooking.Chewy,Mix.Mixed,9.5);
@@ -61,7 +54,19 @@ public class OrderTest {
     public void testOrderCreationBasic() {
         List<Item> items = new ArrayList<>();
         items.add(item1);items.add(item2);items.add(item3);items.add(item4);
-        Date date = new Date();
+        workingHours.addOpeningFragement(new OpeningFragment(DayOfWeek.MONDAY, LocalTime.of(0,00), LocalTime.of(23,59)));
+        workingHours.addOpeningFragement(new OpeningFragment(DayOfWeek.TUESDAY, LocalTime.of(0,00), LocalTime.of(23,59)));
+        workingHours.addOpeningFragement(new OpeningFragment(DayOfWeek.WEDNESDAY, LocalTime.of(0,00), LocalTime.of(23,59)));
+        workingHours.addOpeningFragement(new OpeningFragment(DayOfWeek.THURSDAY, LocalTime.of(0,00), LocalTime.of(23,59)));
+        workingHours.addOpeningFragement(new OpeningFragment(DayOfWeek.FRIDAY, LocalTime.of(0,00), LocalTime.of(23,59)));
+        workingHours.addOpeningFragement(new OpeningFragment(DayOfWeek.SATURDAY, LocalTime.of(0,00), LocalTime.of(23,59)));
+        workingHours.addOpeningFragement(new OpeningFragment(DayOfWeek.SUNDAY, LocalTime.of(0,00), LocalTime.of(23,59)));
+
+        Calendar cal = Calendar.getInstance();
+        cal.setTimeInMillis(0);
+        cal.set(2019, 02, 12, 12, 15, 01);
+        Date date = cal.getTime(); // get back a Date object
+
         store.takeOrder(items, date, "0623862099",false);
         List<Order> orders = store.getOrders();         // no payement but store
 
@@ -76,10 +81,17 @@ public class OrderTest {
     public void testOrderCreationDateProblem() {
         List<Item> items = new ArrayList<>();
         items.add(item1);items.add(item2);items.add(item3);items.add(item4);
+        workingHours.addOpeningFragement(new OpeningFragment(DayOfWeek.MONDAY, LocalTime.of(0,00), LocalTime.of(23,59)));
+        workingHours.addOpeningFragement(new OpeningFragment(DayOfWeek.TUESDAY, LocalTime.of(0,00), LocalTime.of(23,59)));
+        workingHours.addOpeningFragement(new OpeningFragment(DayOfWeek.WEDNESDAY, LocalTime.of(0,00), LocalTime.of(23,59)));
+        workingHours.addOpeningFragement(new OpeningFragment(DayOfWeek.THURSDAY, LocalTime.of(0,00), LocalTime.of(23,59)));
+        workingHours.addOpeningFragement(new OpeningFragment(DayOfWeek.FRIDAY, LocalTime.of(0,00), LocalTime.of(23,59)));
+        workingHours.addOpeningFragement(new OpeningFragment(DayOfWeek.SATURDAY, LocalTime.of(0,00), LocalTime.of(23,59)));
+        workingHours.addOpeningFragement(new OpeningFragment(DayOfWeek.SUNDAY, LocalTime.of(0,00), LocalTime.of(23,59)));
 
         Calendar cal = Calendar.getInstance();
         cal.setTimeInMillis(0);
-        cal.set(2019, 02, 12, 12, 15, 01);
+        cal.set(2014, 02, 12, 12, 15, 01);
         Date date = cal.getTime(); // get back a Date object
 
         store.takeOrder(items, date, "0623862099",false);
@@ -90,5 +102,117 @@ public class OrderTest {
         assertEquals(0,(int)order.getID());
         assertEquals(53.64,order.getPrice(),0);
         assertEquals(State.refused,order.getState());
+    }
+
+    @Test
+    public void testOrderCreationDate_NotOpenProblem() {
+        List<Item> items = new ArrayList<>();
+        items.add(item1);items.add(item2);items.add(item3);items.add(item4);
+        WorkingHours workingHours = store.getWorkingHours();
+        workingHours.addOpeningFragement(new OpeningFragment(DayOfWeek.MONDAY, LocalTime.of(8,00), LocalTime.of(23,59)));
+        workingHours.addOpeningFragement(new OpeningFragment(DayOfWeek.TUESDAY, LocalTime.of(8,00), LocalTime.of(23,59)));
+        workingHours.addOpeningFragement(new OpeningFragment(DayOfWeek.WEDNESDAY, LocalTime.of(8,00), LocalTime.of(23,59)));
+        workingHours.addOpeningFragement(new OpeningFragment(DayOfWeek.THURSDAY, LocalTime.of(8,00), LocalTime.of(23,59)));
+        workingHours.addOpeningFragement(new OpeningFragment(DayOfWeek.FRIDAY, LocalTime.of(8,00), LocalTime.of(23,59)));
+        workingHours.addOpeningFragement(new OpeningFragment(DayOfWeek.SATURDAY, LocalTime.of(10,00), LocalTime.of(23,59)));
+
+        Calendar cal = Calendar.getInstance();
+        cal.setTimeInMillis(0);
+        cal.set(2019, 02, 10, 7, 15, 01);
+        Date date = cal.getTime(); // get back a Date object
+
+        store.takeOrder(items, date, "0623862099",false);
+        List<Order> orders = store.getOrders();         // no payement but store
+
+        assertEquals(1,orders.size());
+        Order order1 = orders.get(0);
+
+        assertEquals(0,(int)order1.getID());
+        assertEquals(53.64,order1.getPrice(),0);
+        assertEquals(State.refused,order1.getState());
+    }
+
+    @Test
+    public void testOrderCreationDate_NotOpenProblem2() {
+        List<Item> items = new ArrayList<>();
+        items.add(item1);items.add(item2);items.add(item3);items.add(item4);
+        WorkingHours workingHours = store.getWorkingHours();
+        workingHours.addOpeningFragement(new OpeningFragment(DayOfWeek.MONDAY, LocalTime.of(8,00), LocalTime.of(23,59)));
+        workingHours.addOpeningFragement(new OpeningFragment(DayOfWeek.TUESDAY, LocalTime.of(8,00), LocalTime.of(23,59)));
+        workingHours.addOpeningFragement(new OpeningFragment(DayOfWeek.WEDNESDAY, LocalTime.of(8,00), LocalTime.of(23,59)));
+        workingHours.addOpeningFragement(new OpeningFragment(DayOfWeek.THURSDAY, LocalTime.of(8,00), LocalTime.of(23,59)));
+        workingHours.addOpeningFragement(new OpeningFragment(DayOfWeek.FRIDAY, LocalTime.of(8,00), LocalTime.of(23,59)));
+        workingHours.addOpeningFragement(new OpeningFragment(DayOfWeek.SATURDAY, LocalTime.of(10,00), LocalTime.of(23,59)));
+
+        Calendar cal = Calendar.getInstance();
+        cal.setTimeInMillis(0);
+        cal.set(2019, 02, 16, 9, 15, 01);
+        Date date = cal.getTime(); // get back a Date object
+
+        store.takeOrder(items, date, "0623862099",false);
+        List<Order> orders = store.getOrders();         // no payement but store
+
+        assertEquals(1,orders.size());
+        Order order1 = orders.get(0);
+
+        assertEquals(0,(int)order1.getID());
+        assertEquals(53.64,order1.getPrice(),0);
+        assertEquals(State.refused,order1.getState());
+    }
+
+    @Test
+    public void testOrderCreationDate_Open() {
+        List<Item> items = new ArrayList<>();
+        items.add(item1);items.add(item2);items.add(item3);items.add(item4);
+        WorkingHours workingHours = store.getWorkingHours();
+        workingHours.addOpeningFragement(new OpeningFragment(DayOfWeek.MONDAY, LocalTime.of(8,00), LocalTime.of(23,59)));
+        workingHours.addOpeningFragement(new OpeningFragment(DayOfWeek.TUESDAY, LocalTime.of(8,00), LocalTime.of(23,59)));
+        workingHours.addOpeningFragement(new OpeningFragment(DayOfWeek.WEDNESDAY, LocalTime.of(8,00), LocalTime.of(23,59)));
+        workingHours.addOpeningFragement(new OpeningFragment(DayOfWeek.THURSDAY, LocalTime.of(8,00), LocalTime.of(23,59)));
+        workingHours.addOpeningFragement(new OpeningFragment(DayOfWeek.FRIDAY, LocalTime.of(8,00), LocalTime.of(23,59)));
+        workingHours.addOpeningFragement(new OpeningFragment(DayOfWeek.SATURDAY, LocalTime.of(10,00), LocalTime.of(23,59)));
+
+        Calendar cal = Calendar.getInstance();
+        cal.setTimeInMillis(0);
+        cal.set(2019, 02, 16, 12, 15, 01);
+        Date date = cal.getTime(); // get back a Date object
+
+        store.takeOrder(items, date, "0623862099",false);
+        List<Order> orders = store.getOrders();         // no payement but store
+
+        assertEquals(1,orders.size());
+        Order order1 = orders.get(0);
+
+        assertEquals(0,(int)order1.getID());
+        assertEquals(53.64,order1.getPrice(),0);
+        assertEquals(State.toPay,order1.getState());
+    }
+
+    @Test
+    public void testOrderCreationDate_BadPhoneNumber() {
+        List<Item> items = new ArrayList<>();
+        items.add(item1);items.add(item2);items.add(item3);items.add(item4);
+        WorkingHours workingHours = store.getWorkingHours();
+        workingHours.addOpeningFragement(new OpeningFragment(DayOfWeek.MONDAY, LocalTime.of(8,00), LocalTime.of(23,59)));
+        workingHours.addOpeningFragement(new OpeningFragment(DayOfWeek.TUESDAY, LocalTime.of(8,00), LocalTime.of(23,59)));
+        workingHours.addOpeningFragement(new OpeningFragment(DayOfWeek.WEDNESDAY, LocalTime.of(8,00), LocalTime.of(23,59)));
+        workingHours.addOpeningFragement(new OpeningFragment(DayOfWeek.THURSDAY, LocalTime.of(8,00), LocalTime.of(23,59)));
+        workingHours.addOpeningFragement(new OpeningFragment(DayOfWeek.FRIDAY, LocalTime.of(8,00), LocalTime.of(23,59)));
+        workingHours.addOpeningFragement(new OpeningFragment(DayOfWeek.SATURDAY, LocalTime.of(10,00), LocalTime.of(23,59)));
+
+        Calendar cal = Calendar.getInstance();
+        cal.setTimeInMillis(0);
+        cal.set(2019, 02, 16, 12, 15, 01);
+        Date date = cal.getTime(); // get back a Date object
+
+        store.takeOrder(items, date, "a623862099",false);
+        List<Order> orders = store.getOrders();         // no payement but store
+
+        assertEquals(1,orders.size());
+        Order order1 = orders.get(0);
+
+        assertEquals(0,(int)order1.getID());
+        assertEquals(53.64,order1.getPrice(),0);
+        assertEquals(State.refused,order1.getState());
     }
 }

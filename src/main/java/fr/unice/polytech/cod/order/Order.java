@@ -37,9 +37,8 @@ public class Order {
         computeFinalPrice();
         store.collectOrder(this);
 
-        Date date = new Date();                                 //TODO define a time to make the command
 
-        if(store==null || items == null || dateIsCorrect(orderTime) || !customerPhoneNumber.matches("[0-9]*")){
+        if(store==null || items == null || !dateIsCorrect(orderTime) || !customerPhoneNumber.matches("[0-9]*")){
             this.currentState = State.refused;
         };
     }
@@ -53,7 +52,10 @@ public class Order {
         Instant instant = Instant.ofEpochMilli(calendar.getTimeInMillis());
         LocalTime convert = LocalDateTime.ofInstant(instant, ZoneId.systemDefault()).toLocalTime();
 
-        return orderTime.after(date) && wo.isOpenOn(DayOfWeek.of(calendar.get(Calendar.DAY_OF_WEEK)),convert);
+        int dayOfTheWeek = calendar.get(Calendar.DAY_OF_WEEK)-1;
+        if (dayOfTheWeek==0)dayOfTheWeek=7;
+
+        return orderTime.after(date) && wo.isOpenOn(DayOfWeek.of(dayOfTheWeek),convert);
     }
 
     private void alertClient(String message) {
