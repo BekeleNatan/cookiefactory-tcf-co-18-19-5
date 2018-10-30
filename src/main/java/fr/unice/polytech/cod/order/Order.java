@@ -4,6 +4,7 @@ import com.sun.deploy.Environment;
 import fr.unice.polytech.cod.Store;
 import fr.unice.polytech.cod.WorkingHours.WorkingHours;
 
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.time.*;
 import java.util.ArrayList;
@@ -70,6 +71,9 @@ public class Order {
         if(hasDiscount){
             finalPrice *= discountRate;
         }
+        BigDecimal bd = new BigDecimal(finalPrice);
+        bd= bd.setScale(2,BigDecimal.ROUND_DOWN);
+        finalPrice = bd.doubleValue();
     }
 
     public boolean makePayement(boolean success) {
