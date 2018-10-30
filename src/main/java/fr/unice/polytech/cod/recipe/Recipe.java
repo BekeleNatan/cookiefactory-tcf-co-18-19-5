@@ -27,8 +27,11 @@ public class Recipe {
     /**
      * @param price
      */
-    public void setPrice(int price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
 
+    public String getName() {
+        return name;
+    }
 }

@@ -86,6 +86,10 @@ public class Store {
         return toReturn;
     }
 
+	public Recipe getRecipeOfTheMonth() {
+		return recipeOfTheMonth;
+	}
+
 	public WorkingHours getWorkingHours() {
 		return workingHours;
 	}
