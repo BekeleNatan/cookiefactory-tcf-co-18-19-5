@@ -7,7 +7,7 @@ import java.util.*;
 
 public class Franchise {
 
-    private HashMap<Integer,Recipe> generalRecipe = new HashMap<>();    //TODO review this hashmap because the recipe of the month is added at key 0
+    private HashMap<Integer,Recipe> franchiseMenu = new HashMap<>();    //TODO review this hashmap because the recipe of the month is added at key 0
     private HashMap<Integer, Store> stores = new HashMap<>();
     private String name;
     private Integer storesID = 0;
@@ -25,12 +25,12 @@ public class Franchise {
 
     public void addRecipe(String recipeName, Dough dough, Flavour flavours, Topping topping, Cooking cooking, Mix mix, double price){
         Recipe recipe = new Recipe(recipeName, dough, flavours, topping, cooking, mix, price);
-        generalRecipe.put(recipeId,recipe);
+        franchiseMenu.put(recipeId,recipe);
         recipeId++;
     }
 
     public HashMap<Integer,Recipe> getMenu() {
-        return generalRecipe;
+        return franchiseMenu;
     }
 
     public List<Store> getStores() {

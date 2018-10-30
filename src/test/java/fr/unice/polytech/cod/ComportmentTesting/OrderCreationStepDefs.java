@@ -1,5 +1,6 @@
 package fr.unice.polytech.cod.ComportmentTesting;
 import cucumber.api.java8.En;
+import fr.unice.polytech.cod.FeaturesTestRunner;
 import fr.unice.polytech.cod.Franchise;
 import fr.unice.polytech.cod.Store;
 import fr.unice.polytech.cod.order.Item;
@@ -30,7 +31,7 @@ public class OrderCreationStepDefs implements En {
         Given("^La franchise \"([^\"]*)\" avec (\\d+) magasins$",
                 (String name, Integer nbrStore) -> {// besoin de refactorer int en Integer car utilisation de la généricité par Cucumber Java 8
                         franchise = new Franchise(name);
-                        FeaturesTest.initialiseStores(franchise,nbrStore);
+                        FeaturesTestRunner.initialiseStores(franchise,nbrStore);
         });
 
         When("Un client veut voir les magasins ou il peut commander$", () -> {
