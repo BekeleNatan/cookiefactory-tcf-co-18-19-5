@@ -7,10 +7,7 @@ import fr.unice.polytech.cod.order.Order;
 import fr.unice.polytech.cod.order.State;
 import fr.unice.polytech.cod.recipe.*;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -25,6 +22,7 @@ public class OrderCreationStepDefs implements En {
     List<Store> stores = new ArrayList<>();
     HashMap<Integer,Recipe> menu = new HashMap<>();
     List<Item> items = new ArrayList<>();
+    Date date = new Date();
 
     public OrderCreationStepDefs() { // implementation des steps dans le constructeur (aussi possible dans des méthodes)
         Given("^La franchise \"([^\"]*)\" avec (\\d+) magasins$",
@@ -63,11 +61,17 @@ public class OrderCreationStepDefs implements En {
         });
 
         And("^Le client valide la commande$", () -> {
-            order = storeToCommand.takeOrder(items,new Date(),"0623862099",false);
+            order = storeToCommand.takeOrder(items,date,"0623862099",false);
         });
 
         And("^Le client paye$", () -> {
             order.makePayement(true);
+        });
+        And("Le client rentre une date passée", () -> {
+            Calendar cal = Calendar.getInstance();
+            cal.setTimeInMillis(0);
+            cal.set(2019, 02, 12, 12, 15, 01);
+            date = cal.getTime(); // get back a Date object
         });
 
         And("^Le client a un probleme de payement$", () -> {

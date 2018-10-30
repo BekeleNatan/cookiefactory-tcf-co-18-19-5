@@ -1,10 +1,13 @@
 package fr.unice.polytech.cod.order;
 
+import com.sun.deploy.Environment;
 import fr.unice.polytech.cod.Store;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
 
 public class Order {
 
@@ -30,6 +33,11 @@ public class Order {
         currentState = State.toPay;
         computeFinalPrice();
         store.collectOrder(this);
+
+        Date date = new Date();                                 //TODO define a time to make the command
+        if(store==null || items == null || date.before(orderTime) || !customerPhoneNumber.matches("[0-9]*")){
+            this.currentState = State.refused;
+        };
     }
 
     private void alertClient(String message) {
@@ -47,12 +55,14 @@ public class Order {
     }
 
     public boolean makePayement(boolean success) {
-        if(success){
+        if(success && currentState==State.toPay){
             currentState = State.toDo;
             alertClient("payment done, the command is treated");
-        }else{
+        }else if (!success){
             alertClient("payment failure, the command is canceled");
             currentState = State.paymentProblem;
+        }else if (currentState!=State.toPay){
+            alertClient("payment done but command canceled"); //TODO is that possible ?
         }
         bankTransactionNumber = 0;
         return true;

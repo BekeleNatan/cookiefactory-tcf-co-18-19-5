@@ -4,11 +4,13 @@ import fr.unice.polytech.cod.Franchise;
 import fr.unice.polytech.cod.Store;
 import fr.unice.polytech.cod.order.Item;
 import fr.unice.polytech.cod.order.Order;
+import fr.unice.polytech.cod.order.State;
 import fr.unice.polytech.cod.recipe.*;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -53,5 +55,26 @@ public class OrderTest {
         Order order = orders.get(0);
         assertEquals(0,(int)order.getID());
         assertEquals(53.64,order.getPrice(),0);
+        assertEquals(State.toPay,order.getState());
+    }
+
+    @Test
+    public void testOrderCreationDateProblem() {
+        List<Item> items = new ArrayList<>();
+        items.add(item1);items.add(item2);items.add(item3);items.add(item4);
+
+        Calendar cal = Calendar.getInstance();
+        cal.setTimeInMillis(0);
+        cal.set(2019, 02, 12, 12, 15, 01);
+        Date date = cal.getTime(); // get back a Date object
+
+        store.takeOrder(items, date, "0623862099",false);
+        List<Order> orders = store.getOrders();         // no payement but store
+
+        assertEquals(1,orders.size());
+        Order order = orders.get(0);
+        assertEquals(0,(int)order.getID());
+        assertEquals(53.64,order.getPrice(),0);
+        assertEquals(State.refused,order.getState());
     }
 }
