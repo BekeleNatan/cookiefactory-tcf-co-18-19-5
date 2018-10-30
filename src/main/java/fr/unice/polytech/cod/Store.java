@@ -6,14 +6,11 @@ import fr.unice.polytech.cod.order.Item;
 import fr.unice.polytech.cod.order.Order;
 import fr.unice.polytech.cod.recipe.*;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 public class Store {
 
-	private Franchise franchise;
+	private Franchise franchise;  //TODO whY ?
 	private String name;
 	private double taxeRate = 1;
 	private int lastId = 0;
@@ -21,16 +18,22 @@ public class Store {
 	private HashMap<Integer,Order> orders = new HashMap();
 	private WorkingHours workingHours = new WorkingHours();
 
+
 	public Store(Franchise franchise, String name) {
 		this.name = name;
 		this.franchise = franchise;
+
 	}
 
-	public HashMap<Integer, Recipe> getMenu() {
-		HashMap<Integer, Recipe> toReturn = new HashMap<>();
-		toReturn.putAll(franchise.getMenu());
-		if(recipeOfTheMonth!=null){toReturn.put(0,recipeOfTheMonth);}
-		return toReturn;
+	public List<Recipe> getMenu() {
+        if(recipeOfTheMonth==null)
+            return franchise.getMenu();
+        else{
+            List<Recipe> toReturn = new ArrayList<>();
+            toReturn.addAll(franchise.getMenu());
+            toReturn.add(recipeOfTheMonth);
+            return toReturn;
+        }
 	}
 
 	public void setRecipeOfTheMonth(String recipeName, Dough dough, Flavour flavours, Topping topping, Cooking cooking, Mix mix, double price){
@@ -43,6 +46,7 @@ public class Store {
 	 */
 	public void removeRecipeOfTheMonth() {
 		recipeOfTheMonth = null;
+
 	}
 
 	/**
@@ -93,4 +97,8 @@ public class Store {
 	public WorkingHours getWorkingHours() {
 		return workingHours;
 	}
+
+    public String getName() {
+	    return name;
+    }
 }
