@@ -2,6 +2,8 @@ package fr.unice.polytech.cod.unitaryTesting.order;
 
 import fr.unice.polytech.cod.Franchise;
 import fr.unice.polytech.cod.Store;
+import fr.unice.polytech.cod.WorkingHours.OpeningFragment;
+import fr.unice.polytech.cod.WorkingHours.WorkingHours;
 import fr.unice.polytech.cod.order.Item;
 import fr.unice.polytech.cod.order.Order;
 import fr.unice.polytech.cod.order.State;
@@ -9,6 +11,8 @@ import fr.unice.polytech.cod.recipe.*;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.time.DayOfWeek;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -32,6 +36,16 @@ public class OrderTest {
     public void initialisation(){
         franchise.addStore("robertCookies");
         store = franchise.chooseStore(0);
+        WorkingHours workingHours = store.getWorkingHours();
+
+        workingHours.addOpeningFragement(new OpeningFragment(DayOfWeek.MONDAY, LocalTime.of(0,00), LocalTime.of(23,59)));
+        workingHours.addOpeningFragement(new OpeningFragment(DayOfWeek.TUESDAY, LocalTime.of(0,00), LocalTime.of(23,59)));
+        workingHours.addOpeningFragement(new OpeningFragment(DayOfWeek.WEDNESDAY, LocalTime.of(0,00), LocalTime.of(23,59)));
+        workingHours.addOpeningFragement(new OpeningFragment(DayOfWeek.THURSDAY, LocalTime.of(0,00), LocalTime.of(23,59)));
+        workingHours.addOpeningFragement(new OpeningFragment(DayOfWeek.FRIDAY, LocalTime.of(0,00), LocalTime.of(23,59)));
+        workingHours.addOpeningFragement(new OpeningFragment(DayOfWeek.SATURDAY, LocalTime.of(0,00), LocalTime.of(23,59)));
+        workingHours.addOpeningFragement(new OpeningFragment(DayOfWeek.SUNDAY, LocalTime.of(0,00), LocalTime.of(23,59)));
+
         store.setTaxeRate(1.2);
         recipe1 = new Recipe("cookie1", Dough.Chocolate, Flavour.Chili, Topping.MandMs, Cooking.Chewy,Mix.Mixed,9.5);
         recipe2 = new Recipe("cookie2", Dough.Oatmeal, Flavour.Chili, Topping.ReesesButtercup, Cooking.Chewy,Mix.Topped,3.4);

@@ -20,7 +20,7 @@ public class WorkingHours {
     }
 
     // ok
-	boolean addOpeningFragement(OpeningFragment openingFragment) {
+	public boolean addOpeningFragement(OpeningFragment openingFragment) {
 	    for(OpeningFragment of : this.openingFragments){
 	        if(of.getDay().equals(openingFragment.getDay())){
 	            if(inBetween(openingFragment.getOpening(), of.getOpening(), of.getClosing())){
@@ -35,7 +35,7 @@ public class WorkingHours {
 	}
 
 	// ok
-	boolean deleteOpeningFragement(DayOfWeek day, LocalTime from, LocalTime to) {
+	public boolean deleteOpeningFragement(DayOfWeek day, LocalTime from, LocalTime to) {
         for(OpeningFragment of : this.openingFragments){
             if(of.getDay().equals(day) && of.getOpening().equals(from) && of.getClosing().equals(to)){
                 this.openingFragments.remove(of);
