@@ -45,6 +45,7 @@ public class Order {
     }
 
     private boolean dateIsCorrect(Date orderTime) {
+        //TODO Verifier mieux la date
         Date date = new Date();
         WorkingHours wo = store.getWorkingHours();
         Calendar calendar = Calendar.getInstance();
@@ -76,8 +77,9 @@ public class Order {
         finalPrice = bd.doubleValue();
     }
 
-    public boolean makePayement(boolean success) {
+    public boolean makePayement(boolean success, int transaction) {
         if(success && currentState==State.toPay){
+            this.bankTransactionNumber = transaction;
             currentState = State.toDo;
             alertClient("payment done, the command is treated");
         }else if (!success){

@@ -18,8 +18,7 @@ public class Customer {
      */
     public void sendMessage(String content) {
         message = content;
-        System.out.println(content);
-        // TODO - implement Customer.sendMessage
+        System.out.println(content); //TODO figure out what to do
     }
 
     public Object getMessage() {

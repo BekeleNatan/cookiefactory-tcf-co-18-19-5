@@ -7,7 +7,7 @@ import java.util.*;
 
 public class Franchise {
 
-    private List<Recipe> franchiseMenu ;    //TODO review this hashmap because the recipe of the month is added at key 0
+    private List<Recipe> franchiseMenu ;
     private List<Store> stores ;
     private String name;
     private Integer storesID = 0;

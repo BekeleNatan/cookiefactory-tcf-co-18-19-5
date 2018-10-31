@@ -10,12 +10,12 @@ import java.util.*;
 
 public class Store {
 
-	private Franchise franchise;  //TODO whY ?
+	private Franchise franchise;
 	private String name;
 	private double taxeRate = 1;
 	private int lastId = 0;
 	private Recipe recipeOfTheMonth = null;
-	private HashMap<Integer,Order> orders = new HashMap(); //Todo
+	private HashMap<Integer,Order> orders = new HashMap(); //Todo change hachmap in list
 	private WorkingHours workingHours = new WorkingHours();
 
 

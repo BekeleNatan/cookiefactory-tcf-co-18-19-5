@@ -78,7 +78,7 @@ public class OrderCreationStepDefs implements En {
         });
 
         And("^Le client paye$", () -> {
-            order.makePayement(true);
+            order.makePayement(true,489638445);
         });
         And("Le client rentre une date passée", () -> {
             Calendar cal = Calendar.getInstance();
@@ -88,7 +88,7 @@ public class OrderCreationStepDefs implements En {
         });
 
         And("^Le client a un probleme de payement$", () -> {
-            order.makePayement(false);
+            order.makePayement(false,0);
         });
 
         And("^Le magasin a mis ses taxes a (.+)$", (String taxe) -> {
