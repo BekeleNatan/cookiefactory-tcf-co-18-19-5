@@ -285,4 +285,148 @@ public class OrderTest {
         assertEquals(State.refused,order.getState());
     }
 
+    @Test
+    public void testOrderCancelAfterPayment() {
+        List<Item> items = new ArrayList<>();
+        items.add(item1);items.add(item2);items.add(item3);items.add(item4);
+        workingHours.addOpeningFragement(new OpeningFragment(DayOfWeek.MONDAY, LocalTime.of(0,00), LocalTime.of(23,59)));
+        workingHours.addOpeningFragement(new OpeningFragment(DayOfWeek.TUESDAY, LocalTime.of(0,00), LocalTime.of(23,59)));
+        workingHours.addOpeningFragement(new OpeningFragment(DayOfWeek.WEDNESDAY, LocalTime.of(0,00), LocalTime.of(23,59)));
+        workingHours.addOpeningFragement(new OpeningFragment(DayOfWeek.THURSDAY, LocalTime.of(0,00), LocalTime.of(23,59)));
+        workingHours.addOpeningFragement(new OpeningFragment(DayOfWeek.FRIDAY, LocalTime.of(0,00), LocalTime.of(23,59)));
+        workingHours.addOpeningFragement(new OpeningFragment(DayOfWeek.SATURDAY, LocalTime.of(0,00), LocalTime.of(23,59)));
+        workingHours.addOpeningFragement(new OpeningFragment(DayOfWeek.SUNDAY, LocalTime.of(0,00), LocalTime.of(23,59)));
+
+        Calendar cal = Calendar.getInstance();
+        cal.setTimeInMillis(0);
+        cal.set(2019, 02, 12, 12, 15, 01);
+        Date date = cal.getTime(); // get back a Date object
+
+        store.takeOrder(items, date, "0623862099",false);
+        List<Order> orders = store.getOrders();         // no payement but store
+
+        assertEquals(1,orders.size());
+        Order order = orders.get(0);
+        assertEquals(0,(int)order.getID());
+        assertEquals(53.64,order.getPrice(),0);
+        assertEquals(State.toPay,order.getState());
+        order.makePayement(true,215325645);
+
+
+        assertEquals("La command a été annulé, le client a été remboursé",order.cancelOrder());
+        assertEquals(State.refused,order.getState());
+    }
+
+    @Test
+    public void testOrderCancel_AfterPayment_ErrorSendingMessage() {
+        List<Item> items = new ArrayList<>();
+        items.add(item1);items.add(item2);items.add(item3);items.add(item4);
+        workingHours.addOpeningFragement(new OpeningFragment(DayOfWeek.MONDAY, LocalTime.of(0,00), LocalTime.of(23,59)));
+        workingHours.addOpeningFragement(new OpeningFragment(DayOfWeek.TUESDAY, LocalTime.of(0,00), LocalTime.of(23,59)));
+        workingHours.addOpeningFragement(new OpeningFragment(DayOfWeek.WEDNESDAY, LocalTime.of(0,00), LocalTime.of(23,59)));
+        workingHours.addOpeningFragement(new OpeningFragment(DayOfWeek.THURSDAY, LocalTime.of(0,00), LocalTime.of(23,59)));
+        workingHours.addOpeningFragement(new OpeningFragment(DayOfWeek.FRIDAY, LocalTime.of(0,00), LocalTime.of(23,59)));
+        workingHours.addOpeningFragement(new OpeningFragment(DayOfWeek.SATURDAY, LocalTime.of(0,00), LocalTime.of(23,59)));
+        workingHours.addOpeningFragement(new OpeningFragment(DayOfWeek.SUNDAY, LocalTime.of(0,00), LocalTime.of(23,59)));
+
+        Calendar cal = Calendar.getInstance();
+        cal.setTimeInMillis(0);
+        cal.set(2019, 02, 12, 12, 15, 01);
+        Date date = cal.getTime(); // get back a Date object
+
+        store.takeOrder(items, date, "0623862099",false);
+        List<Order> orders = store.getOrders();         // no payement but store
+
+        assertEquals(1,orders.size());
+        Order order = orders.get(0);
+        assertEquals(0,(int)order.getID());
+        assertEquals(53.64,order.getPrice(),0);
+        assertEquals(State.toPay,order.getState());
+        order.makePayement(true,215325645);
+
+        Customer customer = mock(Customer.class);
+        when(customer.sendMessage("Votre command a été annulé")).thenReturn(false);
+        when(customer.payBack(215325645)).thenReturn(true);
+        when(customer.getPhoneNumber()).thenReturn("0623862099");
+        order.setCustomer(customer);
+
+        assertEquals("La command a été annulé, le client a été remboursé, mais on a pas pu le prévenir au : 0623862099",order.cancelOrder());
+        assertEquals(State.refused,order.getState());
+    }
+
+    @Test
+    public void testOrderCancel_AfterPayment_ErrorPayingBack() {
+        List<Item> items = new ArrayList<>();
+        items.add(item1);items.add(item2);items.add(item3);items.add(item4);
+        workingHours.addOpeningFragement(new OpeningFragment(DayOfWeek.MONDAY, LocalTime.of(0,00), LocalTime.of(23,59)));
+        workingHours.addOpeningFragement(new OpeningFragment(DayOfWeek.TUESDAY, LocalTime.of(0,00), LocalTime.of(23,59)));
+        workingHours.addOpeningFragement(new OpeningFragment(DayOfWeek.WEDNESDAY, LocalTime.of(0,00), LocalTime.of(23,59)));
+        workingHours.addOpeningFragement(new OpeningFragment(DayOfWeek.THURSDAY, LocalTime.of(0,00), LocalTime.of(23,59)));
+        workingHours.addOpeningFragement(new OpeningFragment(DayOfWeek.FRIDAY, LocalTime.of(0,00), LocalTime.of(23,59)));
+        workingHours.addOpeningFragement(new OpeningFragment(DayOfWeek.SATURDAY, LocalTime.of(0,00), LocalTime.of(23,59)));
+        workingHours.addOpeningFragement(new OpeningFragment(DayOfWeek.SUNDAY, LocalTime.of(0,00), LocalTime.of(23,59)));
+
+        Calendar cal = Calendar.getInstance();
+        cal.setTimeInMillis(0);
+        cal.set(2019, 02, 12, 12, 15, 01);
+        Date date = cal.getTime(); // get back a Date object
+
+        store.takeOrder(items, date, "0623862099",false);
+        List<Order> orders = store.getOrders();         // no payement but store
+
+        assertEquals(1,orders.size());
+        Order order = orders.get(0);
+        assertEquals(0,(int)order.getID());
+        assertEquals(53.64,order.getPrice(),0);
+        assertEquals(State.toPay,order.getState());
+        order.makePayement(true,215325645);
+
+        Customer customer = mock(Customer.class);
+        when(customer.sendMessage("Votre command a été annulé, vous allez être contacter pour le remboursement")).thenReturn(true);
+        when(customer.payBack(215325645)).thenReturn(false);
+        when(customer.getPhoneNumber()).thenReturn("0623862099");
+        order.setCustomer(customer);
+
+        assertEquals("La command a été annulé, le client n'a pas été remboursé, son numéro est le : 0623862099",order.cancelOrder());
+        assertEquals(State.refused,order.getState());
+    }
+
+    @Test
+    public void testOrderCancel_AfterPayment_ErrorPayingBack_ErrorSendingMessage() {
+        List<Item> items = new ArrayList<>();
+        items.add(item1);items.add(item2);items.add(item3);items.add(item4);
+        workingHours.addOpeningFragement(new OpeningFragment(DayOfWeek.MONDAY, LocalTime.of(0,00), LocalTime.of(23,59)));
+        workingHours.addOpeningFragement(new OpeningFragment(DayOfWeek.TUESDAY, LocalTime.of(0,00), LocalTime.of(23,59)));
+        workingHours.addOpeningFragement(new OpeningFragment(DayOfWeek.WEDNESDAY, LocalTime.of(0,00), LocalTime.of(23,59)));
+        workingHours.addOpeningFragement(new OpeningFragment(DayOfWeek.THURSDAY, LocalTime.of(0,00), LocalTime.of(23,59)));
+        workingHours.addOpeningFragement(new OpeningFragment(DayOfWeek.FRIDAY, LocalTime.of(0,00), LocalTime.of(23,59)));
+        workingHours.addOpeningFragement(new OpeningFragment(DayOfWeek.SATURDAY, LocalTime.of(0,00), LocalTime.of(23,59)));
+        workingHours.addOpeningFragement(new OpeningFragment(DayOfWeek.SUNDAY, LocalTime.of(0,00), LocalTime.of(23,59)));
+
+        Calendar cal = Calendar.getInstance();
+        cal.setTimeInMillis(0);
+        cal.set(2019, 02, 12, 12, 15, 01);
+        Date date = cal.getTime(); // get back a Date object
+
+        store.takeOrder(items, date, "0623862099",false);
+        List<Order> orders = store.getOrders();         // no payement but store
+
+        assertEquals(1,orders.size());
+        Order order = orders.get(0);
+        assertEquals(0,(int)order.getID());
+        assertEquals(53.64,order.getPrice(),0);
+        assertEquals(State.toPay,order.getState());
+        order.makePayement(true,215325645);
+
+        Customer customer = mock(Customer.class);
+        when(customer.sendMessage("Votre command a été annulé, vous allez être contacter pour le remboursement")).thenReturn(false);
+        when(customer.payBack(215325645)).thenReturn(false);
+        when(customer.getPhoneNumber()).thenReturn("0623862099");
+        order.setCustomer(customer);
+
+        assertEquals("La command a été annulé, le client n'a pas été remboursé, et on a pas pu le prévenir au : 0623862099",order.cancelOrder());
+        assertEquals(State.refused,order.getState());
+    }
+
+
 }

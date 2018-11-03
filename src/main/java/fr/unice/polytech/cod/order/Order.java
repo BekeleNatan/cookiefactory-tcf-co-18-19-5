@@ -24,7 +24,7 @@ public class Order {
     private Customer customer;
     private double finalPrice = 0;
 
-    private int bankTransactionNumber;
+    private double bankTransactionNumber;
     private static double discountRate = 0.9;
 
     public Order(Store store, int orderId, List<Item> items, Date orderTime, String customerPhoneNumber, boolean hasDiscount) {
@@ -77,7 +77,8 @@ public class Order {
         finalPrice = bd.doubleValue();
     }
 
-    public boolean makePayement(boolean success, int transaction) {
+    public boolean makePayement(boolean success, double transaction) {
+        bankTransactionNumber = 0;
         if(success && currentState==State.toPay){
             this.bankTransactionNumber = transaction;
             currentState = State.toDo;
@@ -88,7 +89,6 @@ public class Order {
         }else if (currentState!=State.toPay){
             alertClient("payment done but command canceled"); //TODO is that possible ?
         }
-        bankTransactionNumber = 0;
         return true;
     }
 
@@ -113,6 +113,8 @@ public class Order {
             message += ", le client n'a pas été remboursé";
             if(!customer.sendMessage("Votre command a été annulé, vous allez être contacter pour le remboursement")){
                 message += ", et on a pas pu le prévenir au : "+customer.getPhoneNumber();
+            }else{
+                message += ", son numéro est le : "+customer.getPhoneNumber();
             }
         }
 
@@ -137,5 +139,9 @@ public class Order {
 
     public void setCustomer(Customer customer) {
         this.customer = customer;
+    }
+
+    public Object getTransactionNumber() {
+        return bankTransactionNumber;
     }
 }
