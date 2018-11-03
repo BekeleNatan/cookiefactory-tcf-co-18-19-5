@@ -15,7 +15,7 @@ public class Store {
 	private double taxeRate = 1;
 	private int lastId = 0;
 	private Recipe recipeOfTheMonth = null;
-	private HashMap<Integer,Order> orders = new HashMap(); //Todo change hachmap in list
+	private List<Order> orders = new ArrayList<>(); //Todo change hachmap in list
 	private WorkingHours workingHours = new WorkingHours();
 
 
@@ -76,7 +76,7 @@ public class Store {
 	 *
 	 */
 	public void collectOrder(Order order) {
-		orders.put(order.getID(),order);
+		orders.add(order);
 	}
 
 	public void printPeekHoursStat() {
@@ -85,8 +85,7 @@ public class Store {
 	}
 
     public List<Order> getOrders() {
-		List<Order> toReturn = new ArrayList<>();
-		toReturn.addAll(orders.values());
+		List<Order> toReturn = new ArrayList<>(orders);
         return toReturn;
     }
 

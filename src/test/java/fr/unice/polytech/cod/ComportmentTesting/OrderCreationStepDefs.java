@@ -132,6 +132,10 @@ public class OrderCreationStepDefs implements En {
         Then("^Il trouve (\\d+) cookies$", (Integer nbrCookies) -> {
             assertEquals((int)nbrCookies ,menu.size());
         });
+        And("^La commande est stockee$", () -> {
+            assertEquals(1 ,storeToCommand.getOrders().size());
+        });
+
 
 
     }
