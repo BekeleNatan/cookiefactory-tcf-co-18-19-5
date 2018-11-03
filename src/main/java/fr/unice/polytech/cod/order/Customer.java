@@ -16,9 +16,15 @@ public class Customer {
     /**
      * @param content
      */
-    public void sendMessage(String content) {
+    public boolean sendMessage(String content) {
         message = content;
         System.out.println(content); //TODO figure out what to do
+        return true;
+    }
+
+    public boolean payBack(int transactionNumber){
+        System.out.print(transactionNumber); //TODO figure out what to do
+        return true;
     }
 
     public Object getMessage() {

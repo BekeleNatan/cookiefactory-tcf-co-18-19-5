@@ -92,9 +92,31 @@ public class Order {
         return true;
     }
 
-    public void cancelOrder() {
-        // TODO - implement Order.cancelOrder
-        throw new UnsupportedOperationException();
+    public String cancelOrder() {
+        if (currentState==State.toPay){
+            this.currentState = State.refused;
+            String message = "La command a été annulé";
+            if(!customer.sendMessage("Votre command a été annulé")){
+                message += ", mais on a pas pu le prévenir au : "+customer.getPhoneNumber();
+            }
+            return message;
+        }
+
+        this.currentState = State.refused;
+        String message = "La command a été annulé";
+        if(customer.payBack(bankTransactionNumber)){
+            message += ", le client a été remboursé";
+            if(!customer.sendMessage("Votre command a été annulé, vous allez recevoir un remboursement sous peu")){
+                message += ", mais on a pas pu le prévenir au : "+customer.getPhoneNumber();
+            }
+        }else{
+            message += ", le client n'a pas été remboursé";
+            if(!customer.sendMessage("Votre command a été annulé, vous allez être contacter pour le remboursement")){
+                message += ", et on a pas pu le prévenir au : "+customer.getPhoneNumber();
+            }
+        }
+
+        return message;
     }
 
     public Integer getID() {
@@ -111,5 +133,9 @@ public class Order {
 
     public Customer getCustomer() {
         return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
     }
 }
