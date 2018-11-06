@@ -20,7 +20,8 @@ public class WorkingHours {
     }
 
     // ok
-	public boolean addOpeningFragement(OpeningFragment openingFragment) throws RuntimeException{
+	public boolean addOpeningFragement(DayOfWeek day, LocalTime from, LocalTime to) throws RuntimeException{
+	    OpeningFragment openingFragment = new OpeningFragment(day, from, to);
 	    for(OpeningFragment of : this.openingFragments){
 	        if(of.getDay().equals(openingFragment.getDay())){
 	            if(inBetween(openingFragment.getOpening(), of.getOpening(), of.getClosing())){

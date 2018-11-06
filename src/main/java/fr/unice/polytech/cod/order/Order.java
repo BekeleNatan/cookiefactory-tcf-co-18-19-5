@@ -24,7 +24,7 @@ public class Order {
     private Customer customer;
     private double finalPrice = 0;
 
-    private double bankTransactionNumber;
+    private int bankTransactionNumber;
     private static double discountRate = 0.9;
 
     public Order(Store store, int orderId, List<Item> items, Date orderTime, String customerPhoneNumber, boolean hasDiscount) {
@@ -77,7 +77,7 @@ public class Order {
         finalPrice = bd.doubleValue();
     }
 
-    public boolean makePayement(boolean success, double transaction) {
+    public boolean makePayement(boolean success, int transaction) {
         bankTransactionNumber = 0;
         if(success && currentState==State.toPay){
             this.bankTransactionNumber = transaction;

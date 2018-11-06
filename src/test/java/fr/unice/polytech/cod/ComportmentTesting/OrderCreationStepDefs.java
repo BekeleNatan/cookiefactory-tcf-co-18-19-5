@@ -24,12 +24,12 @@ public class OrderCreationStepDefs implements En {
 
     private Order order;
     private Store storeToCommand;
-    Franchise franchise;
-    List<Store> stores = new ArrayList<>();
-    List<Recipe> menu = new ArrayList<>();
-    List<Item> items = new ArrayList<>();
-    Date date = null;
-    Boolean loyaltyDiscount = false;
+    private Franchise franchise;
+    private List<Store> stores = new ArrayList<>();
+    private List<Recipe> menu = new ArrayList<>();
+    private List<Item> items = new ArrayList<>();
+    private Date date = null;
+    private Boolean loyaltyDiscount = false;
 
     public OrderCreationStepDefs() { // implementation des steps dans le constructeur (aussi possible dans des méthodes)
         Given("^La franchise \"([^\"]*)\" avec (\\d+) magasins$",
@@ -115,13 +115,13 @@ public class OrderCreationStepDefs implements En {
 
         And("Le magasin (\\d+) est tout le temps ouvert$", (Integer storeId) -> {
             WorkingHours workingHours = franchise.chooseStore(storeId).getWorkingHours();
-            workingHours.addOpeningFragement(new OpeningFragment(DayOfWeek.MONDAY, LocalTime.of(0,00), LocalTime.of(23,59)));
-            workingHours.addOpeningFragement(new OpeningFragment(DayOfWeek.TUESDAY, LocalTime.of(0,00), LocalTime.of(23,59)));
-            workingHours.addOpeningFragement(new OpeningFragment(DayOfWeek.WEDNESDAY, LocalTime.of(0,00), LocalTime.of(23,59)));
-            workingHours.addOpeningFragement(new OpeningFragment(DayOfWeek.THURSDAY, LocalTime.of(0,00), LocalTime.of(23,59)));
-            workingHours.addOpeningFragement(new OpeningFragment(DayOfWeek.FRIDAY, LocalTime.of(0,00), LocalTime.of(23,59)));
-            workingHours.addOpeningFragement(new OpeningFragment(DayOfWeek.SATURDAY, LocalTime.of(0,00), LocalTime.of(23,59)));
-            workingHours.addOpeningFragement(new OpeningFragment(DayOfWeek.SUNDAY, LocalTime.of(0,00), LocalTime.of(23,59)));
+            workingHours.addOpeningFragement(DayOfWeek.MONDAY, LocalTime.of(0,00), LocalTime.of(23,59));
+            workingHours.addOpeningFragement(DayOfWeek.TUESDAY, LocalTime.of(0,00), LocalTime.of(23,59));
+            workingHours.addOpeningFragement(DayOfWeek.WEDNESDAY, LocalTime.of(0,00), LocalTime.of(23,59));
+            workingHours.addOpeningFragement(DayOfWeek.THURSDAY, LocalTime.of(0,00), LocalTime.of(23,59));
+            workingHours.addOpeningFragement(DayOfWeek.FRIDAY, LocalTime.of(0,00), LocalTime.of(23,59));
+            workingHours.addOpeningFragement(DayOfWeek.SATURDAY, LocalTime.of(0,00), LocalTime.of(23,59));
+            workingHours.addOpeningFragement(DayOfWeek.SUNDAY, LocalTime.of(0,00), LocalTime.of(23,59));
         });
 
         When("^Un client veut voir le menu des cookies proposes dans la store (\\d+)$", (Integer idStore) -> {

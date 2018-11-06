@@ -1,6 +1,5 @@
 package fr.unice.polytech.cod.ComportmentTesting;
 
-import com.sun.org.apache.xml.internal.resolver.readers.ExtendedXMLCatalogReader;
 import cucumber.api.PendingException;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
@@ -64,8 +63,7 @@ public class WorkingHoursStepsDef {
         LocalTime opening = LocalTime.of(parseInt(openingHour), parseInt(openingMinutes));
         LocalTime closing = LocalTime.of(parseInt(closingHour), parseInt(closingMinutes));
         try {
-            OpeningFragment of = new OpeningFragment(day, opening, closing);
-            store.getWorkingHours().addOpeningFragement(of);
+            store.getWorkingHours().addOpeningFragement(day, opening, closing);
         } catch (RuntimeException e) {
             myExceptions.add(e);
         }

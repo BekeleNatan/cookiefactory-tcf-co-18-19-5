@@ -22,7 +22,7 @@ public class Customer {
         return true;
     }
 
-    public boolean payBack(double transactionNumber){
+    public boolean payBack(int transactionNumber){
         System.out.print(transactionNumber); //TODO figure out what to do
         return true;
     }

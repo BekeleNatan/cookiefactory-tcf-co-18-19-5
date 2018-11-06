@@ -1,6 +1,5 @@
 package fr.unice.polytech.cod;
 
-import fr.unice.polytech.cod.Franchise;
 import org.junit.runner.RunWith;
 import cucumber.api.junit.Cucumber;
 import cucumber.api.CucumberOptions;
