@@ -19,3 +19,5 @@
       Given Le store 2 contient une recette "monthChocolate" avec Dough : "Plain", Flavour : "Cinnamon", Topping : "MandMs", Cooking : "Crunchy", Mix : "Mixed", Price : 3.2
       When Un client veut voir le menu des cookies proposes dans la store 1
       Then Il trouve 2 cookies
+
+    

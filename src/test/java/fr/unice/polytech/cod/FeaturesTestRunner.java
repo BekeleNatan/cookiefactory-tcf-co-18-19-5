@@ -7,9 +7,8 @@ import cucumber.api.CucumberOptions;
 @RunWith(Cucumber.class)
 @CucumberOptions(features = "src/test/resources/features")
 public class FeaturesTestRunner { // will run all features found on the classpath in the same package as this class
-    public static void initialiseStores(Franchise franchise, int nbrStore){
-        for (int i =0 ; i < nbrStore ; i++){
-            franchise.addStore("Store"+i);
-        }
+    public static void initialiseStores(Franchise franchise, int nbrStore) {
+
     }
 }
+
