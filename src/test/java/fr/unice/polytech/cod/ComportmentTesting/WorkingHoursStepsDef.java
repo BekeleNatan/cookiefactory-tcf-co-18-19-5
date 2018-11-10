@@ -46,17 +46,17 @@ public class WorkingHoursStepsDef {
         this.franchise = new Franchise(name);
     }
 
-    @And("^\"([^\"]*)\" is a one store of the franchise$")
-    public void isAOneStoreOfTheFranchise(String name) {
-       this.franchise.addStore(name);
+    @And("^\"([^\"]*)\" is a one store of the franchise with tax rate of (\\d+)$")
+    public void isAOneStoreOfTheFranchise(String storeName, Integer taxRate) {
+        this.franchise.addStore(storeName, taxRate);
     }
 
 
     @When("^we add a new opening fragment to the store \"([^\"]*)\" on \"([^\"]*)\" from \"([^\"]*)\":\"([^\"]*)\" to \"([^\"]*)\":\"([^\"]*)\"$")
-    public void weAddANewOpeningFragmentToTheStoreOnFromTo(String storeName, String openingDay, String openingHour, String openingMinutes, String closingHour, String closingMinutes)  {
+    public void weAddANewOpeningFragmentToTheStoreOnFromTo(String storeName, String openingDay, String openingHour, String openingMinutes, String closingHour, String closingMinutes) {
         this.store = getStoreByName(this.franchise, storeName.toLowerCase());
 
-        if (this.store == null){
+        if (this.store == null) {
             throw new PendingException("store not found");
         }
         DayOfWeek day = fromStringToDayOfWeek(openingDay);
@@ -70,21 +70,29 @@ public class WorkingHoursStepsDef {
     }
 
 
-
-    private DayOfWeek fromStringToDayOfWeek(String day){
-        switch (day.toLowerCase()){
-            case "monday" : return DayOfWeek.MONDAY;
-            case "tuesday" : return DayOfWeek.TUESDAY;
-            case "wednesday" : return DayOfWeek.WEDNESDAY;
-            case "thursday" : return DayOfWeek.THURSDAY;
-            case "friday" : return DayOfWeek.FRIDAY;
-            case "saturday" : return DayOfWeek.SATURDAY;
-            case "sunday" : return DayOfWeek.SUNDAY;
-            default: return null;
+    private DayOfWeek fromStringToDayOfWeek(String day) {
+        switch (day.toLowerCase()) {
+            case "monday":
+                return DayOfWeek.MONDAY;
+            case "tuesday":
+                return DayOfWeek.TUESDAY;
+            case "wednesday":
+                return DayOfWeek.WEDNESDAY;
+            case "thursday":
+                return DayOfWeek.THURSDAY;
+            case "friday":
+                return DayOfWeek.FRIDAY;
+            case "saturday":
+                return DayOfWeek.SATURDAY;
+            case "sunday":
+                return DayOfWeek.SUNDAY;
+            default:
+                return null;
         }
     }
-    private Store getStoreByName(Franchise franchise, String name){
-        for(Store store : franchise.getStores()){
+
+    private Store getStoreByName(Franchise franchise, String name) {
+        for (Store store : franchise.getStores()) {
             if (store.getName().toLowerCase().equals(name.toLowerCase())) {
                 return store;
             }
@@ -94,16 +102,16 @@ public class WorkingHoursStepsDef {
 
 
     @Then("^the store \"([^\"]*)\" is( not?)* open on \"([^\"]*)\" at \"([^\"]*)\":\"([^\"]*)\"$")
-    public void theStoreIsOpenOnAt(String storeName, String not, String openingDay, String candidatHour, String candidatMinutes)  {
+    public void theStoreIsOpenOnAt(String storeName, String not, String openingDay, String candidatHour, String candidatMinutes) {
         this.store = getStoreByName(this.franchise, storeName);
-        if (this.store == null){
+        if (this.store == null) {
             throw new PendingException("store not found");
         }
         DayOfWeek day = fromStringToDayOfWeek(openingDay);
         LocalTime opening = LocalTime.of(parseInt(candidatHour), parseInt(candidatMinutes));
-        if(not == null){
+        if (not == null) {
             assertTrue(this.store.getWorkingHours().isOpenOn(day, opening));
-        }else{
+        } else {
             assertFalse(this.store.getWorkingHours().isOpenOn(day, opening));
         }
 

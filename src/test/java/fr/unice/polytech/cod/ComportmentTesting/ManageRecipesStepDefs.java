@@ -6,14 +6,14 @@ import fr.unice.polytech.cod.Franchise;
 import fr.unice.polytech.cod.Store;
 import fr.unice.polytech.cod.recipe.*;
 
-import java.util.Map;
+import java.util.Optional;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public class ManageRecipesStepDefs implements En {
-    Franchise franchise;
-    Store store;
+    private Franchise franchise;
+    private Store store;
 
 
     public ManageRecipesStepDefs() throws Throwable {
@@ -22,63 +22,95 @@ public class ManageRecipesStepDefs implements En {
         Given("^A franchise with the name \"([^\"]*)\"$", (String arg0) -> {
             franchise = new Franchise("The cookie Factory");
         });
-        And("^The franchiseMenu is empty$", () -> {
-            assertTrue(franchise.getMenu().isEmpty());
+        And("^The franchise creates a store named \"([^\"]*)\" and its taxe rate is : \"([^\"]*)\"$", (String storeName, String taxeRate) -> {
+            store = franchise.addStore(storeName, Double.parseDouble(taxeRate));
         });
-        And("^The franchise owns a store named \"([^\"]*)\"$", (String arg0) -> {
-            franchise.addStore("The Cookie Factory Antibes");
-        });
-
 
         //Creation of a recipe by the franchise
-        When("^\"([^\"]*)\" creates a recipe named \"([^\"]*)\" with Dough : \"([^\"]*)\"," +
-                        " Flavour : \"([^\"]*)\", Topping : \"([^\"]*)\", Cooking : \"([^\"]*)\", Mix : \"([^\"]*)\"," +
-                        " Price : (.+)$",
-                (String arg0, String arg1, String arg2, String arg3, String arg4, String arg5, String arg6, String arg7) -> {
-                    franchise.addRecipe(arg1, Dough.valueOf(arg2), Flavour.valueOf(arg3), Topping.valueOf(arg4), Cooking.valueOf(arg5), Mix.valueOf(arg6), Double.parseDouble(arg7));
-                });
-        Then("^The franchiseMenu has one recipe$", () -> {
-            assertEquals(franchise.getMenu().size(), 1);
+        When("^The manager of the store \"([^\"]*)\" was told by the franchise to add a recipe named " +
+                "\"([^\"]*)\" to his store, this are the ingredients : Dough : \"([^\"]*)\", Flavour : \"([^\"]*)\", " +
+                "Topping : \"([^\"]*)\", Cooking : \"([^\"]*)\", Mix : \"([^\"]*)\", and the price is " +
+                "fixed to \"([^\"]*)\"$", (String storeName, String recipeName, String arg2, String dough,
+                                           String flavour, String topping, String cooking, String mix, String price) -> {
+            Optional<Store> store = franchise.getStoreByName(storeName);
+            if (store.isPresent()) {
+                store.get().getMenu().addRecipe(recipeName, Dough.valueOf(dough), Flavour.valueOf(flavour), Topping.valueOf(topping), Cooking.valueOf(cooking), Mix.valueOf(mix), Double.parseDouble(price));
+            } else {
+                throw new RuntimeException();
+            }
         });
-        And("^The recipe name is \"([^\"]*)\"$", (String arg0) -> {
 
-            assertEquals(franchise.getMenu().get(0).getName(), arg0);
+
+        Then("^The store \"([^\"]*)\" menu has (\\d+) recipe(s)$", (String storeName, Integer nbRecipes) -> {
+            Optional<Store> store = franchise.getStoreByName(storeName);
+            if (store.isPresent()) {
+                assertTrue(nbRecipes == store.get().getMenu().getListOfAvailableRecipes().size());
+            } else {
+                throw new RuntimeException("Store don't exists");
+            }
         });
-
 
         //Creation of a recipe by the store
         When("^\"([^\"]*)\" creates a recipeOfTheMonth named \"([^\"]*)\" with Dough : \"([^\"]*)\", " +
                         "Flavour : \"([^\"]*)\", Topping : \"([^\"]*)\", Cooking : \"([^\"]*)\", Mix : \"([^\"]*)\", Price : (.+)$",
-                (String arg0, String arg1, String arg2, String arg3, String arg4, String arg5, String arg6, String  arg7) -> {
-                    store = franchise.getStores().get(0);
-                    store.setRecipeOfTheMonth(arg1, Dough.valueOf(arg2), Flavour.valueOf(arg3), Topping.valueOf(arg4), Cooking.valueOf(arg5), Mix.valueOf(arg6), Double.parseDouble(arg7));
-
+                (String storeName, String monthlyRecipeName, String dough, String flavour, String topping, String cooking, String mix, String price) -> {
+                    Optional<Store> store = franchise.getStoreByName(storeName);
+                    if (store.isPresent()) {
+                        store.get().setRecipeOfTheMonth(monthlyRecipeName, Dough.valueOf(dough), Flavour.valueOf(flavour), Topping.valueOf(topping), Cooking.valueOf(cooking), Mix.valueOf(mix), Double.parseDouble(price));
+                    } else {
+                        throw new RuntimeException("Store don't exists");
+                    }
                 });
-        Then("^The recipeOfTheMonth is now \"([^\"]*)\"$", (String arg0) -> {
-            assertEquals(store.getRecipeOfTheMonth().getName(),arg0);
+
+        Then("^The recipeOfTheMonth is now \"([^\"]*)\"$", (String monthlyRecipeName) -> {
+            assertEquals(store.getRecipeOfTheMonth().getName(), monthlyRecipeName);
         });
 
-        //Modification of price of a recipe
-        When("^\"([^\"]*)\" changes the price of the recipe \"([^\"]*)\" from (.+) to (.+)$", (String arg0, String arg1, String arg2, String arg3) -> {
-            store = franchise.getStores().get(0);
-            store.setRecipeOfTheMonth(arg1, Dough.Chocolate, Flavour.Chili, Topping.MandMs, Cooking.Chewy, Mix.Topped, Double.parseDouble(arg2));
-            store.getRecipeOfTheMonth().setPrice(Double.parseDouble(arg3));
-        });
-        Then("^The recipeOfTheMonth's price is now (.+)$", (String arg0) -> {
-           assertEquals(Double.parseDouble(arg0), store.getRecipeOfTheMonth().getPrice(),001);
+        Then("^The menu of the store \"([^\"]*)\" is now empty$", (String storeName) -> {
+            Optional<Store> store = franchise.getStoreByName(storeName);
+            if (store.isPresent()) {
+                assertEquals(0, store.get().getMenu().getListOfAvailableRecipes().size());
+            } else {
+                throw new RuntimeException("Store don't exists");
+            }
         });
 
+        // ok ------------------------
 
         //Removal of a recipe from the franchiseMenu
         When("^\"([^\"]*)\" wants to remove the recipe \"([^\"]*)\" from their franchiseMenu$", (String arg0, String arg1) -> {
             // Write code here that turns the phrase above into concrete actions
             throw new PendingException();
         });
-        Then("^The franchiseMenu is now empty$", () -> {
-            // Write code here that turns the phrase above into concrete actions
-            throw new PendingException();
+
+
+        And("^The manager of \"([^\"]*)\" want to change the price of the \"([^\"]*)\" to (\\d+)$", (String storeName, String recipeName, Integer newPrice) -> {
+            Optional<Store> store = franchise.getStoreByName(storeName);
+            if (store.isPresent()) {
+                Optional<Recipe> recipe = store.get().getMenu().getRecipeByName(recipeName);
+                if (recipe.isPresent()) {
+                    recipe.get().setPrice(Double.valueOf(newPrice));
+                } else {
+                    throw new RuntimeException("The recipe do not exists");
+                }
+            } else {
+                throw new RuntimeException("Store don't exists");
+            }
         });
 
+        Then("^The price of the recipe \"([^\"]*)\" in the store \"([^\"]*)\" is (\\d+)$", (String recipeName, String storeName, Integer price) -> {
+            Optional<Store> store = franchise.getStoreByName(storeName);
+            if (store.isPresent()) {
+                Optional<Recipe> recipe = store.get().getMenu().getRecipeByName(recipeName);
+                if (recipe.isPresent()) {
+                    assertTrue(price == recipe.get().getPrice());
+                } else {
+                    throw new RuntimeException("The recipe does'nt exists");
+                }
+            } else {
+                throw new RuntimeException("Store doesn't exists");
+            }
+        });
 
     }
 }

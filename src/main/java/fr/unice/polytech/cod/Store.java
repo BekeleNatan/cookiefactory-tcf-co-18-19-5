@@ -1,6 +1,5 @@
 package fr.unice.polytech.cod;
 
-import fr.unice.polytech.cod.Franchise;
 import fr.unice.polytech.cod.WorkingHours.WorkingHours;
 import fr.unice.polytech.cod.order.Item;
 import fr.unice.polytech.cod.order.Order;
@@ -10,94 +9,87 @@ import java.util.*;
 
 public class Store {
 
-	private Franchise franchise;
-	private String name;
-	private double taxeRate = 1;
-	private int lastId = 0;
-	private Recipe recipeOfTheMonth = null;
-	private List<Order> orders = new ArrayList<>(); //Todo change hachmap in list
-	private WorkingHours workingHours = new WorkingHours();
+    // initialized in the constructor
+    private String name;
+    private Menu menu;
+    private double taxeRate;
 
 
-	public Store(Franchise franchise, String name) {
-		this.name = name;
-		this.franchise = franchise;
+    private int orderIdCounter = 0;
+    private Recipe recipeOfTheMonth = null;
+    private List<Order> orders = new ArrayList<>(); //Todo change hashmap in list
+    private WorkingHours workingHours = new WorkingHours();
 
-	}
 
-	public List<Recipe> getMenu() {
-        if(recipeOfTheMonth==null)
-            return franchise.getMenu();
-        else{
-            List<Recipe> toReturn = new ArrayList<>();
-            toReturn.addAll(franchise.getMenu());
-            toReturn.add(recipeOfTheMonth);
-            return toReturn;
-        }
-	}
+    public Store(String name, double taxeRate) {
+        this.name = name;
+        this.menu = new Menu();
+        this.taxeRate = taxeRate;
+    }
 
-	public void setRecipeOfTheMonth(String recipeName, Dough dough, Flavour flavours, Topping topping, Cooking cooking, Mix mix, double price){
-		Recipe recipe = new Recipe(recipeName, dough, flavours, topping, cooking, mix, price);
-		recipeOfTheMonth = recipe;
-	}
+    public Menu getMenu() {
+        return this.menu;
+    }
 
-	/**
-	 *
-	 */
-	public void removeRecipeOfTheMonth() {
-		recipeOfTheMonth = null;
+    public void setRecipeOfTheMonth(String recipeName, Dough dough, Flavour flavours, Topping topping, Cooking cooking, Mix mix, double price) {
+        Recipe recipe = new Recipe(recipeName, dough, flavours, topping, cooking, mix, price);
+        recipeOfTheMonth = recipe;
+    }
 
-	}
+    /**
+     *
+     */
+    public void removeRecipeOfTheMonth() {
+        recipeOfTheMonth = null;
+    }
 
-	/**
-	 *
-	 * @param newRate
-	 */
-	public void setTaxeRate(double newRate) {
-		this.taxeRate = newRate;
-	}
+    /**
+     * @param newRate
+     */
+    public void setTaxeRate(double newRate) {
+        this.taxeRate = newRate;
+    }
 
-	public double getTaxeRate() {
-		return this.taxeRate;
-	}
+    public double getTaxeRate() {
+        return this.taxeRate;
+    }
 
-	/**
-	 *
-	 * @param items
-	 * @param hasDiscount
-	 */
-	public Order takeOrder(List<Item> items, Date orderTime, String phoneNumber, boolean hasDiscount) {
-		Order order = new Order(this,lastId,items,orderTime, phoneNumber, hasDiscount);
-		lastId++;
-		return order;
-	}
+    /**
+     * @param itemsList
+     * @param hasDiscount
+     */
+    public Order takeOrder(List<Item> itemsList, Date orderTime, String phoneNumber, boolean hasDiscount) {
+        Order order = new Order(this, orderIdCounter, itemsList, orderTime, phoneNumber, hasDiscount);
+        orderIdCounter++;
+        return order;
+    }
 
-	/**
-	 *
-	 */
-	public void collectOrder(Order order) {
-		orders.add(order);
-	}
+    /**
+     *
+     */
+    public void collectOrder(Order order) {
+        orders.add(order);
+    }
 
-	public void printPeekHoursStat() {
-		// TODO - implement Store.printPeekHoursStat
-		throw new UnsupportedOperationException();
-	}
+    public void printPeekHoursStat() {
+        // TODO - implement Store.printPeekHoursStat
+        throw new UnsupportedOperationException();
+    }
 
     public List<Order> getOrders() {
-		List<Order> toReturn = new ArrayList<>(orders);
+        List<Order> toReturn = new ArrayList<>(orders);
         return toReturn;
     }
 
-	public Recipe getRecipeOfTheMonth() {
-		return recipeOfTheMonth;
-	}
+    public Recipe getRecipeOfTheMonth() {
+        return recipeOfTheMonth;
+    }
 
-	public WorkingHours getWorkingHours() {
-		return workingHours;
-	}
+    public WorkingHours getWorkingHours() {
+        return workingHours;
+    }
 
     public String getName() {
-	    return name;
+        return name;
     }
 }

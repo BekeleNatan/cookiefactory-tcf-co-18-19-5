@@ -25,10 +25,6 @@ import static org.mockito.Mockito.*;
 public class OrderTest {
     private Franchise franchise = new Franchise("Cod");
     private Store store;
-    private Recipe recipe1;
-    private Recipe recipe2;
-    private Recipe recipe3;
-    private Recipe recipe4;
     private Item item1;
     private Item item2;
     private Item item3;
@@ -37,15 +33,19 @@ public class OrderTest {
 
     @Before
     public void initialisation() {
-        franchise.addStore("robertCookies");
+
+        // adding the store to the franchise
+        franchise.addStore("robertCookies", 1.2);
+
+
         store = franchise.chooseStore(0);
         workingHours = store.getWorkingHours();
 
         store.setTaxeRate(1.2);
-        recipe1 = new Recipe("cookie1", Dough.Chocolate, Flavour.Chili, Topping.MandMs, Cooking.Chewy, Mix.Mixed, 9.5);
-        recipe2 = new Recipe("cookie2", Dough.Oatmeal, Flavour.Chili, Topping.ReesesButtercup, Cooking.Chewy, Mix.Topped, 3.4);
-        recipe3 = new Recipe("cookie3", Dough.Plain, Flavour.Cinnamon, Topping.MilkChocolate, Cooking.Crunchy, Mix.Mixed, 2.4);
-        recipe4 = new Recipe("cookie4", Dough.Chocolate, Flavour.Vanilla, Topping.MandMs, Cooking.Crunchy, Mix.Topped, 2.1);
+        Recipe recipe1 = new Recipe("cookie1", Dough.Chocolate, Flavour.Chili, Topping.MandMs, Cooking.Chewy, Mix.Mixed, 9.5);
+        Recipe recipe2 = new Recipe("cookie2", Dough.Oatmeal, Flavour.Chili, Topping.ReesesButtercup, Cooking.Chewy, Mix.Topped, 3.4);
+        Recipe recipe3 = new Recipe("cookie3", Dough.Plain, Flavour.Cinnamon, Topping.MilkChocolate, Cooking.Crunchy, Mix.Mixed, 2.4);
+        Recipe recipe4 = new Recipe("cookie4", Dough.Chocolate, Flavour.Vanilla, Topping.MandMs, Cooking.Crunchy, Mix.Topped, 2.1);
         item1 = new Item(recipe1, 1);
         item2 = new Item(recipe2, 4);
         item3 = new Item(recipe3, 2);
