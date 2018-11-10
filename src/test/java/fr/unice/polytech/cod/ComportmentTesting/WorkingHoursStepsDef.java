@@ -43,11 +43,13 @@ public class WorkingHoursStepsDef {
 
     @Given("^\"([^\"]*)\" is a franchise$")
     public void isAFranchise(String name) {
+        System.out.println("je suis beau");
         this.franchise = new Franchise(name);
     }
 
     @And("^\"([^\"]*)\" is a one store of the franchise with tax rate of (\\d+)$")
     public void isAOneStoreOfTheFranchise(String storeName, Integer taxRate) {
+        System.out.println("je suis beau");
         this.franchise.addStore(storeName, taxRate);
     }
 
@@ -55,6 +57,7 @@ public class WorkingHoursStepsDef {
     @When("^we add a new opening fragment to the store \"([^\"]*)\" on \"([^\"]*)\" from \"([^\"]*)\":\"([^\"]*)\" to \"([^\"]*)\":\"([^\"]*)\"$")
     public void weAddANewOpeningFragmentToTheStoreOnFromTo(String storeName, String openingDay, String openingHour, String openingMinutes, String closingHour, String closingMinutes) {
         this.store = getStoreByName(this.franchise, storeName.toLowerCase());
+        System.out.println("je suis beau");
 
         if (this.store == null) {
             throw new PendingException("store not found");
@@ -103,6 +106,8 @@ public class WorkingHoursStepsDef {
 
     @Then("^the store \"([^\"]*)\" is( not?)* open on \"([^\"]*)\" at \"([^\"]*)\":\"([^\"]*)\"$")
     public void theStoreIsOpenOnAt(String storeName, String not, String openingDay, String candidatHour, String candidatMinutes) {
+        System.out.println("je suis beau");
+
         this.store = getStoreByName(this.franchise, storeName);
         if (this.store == null) {
             throw new PendingException("store not found");
@@ -120,11 +125,14 @@ public class WorkingHoursStepsDef {
 
     @Then("a failure is expected")
     public void a_failure_is_expected() {
+        System.out.println("je suis beau");
+
         myExceptions.expectException();
     }
 
     @Then("it fails")
     public void it_fails() {
+        System.out.println("je suis beau");
         assertTrue(myExceptions.exceptions.size() != 0);
     }
 }
