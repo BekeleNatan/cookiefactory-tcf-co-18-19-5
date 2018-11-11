@@ -19,6 +19,10 @@ public class Menu {
         return recipe;
     }
 
+    public void addRecipe(Recipe recipe){
+        listOfAvailableRecipes.add(recipe);
+    }
+
 
     public List<Recipe> getListOfAvailableRecipes() {
         return listOfAvailableRecipes;

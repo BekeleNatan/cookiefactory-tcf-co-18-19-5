@@ -17,7 +17,7 @@ public class Store {
 
     private int orderIdCounter = 0;
     private Recipe recipeOfTheMonth = null;
-    private List<Order> orders = new ArrayList<>(); //Todo change hashmap in list
+    private List<Order> orders = new ArrayList<>();
     private WorkingHours workingHours = new WorkingHours();
 
 
@@ -87,6 +87,10 @@ public class Store {
 
     public WorkingHours getWorkingHours() {
         return workingHours;
+    }
+
+    public void addRecipteToMenu(Recipe recipe){
+        menu.addRecipe(recipe);
     }
 
     public String getName() {
