@@ -1,11 +1,9 @@
 package fr.unice.polytech.cod.ComportmentTesting;
 
-import cucumber.api.PendingException;
 import cucumber.api.java8.En;
-import fr.unice.polytech.cod.FeaturesTestRunner;
 import fr.unice.polytech.cod.Franchise;
 import fr.unice.polytech.cod.Store;
-import fr.unice.polytech.cod.WorkingHours.WorkingHours;
+import fr.unice.polytech.cod.unitaryTesting.WorkingHours.WorkingHours;
 import fr.unice.polytech.cod.order.Item;
 import fr.unice.polytech.cod.order.Order;
 import fr.unice.polytech.cod.order.State;
@@ -35,9 +33,7 @@ public class OrderCreationStepDefs implements En {
         Given("^A franchise with the name \"([^\"]*)\"$", (String franchiseName) -> {
             franchise = new Franchise(franchiseName);
         });
-        And("^The franchise creates a store named \"([^\"]*)\" and its taxe rate is : \"([^\"]*)\"$", (String storeName, String taxeRate) -> {
-            store = franchise.addStore(storeName, Double.parseDouble(taxeRate));
-        });
+
 
         //Creation of a recipe by the franchise
         When("^The manager of the store \"([^\"]*)\" was told by the franchise to add a recipe named " +

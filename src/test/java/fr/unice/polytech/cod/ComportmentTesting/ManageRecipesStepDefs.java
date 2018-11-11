@@ -18,38 +18,6 @@ public class ManageRecipesStepDefs implements En {
 
     public ManageRecipesStepDefs() throws Throwable {
 
-        //Background
-        Given("^A franchise with the name \"([^\"]*)\"$", (String arg0) -> {
-            franchise = new Franchise("The cookie Factory");
-        });
-        And("^The franchise creates a store named \"([^\"]*)\" and its taxe rate is : \"([^\"]*)\"$", (String storeName, String taxeRate) -> {
-            store = franchise.addStore(storeName, Double.parseDouble(taxeRate));
-        });
-
-        //Creation of a recipe by the franchise
-        When("^The manager of the store \"([^\"]*)\" was told by the franchise to add a recipe named " +
-                "\"([^\"]*)\" to his store, this are the ingredients : Dough : \"([^\"]*)\", Flavour : \"([^\"]*)\", " +
-                "Topping : \"([^\"]*)\", Cooking : \"([^\"]*)\", Mix : \"([^\"]*)\", and the price is " +
-                "fixed to \"([^\"]*)\"$", (String storeName, String recipeName, String arg2, String dough,
-                                           String flavour, String topping, String cooking, String mix, String price) -> {
-            Optional<Store> store = franchise.getStoreByName(storeName);
-            if (store.isPresent()) {
-                store.get().getMenu().addRecipe(recipeName, Dough.valueOf(dough), Flavour.valueOf(flavour), Topping.valueOf(topping), Cooking.valueOf(cooking), Mix.valueOf(mix), Double.parseDouble(price));
-            } else {
-                throw new RuntimeException();
-            }
-        });
-
-
-        Then("^The store \"([^\"]*)\" menu has (\\d+) recipe(s)$", (String storeName, Integer nbRecipes) -> {
-            Optional<Store> store = franchise.getStoreByName(storeName);
-            if (store.isPresent()) {
-                assertTrue(nbRecipes == store.get().getMenu().getListOfAvailableRecipes().size());
-            } else {
-                throw new RuntimeException("Store don't exists");
-            }
-        });
-
         //Creation of a recipe by the store
         When("^\"([^\"]*)\" creates a recipeOfTheMonth named \"([^\"]*)\" with Dough : \"([^\"]*)\", " +
                         "Flavour : \"([^\"]*)\", Topping : \"([^\"]*)\", Cooking : \"([^\"]*)\", Mix : \"([^\"]*)\", Price : (.+)$",
@@ -109,6 +77,14 @@ public class ManageRecipesStepDefs implements En {
                 }
             } else {
                 throw new RuntimeException("Store doesn't exists");
+            }
+        });
+        Then("^The store \"([^\"]*)\" menu has (\\d+) recipe(s)$", (String storeName, Integer nbRecipes) -> {
+            Optional<Store> store = franchise.getStoreByName(storeName);
+            if (store.isPresent()) {
+                assertTrue(nbRecipes == store.get().getMenu().getListOfAvailableRecipes().size());
+            } else {
+                throw new RuntimeException("Store don't exists");
             }
         });
 

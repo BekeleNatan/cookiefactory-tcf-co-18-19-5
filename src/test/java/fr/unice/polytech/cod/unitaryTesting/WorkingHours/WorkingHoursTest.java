@@ -1,4 +1,4 @@
-package fr.unice.polytech.cod.WorkingHours;
+package fr.unice.polytech.cod.unitaryTesting.WorkingHours;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -12,7 +12,6 @@ import static org.junit.Assert.*;
 
 public class WorkingHoursTest {
 
-    List<OpeningFragment> openingFragments = new ArrayList<>();
     WorkingHours workingHours = new WorkingHours();
 
     @Before

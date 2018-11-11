@@ -1,6 +1,6 @@
 package fr.unice.polytech.cod;
 
-import fr.unice.polytech.cod.WorkingHours.WorkingHours;
+import fr.unice.polytech.cod.unitaryTesting.WorkingHours.WorkingHours;
 import fr.unice.polytech.cod.order.Item;
 import fr.unice.polytech.cod.order.Order;
 import fr.unice.polytech.cod.recipe.*;
