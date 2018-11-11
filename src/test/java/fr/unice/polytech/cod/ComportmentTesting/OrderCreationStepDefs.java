@@ -29,7 +29,7 @@ public class OrderCreationStepDefs implements En {
     private Boolean loyaltyDiscount = false;
 
     public OrderCreationStepDefs() { // implementation des steps dans le constructeur (aussi possible dans des méthodes)
-        //Background
+        /*//Background
         Given("^A franchise with the name \"([^\"]*)\"$", (String franchiseName) -> {
             franchise = new Franchise(franchiseName);
         });
@@ -48,7 +48,7 @@ public class OrderCreationStepDefs implements En {
                 throw new RuntimeException();
             }
         });
-
+*/
         // commande
         When("^Le client commande dans la boutique \"([^\"]*)\"$", (String storeName) -> {
             Optional<Store> store = franchise.getStoreByName(storeName);

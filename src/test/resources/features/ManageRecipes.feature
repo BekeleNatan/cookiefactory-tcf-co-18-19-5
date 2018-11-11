@@ -7,8 +7,8 @@ Feature: Manage recipes
     And The franchise creates a store named "The Cookie Factory Antibes" and its taxe rate is : "1.2"
 
   Scenario: Creation of a recipe by the franchise
-    When The manager of the store "The Cookie Factory Antibes" was told by the franchise to add a recipe named "Chocolalala" to his store, this are the ingredients : Dough : "Plain", Flavour : "Vanilla", Topping : "MandMs", Cooking : "Crunchy", Mix : "Mixed", and the price is fixed to "3.4"
-    Then The store "The Cookie Factory Antibes" menu has 1 recipe(s)
+    When The Franchise wants to add the recipe "Chocolalala" with ingredients : Dough : "Plain", Flavour : "Vanilla", Topping : "MandMs", Cooking : "Crunchy", Mix : "Mixed", and the price is fixed to "3.4"to the stores menu
+    Then The store "The Cookie Factory Antibes" menu has 1 recipe
 
   Scenario: Creation of the monthly recipe by the store
     When "The Cookie Factory Antibes" creates a recipeOfTheMonth named "hardChocolate" with Dough : "Plain", Flavour : "Vanilla", Topping : "MandMs", Cooking : "Crunchy", Mix : "Mixed", Price : 3.1
