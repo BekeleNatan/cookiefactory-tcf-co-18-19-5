@@ -2,10 +2,9 @@ package fr.unice.polytech.cod.order;
 
 
 import fr.unice.polytech.cod.Store;
-import fr.unice.polytech.cod.WorkingHours.WorkingHours;
+import fr.unice.polytech.cod.unitaryTesting.WorkingHours.WorkingHours;
 
 import java.math.BigDecimal;
-import java.text.SimpleDateFormat;
 import java.time.*;
 import java.util.ArrayList;
 import java.util.Calendar;

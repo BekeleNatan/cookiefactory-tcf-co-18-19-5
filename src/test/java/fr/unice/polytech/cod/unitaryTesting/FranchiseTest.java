@@ -1,5 +1,7 @@
-package fr.unice.polytech.cod;
+package fr.unice.polytech.cod.unitaryTesting;
 
+import fr.unice.polytech.cod.Franchise;
+import fr.unice.polytech.cod.Store;
 import org.junit.Test;
 
 import javax.swing.text.html.Option;
@@ -17,7 +19,6 @@ public class FranchiseTest {
     public void chooseStore() {
         franchise.addStore("COD Antibes", 1.2);
         franchise.addStore("COD Nice", 1.3);
-
     }
 
     @Test

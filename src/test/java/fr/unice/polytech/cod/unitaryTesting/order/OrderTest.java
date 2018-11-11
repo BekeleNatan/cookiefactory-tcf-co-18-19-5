@@ -2,8 +2,7 @@ package fr.unice.polytech.cod.unitaryTesting.order;
 
 import fr.unice.polytech.cod.Franchise;
 import fr.unice.polytech.cod.Store;
-import fr.unice.polytech.cod.WorkingHours.OpeningFragment;
-import fr.unice.polytech.cod.WorkingHours.WorkingHours;
+import fr.unice.polytech.cod.unitaryTesting.WorkingHours.WorkingHours;
 import fr.unice.polytech.cod.order.Customer;
 import fr.unice.polytech.cod.order.Item;
 import fr.unice.polytech.cod.order.Order;

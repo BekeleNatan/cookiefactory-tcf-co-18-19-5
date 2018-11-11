@@ -1,4 +1,4 @@
-package fr.unice.polytech.cod.WorkingHours;
+package fr.unice.polytech.cod.unitaryTesting.WorkingHours;
 
 import java.time.DayOfWeek;
 import java.time.LocalTime;
