@@ -38,4 +38,8 @@ public class Franchise {
         stores.add(theNewStore);
         return theNewStore;
     }
+
+    public void addRecipeToStore(Recipe recipe){
+        stores.forEach(store -> store.addRecipteToMenu(recipe));
+    }
 }
