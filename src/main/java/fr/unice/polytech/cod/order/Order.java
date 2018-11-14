@@ -34,7 +34,7 @@ public class Order {
         this.items = items;
         this.customer = new Customer(customerPhoneNumber);
         this.hasDiscount = hasDiscount;
-        currentState = State.toPay;
+        this.currentState = State.toPay;
         computeFinalPrice();
         store.collectOrder(this);
 
@@ -47,7 +47,7 @@ public class Order {
     private boolean dateIsCorrect(Date orderTime) {
         //TODO Verifier mieux la date
         Date date = new Date();
-        WorkingHours wo = store.getWorkingHours();
+        WorkingHours wo = this.store.getWorkingHours();
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(orderTime);
 
@@ -61,60 +61,61 @@ public class Order {
     }
 
     private void alertClient(String message) {
-        customer.sendMessage(message);
+        this.customer.sendMessage(message);
     }
 
     private void computeFinalPrice() {
-        double taxeRate = store.getTaxeRate();
+        double taxeRate = this.store.getTaxeRate();
         for (Item item : items){
-            finalPrice += item.getPrice()*taxeRate;
+            this.finalPrice += item.getPrice()*taxeRate;
         }
-        if(hasDiscount){
-            finalPrice *= discountRate;
+        if(this.hasDiscount){
+            this.finalPrice *= this.discountRate;
         }
-        BigDecimal bd = new BigDecimal(finalPrice);
+        BigDecimal bd = new BigDecimal(this.finalPrice);
         bd= bd.setScale(2,BigDecimal.ROUND_DOWN);
-        finalPrice = bd.doubleValue();
+        this.finalPrice = bd.doubleValue();
     }
 
     public boolean makePayement(boolean success, int transaction) {
-        bankTransactionNumber = 0;
-        if(success && currentState==State.toPay){
+        this.bankTransactionNumber = 0;
+        if(success && this.currentState==State.toPay){
             this.bankTransactionNumber = transaction;
-            currentState = State.toDo;
+            this.currentState = State.toDo;
             alertClient("payment done, the command is treated");
         }else if (!success){
             alertClient("payment failure, the command is canceled");
-            currentState = State.paymentProblem;
-        }else if (currentState!=State.toPay){
+            this.currentState = State.paymentProblem;
+        }else if (this.currentState!=State.toPay){
             alertClient("payment done but command canceled"); //TODO is that possible ?
         }
         return true;
     }
 
     public String cancelOrder() {
-        if (currentState==State.toPay){
+        if (this.currentState==State.toPay){
             this.currentState = State.refused;
             String message = "La command a été annulé";
             if(!customer.sendMessage("Votre command a été annulé")){
-                message += ", mais on a pas pu le prévenir au : "+customer.getPhoneNumber();
+                message += ", mais on a pas pu le prévenir au : "+this.customer.getPhoneNumber();
             }
             return message;
         }
 
         this.currentState = State.refused;
         String message = "La command a été annulé";
-        if(customer.payBack(bankTransactionNumber)){
+
+        if(this.customer.payBack(this.bankTransactionNumber)){
             message += ", le client a été remboursé";
-            if(!customer.sendMessage("Votre command a été annulé, vous allez recevoir un remboursement sous peu")){
-                message += ", mais on a pas pu le prévenir au : "+customer.getPhoneNumber();
+            if(!this.customer.sendMessage("Votre command a été annulé, vous allez recevoir un remboursement sous peu")){
+                message += ", mais on a pas pu le prévenir au : "+this.customer.getPhoneNumber();
             }
         }else{
             message += ", le client n'a pas été remboursé";
-            if(!customer.sendMessage("Votre command a été annulé, vous allez être contacter pour le remboursement")){
-                message += ", et on a pas pu le prévenir au : "+customer.getPhoneNumber();
+            if(!this.customer.sendMessage("Votre command a été annulé, vous allez être contacter pour le remboursement")){
+                message += ", et on a pas pu le prévenir au : "+this.customer.getPhoneNumber();
             }else{
-                message += ", son numéro est le : "+customer.getPhoneNumber();
+                message += ", son numéro est le : "+this.customer.getPhoneNumber();
             }
         }
 
@@ -122,19 +123,19 @@ public class Order {
     }
 
     public Integer getID() {
-        return orderId;
+        return this.orderId;
     }
 
     public double getPrice() {
-        return finalPrice;
+        return this.finalPrice;
     }
 
     public State getState() {
-        return currentState;
+        return this.currentState;
     }
 
     public Customer getCustomer() {
-        return customer;
+        return this.customer;
     }
 
     public void setCustomer(Customer customer) {
@@ -142,6 +143,6 @@ public class Order {
     }
 
     public Object getTransactionNumber() {
-        return bankTransactionNumber;
+        return this.bankTransactionNumber;
     }
 }

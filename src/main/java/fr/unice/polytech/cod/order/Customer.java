@@ -17,7 +17,7 @@ public class Customer {
      * @param content
      */
     public boolean sendMessage(String content) {
-        message = content;
+        this.message = content;
         System.out.println(content); //TODO figure out what to do
         return true;
     }
@@ -27,7 +27,8 @@ public class Customer {
         return true;
     }
 
-    public Object getMessage() {
-        return message;
+    public String getMessage() {
+        return this.message;
     }
+
 }
