@@ -19,7 +19,7 @@ public class Item {
     }
 
     private void computePrice() {
-        price = recipe.getPrice() * quantity;
+        this.price = recipe.getPrice() * this.quantity;
     }
 
     /**
@@ -35,8 +35,8 @@ public class Item {
     }
 
     public Recipe getRecipe() {
-        // TODO - implement Item.getRecipe
-        throw new UnsupportedOperationException();
+
+        return this.recipe;
     }
 
     public double getPrice() {
