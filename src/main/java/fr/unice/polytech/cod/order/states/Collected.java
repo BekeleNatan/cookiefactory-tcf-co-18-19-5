@@ -1,5 +1,7 @@
 package fr.unice.polytech.cod.order.states;
 
+import fr.unice.polytech.cod.store.CashRegister;
+
 public class Collected implements OrderState {
 
 	public void nextState() {
@@ -11,10 +13,6 @@ public class Collected implements OrderState {
 	}
 
 	public void getCurrentState() {
-		throw new UnsupportedOperationException();
-	}
-
-	public boolean pay(CashRegister aCaissePayed) {
 		throw new UnsupportedOperationException();
 	}
 }

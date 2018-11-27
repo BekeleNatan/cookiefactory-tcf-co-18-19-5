@@ -5,7 +5,6 @@ import fr.unice.polytech.cod.payment.PaymentMethod;
 import fr.unice.polytech.cod.payment.PaymentMethodFactory;
 
 public class CashRegister {
-	public PaymentMethodFactory _unnamed_PaymentMethodFactory_;
 
 	public boolean pay(Order aOrder, PaymentMethod aPaymentMethod, Double aAmount) {
 		throw new UnsupportedOperationException();

@@ -1,13 +1,16 @@
 package fr.unice.polytech.cod.recipe;
 
+import fr.unice.polytech.cod.recipe.ingredients.Ingredient;
+
+import java.util.List;
+
 public class CookieFactory {
-	private int _minPossibleToppings;
-	private int _maxPossibleToppings;
-	private int _minPossibleFlavour;
-	private int _maxPossibleFlavour;
-	private int _minPossibleDough;
-	private int _maxPossibleDough;
-	public Recipe _creates;
+	private int minPossibleToppings;
+	private int maxPossibleToppings;
+	private int minPossibleFlavour;
+	private int maxPossibleFlavour;
+	private int minPossibleDough;
+	private int maxPossibleDough;
 
 	public NormalRecipe createNormalRecipe(double aPrice, CookingType aCookingType, MixType aMixType, List<Ingredient> aListIngredient) {
 		throw new UnsupportedOperationException();

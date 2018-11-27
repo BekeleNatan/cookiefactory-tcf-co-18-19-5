@@ -1,5 +1,7 @@
 package fr.unice.polytech.cod.order.states;
 
+import fr.unice.polytech.cod.store.CashRegister;
+
 public interface OrderState {
 
 	public void nextState();
@@ -7,6 +9,4 @@ public interface OrderState {
 	public void cancelState();
 
 	public void getCurrentState();
-
-	public boolean pay(CashRegister aCaissePayed);
 }

@@ -1,8 +1,10 @@
 package fr.unice.polytech.cod.workinghours;
 
+import java.time.DayOfWeek;
+import java.time.LocalTime;
+
 public class OpeningFragment {
-	private DayOfWeek _day;
-	private LocalTime _opening;
-	private LocalTime _closing;
-	public WorkingHours _forms;
+	private DayOfWeek day;
+	private LocalTime opening;
+	private LocalTime closing;
 }

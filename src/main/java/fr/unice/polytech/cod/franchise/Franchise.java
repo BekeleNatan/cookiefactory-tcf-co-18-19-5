@@ -10,12 +10,10 @@ import java.util.List;
 
 public class Franchise {
     private String name;
-    private FranchiseMenu menu;
     private ArrayList<Store> stores = new ArrayList<>();
 
     Franchise(String name) {
         this.name = name;
-        menu = new FranchiseMenu();
     }
 
     Store findStoreByName(String aStoreName) {
@@ -26,10 +24,6 @@ public class Franchise {
     Store findStoreById(int aStoreId) {
         // todo FRANCHISE : choose store by id
         throw new UnsupportedOperationException();
-    }
-
-    public FranchiseMenu getMenu() {
-        return menu;
     }
 
     public List<Store> getStores() {

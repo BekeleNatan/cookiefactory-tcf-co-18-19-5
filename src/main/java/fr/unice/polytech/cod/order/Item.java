@@ -4,16 +4,15 @@ import fr.unice.polytech.cod.recipe.Recipe;
 import fr.unice.polytech.cod.store.Stock;
 
 public class Item {
-	private int _quantity;
-	private int _price;
-	public Order _is_composed_of;
+	private int quantity;
+	private int price;
 
 	public Item(Recipe aRecipe, int aQuantity) {
 		throw new UnsupportedOperationException();
 	}
 
 	public int getQuantity() {
-		return this._quantity;
+		return this.quantity;
 	}
 
 	public void setQuantity(int aQuantity, Stock aStock) {
@@ -25,6 +24,6 @@ public class Item {
 	}
 
 	public int getPrice() {
-		return this._price;
+		return this.price;
 	}
 }

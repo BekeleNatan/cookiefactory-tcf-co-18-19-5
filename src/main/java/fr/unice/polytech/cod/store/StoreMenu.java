@@ -2,15 +2,15 @@ package fr.unice.polytech.cod.store;
 
 import fr.unice.polytech.cod.Menu;
 import fr.unice.polytech.cod.franchise.FranchiseMenu;
-import fr.unice.polytech.cod.recipe.Recipe;
+import fr.unice.polytech.cod.recipe.NormalRecipe;
+
+import java.util.List;
 
 public class StoreMenu implements Menu {
-	private Recipe _monthlyRecipe;
-	public FranchiseMenu _completes;
-	public Store _edit_and_show;
-	public Recipe _offers;
+	private NormalRecipe monthlyRecipe;
+	public FranchiseMenu franchiseMenu;
 
-	public boolean setMonthlyRecipe(Recipe aRecipe) {
+	public boolean setMonthlyRecipe(NormalRecipe aRecipe) {
 		throw new UnsupportedOperationException();
 	}
 
@@ -18,19 +18,19 @@ public class StoreMenu implements Menu {
 		throw new UnsupportedOperationException();
 	}
 
-	public void getMenu(Stock aStock) {
+	public List<NormalRecipe> getMenu(Stock aStock) {
 		throw new UnsupportedOperationException();
 	}
 
-	public boolean addRecipe(Recipe aRecipe) {
+	public boolean addRecipe(NormalRecipe aRecipe) {
 		throw new UnsupportedOperationException();
 	}
 
-	public boolean deleteRecipe(Recipe aRecipe) {
+	public boolean deleteRecipe(NormalRecipe aRecipe) {
 		throw new UnsupportedOperationException();
 	}
 
-	public Recipe getRecipeByName(String aRecipeName) {
+	public NormalRecipe getRecipeByName(String aRecipeName) {
 		throw new UnsupportedOperationException();
 	}
 }
