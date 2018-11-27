@@ -1,51 +1,76 @@
 package fr.unice.polytech.cod.store;
 
-import fr.unice.polytech.cod.franchise.Franchise;
 import fr.unice.polytech.cod.order.OrderRegister;
-import fr.unice.polytech.cod.recipe.Recipe;
-import fr.unice.polytech.cod.workinghours.WorkingHours;
+import fr.unice.polytech.cod.store.workinghours.WorkingHours;
 
-import java.util.List;
 
 public class Store {
     private String storeName;
-    private int storeId;
-    private int taxeRate;
+    private double taxeRate;
     private double pointsToMoneyRate;
-    public WorkingHours workingHours;
-    public StoreMenu menu;
-    public Stock stock;
-    public OrderRegister orderRegister;
+
+    private WorkingHours workingHours;
+    private StoreMenu storeMenu;
+    private Stock stock;
+    private OrderRegister orderRegister;
 
     public Store(String name) {
-        storeName = name;
+        this.storeName = name;
+        this.workingHours = new WorkingHours();
+        this.storeMenu = new StoreMenu();
+        this.taxeRate = 1;
+        this.pointsToMoneyRate = 1;
+        this.stock = new Stock();
+        this.orderRegister = new OrderRegister();
     }
 
-    public void setTaxeRate(int aNewRate) {
+    // taxeRate
+    public void setTaxeRate(double aNewRate) {
         this.taxeRate = aNewRate;
     }
 
-    public int getTaxeRate() {
+    public double getTaxeRate() {
         return this.taxeRate;
     }
 
-    public List<Recipe> getMenu(Stock aOurStock) {
-        throw new UnsupportedOperationException();
+    // storeMenu
+    public StoreMenu getStoreMenu() {
+        return storeMenu;
     }
 
-    public void getWorkingHours() {
-        throw new UnsupportedOperationException();
+    // workingHours
+    public WorkingHours getWorkingHours() {
+        return workingHours;
     }
 
+    // pointsToMoneyRate
     public boolean setPointsToMoneyRate(double aNewPointsToEurosRate) {
-        throw new UnsupportedOperationException();
+        this.pointsToMoneyRate = aNewPointsToEurosRate;
+        return true;
     }
 
     public double getPointsToMoneyRate() {
         return this.pointsToMoneyRate;
     }
 
+    // Name
     public String getName() {
         return storeName;
     }
+
+    public boolean setName(String newName) {
+        this.storeName = newName;
+        return true;
+    }
+
+    // Order Register
+    public OrderRegister getOrderRegister() {
+        return this.orderRegister;
+    }
+
+    // Stock
+    public Stock getStock() {
+        return this.stock;
+    }
+
 }

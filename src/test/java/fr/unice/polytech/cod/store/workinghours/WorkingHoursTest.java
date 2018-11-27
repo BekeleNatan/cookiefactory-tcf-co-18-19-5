@@ -1,4 +1,4 @@
-package fr.unice.polytech.cod.workinghours;
+package fr.unice.polytech.cod.store.workinghours;
 
 import org.junit.Before;
 import org.junit.Ignore;
