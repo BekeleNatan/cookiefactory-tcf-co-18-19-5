@@ -9,16 +9,14 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class Order {
-    private int _orderId;
-    private Date _orderTime;
-    private OrderState _currentState;
-    private boolean _hasDiscount;
-    private String _bankTransactionNumber;
-    private double _price;
-    public OrderRegister _recieves;
-    public ArrayList<Item> _is_composed_of = new ArrayList<Item>();
-    public Customer _is_made_by;
-    public OrderState _unnamed_OrderState_;
+    private int orderId;
+    private Date collecteTime;
+    private OrderState currentState;
+    private boolean hasDiscount;
+    private String bankTransactionNumber;
+    private double price;
+    public ArrayList<Item> items = new ArrayList<Item>();
+    public Customer customer;
 
     public Order(Stock aStock, WorkingHours aWorkingHours) {
         throw new UnsupportedOperationException();

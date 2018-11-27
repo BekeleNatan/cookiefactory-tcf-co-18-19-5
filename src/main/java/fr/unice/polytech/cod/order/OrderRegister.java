@@ -5,9 +5,11 @@ import fr.unice.polytech.cod.store.Stock;
 import fr.unice.polytech.cod.store.Store;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class OrderRegister {
-
+    List<Order> orders;
+    List<Stats> stats;
 
     OrderRegister(){
 
@@ -22,6 +24,10 @@ public class OrderRegister {
     }
 
     public Order createNewOrder(Stock aStock) {
+        throw new UnsupportedOperationException();
+    }
+
+    public void computeStats() {
         throw new UnsupportedOperationException();
     }
 }

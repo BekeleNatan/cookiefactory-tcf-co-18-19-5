@@ -3,9 +3,10 @@ package fr.unice.polytech.cod.payment;
 import fr.unice.polytech.cod.payment.cash.CashPayment;
 import fr.unice.polytech.cod.payment.creditcard.CreditCardPayment;
 import fr.unice.polytech.cod.payment.unfaithpass.UnfaithPassPayment;
+import fr.unice.polytech.cod.store.CashRegister;
 
 public class PaymentMethodFactory {
-	public CashRegister _unnamed_CashRegister_;
+	public CashRegister cashRegister;
 
 	public CreditCardPayment createCreditCard(String aNameOnCard, String aNumber, String aCvv, String aExpirationDate) {
 		throw new UnsupportedOperationException();

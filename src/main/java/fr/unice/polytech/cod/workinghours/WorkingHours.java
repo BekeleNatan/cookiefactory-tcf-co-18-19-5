@@ -1,10 +1,13 @@
 package fr.unice.polytech.cod.workinghours;
 
+import fr.unice.polytech.cod.store.Store;
+
+import java.time.DayOfWeek;
+import java.time.LocalTime;
 import java.util.ArrayList;
 
 public class WorkingHours {
-	public Store _opens_on;
-	public ArrayList<OpeningFragment> _forms = new ArrayList<OpeningFragment>();
+	public ArrayList<OpeningFragment> openingFragments = new ArrayList<OpeningFragment>();
 
 	public boolean isOpenOn(DayOfWeek aDay, LocalTime aAt) {
 		throw new UnsupportedOperationException();
@@ -18,11 +21,11 @@ public class WorkingHours {
 		throw new UnsupportedOperationException();
 	}
 
-	public boolean addRestrictedHoursDay(Day aDay, OpeningFragment aOpeningFragment) {
+	public boolean addRestrictedHoursDay(DayOfWeek aDay, OpeningFragment aOpeningFragment) {
 		throw new UnsupportedOperationException();
 	}
 
-	public boolean deleteRestrictedHoursDay(Day aDay, OpeningFragment aOpeningFragment) {
+	public boolean deleteRestrictedHoursDay(DayOfWeek aDay, OpeningFragment aOpeningFragment) {
 		throw new UnsupportedOperationException();
 	}
 }

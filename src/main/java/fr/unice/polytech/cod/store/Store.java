@@ -8,23 +8,21 @@ import fr.unice.polytech.cod.workinghours.WorkingHours;
 import java.util.List;
 
 public class Store {
-	private String _storeName;
-	private int _storeId;
-	private int _taxeRate;
-	private double _pointsToMoneyRate;
-	public Franchise _owns;
-	public Recipe _recipeOfTheMonth;
-	public WorkingHours _opens_on;
-	public StoreMenu _edit_and_show;
-	public Stock _manages;
-	public OrderRegister _use;
+	private String storeName;
+	private int storeId;
+	private int taxeRate;
+	private double pointsToMoneyRate;
+	public WorkingHours workingHours;
+	public StoreMenu menu;
+	public Stock stock;
+	public OrderRegister orderRegister;
 
 	public void setTaxeRate(int aNewRate) {
-		this._taxeRate = aNewRate;
+		this.taxeRate = aNewRate;
 	}
 
 	public int getTaxeRate() {
-		return this._taxeRate;
+		return this.taxeRate;
 	}
 
 	public List<Recipe> getMenu(Stock aOurStock) {
@@ -40,6 +38,6 @@ public class Store {
 	}
 
 	public double getPointsToMoneyRate() {
-		return this._pointsToMoneyRate;
+		return this.pointsToMoneyRate;
 	}
 }
