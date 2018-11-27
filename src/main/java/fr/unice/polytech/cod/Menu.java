@@ -1,18 +1,18 @@
 package fr.unice.polytech.cod;
 
-import fr.unice.polytech.cod.recipe.NormalRecipe;
 import fr.unice.polytech.cod.recipe.Recipe;
-import fr.unice.polytech.cod.store.Stock;
-
 import java.util.List;
 
-public interface Menu {
+abstract public class Menu {
+    private List<Recipe> recipes;
 
-    public List<Recipe> getMenu(Stock aStock);
+    public boolean addRecipe(Recipe aRecipe) {
+        recipes.add(aRecipe);
+        return true;
+    }
 
-    public boolean addRecipe(NormalRecipe aRecipe);
-
-    public boolean deleteRecipe(NormalRecipe aRecipe);
-
-    public NormalRecipe getRecipeByName(String aRecipeName);
+    public boolean deleteRecipe(Recipe aRecipe) {
+        recipes.remove(aRecipe);
+        return true;
+    }
 }
