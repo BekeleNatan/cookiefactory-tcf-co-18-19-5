@@ -19,6 +19,6 @@ public class FranchiseMenu extends Menu {
     }
 
     public NormalRecipe getRecipeByName(String aRecipeName) {
-        for()
+        return null;
     }
 }
