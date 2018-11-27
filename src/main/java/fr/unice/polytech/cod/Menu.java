@@ -1,37 +1,11 @@
 package fr.unice.polytech.cod;
 
-import fr.unice.polytech.cod.recipe.*;
+import fr.unice.polytech.cod.recipe.Recipe;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+public interface Menu {
+    public boolean addRecipe(Recipe aRecipe);
 
-public class Menu {
-    private List<Recipe> listOfAvailableRecipes ;
+    public boolean deleteRecipe(Recipe aRecipe);
 
-    public Menu(){
-        listOfAvailableRecipes = new ArrayList<>();
-    }
-
-    public Recipe addRecipe(String recipeName, Dough dough, Flavour flavours, Topping topping, Cooking cooking, Mix mix, Double price) {
-        Recipe recipe = new Recipe(recipeName, dough, flavours, topping, cooking, mix, price);
-        listOfAvailableRecipes.add(recipe);
-        return recipe;
-    }
-
-    public void addRecipe(Recipe recipe){
-        listOfAvailableRecipes.add(recipe);
-    }
-
-
-    public List<Recipe> getListOfAvailableRecipes() {
-        return listOfAvailableRecipes;
-    }
-
-    public Optional<Recipe> getRecipeByName(String name) {
-        return getListOfAvailableRecipes().stream().filter(recipe -> recipe.getName().equals(name)).findFirst();
-    }
-
+    public Recipe getRecipeByName(String aRecipeName);
 }
-
-

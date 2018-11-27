@@ -1,37 +1,34 @@
 package fr.unice.polytech.cod.recipe;
 
-public class Recipe {
+import java.util.ArrayList;
 
-    private String name;
-    private Dough dough;
-    private Flavour flavours;
-    private Topping topping;
-    private Cooking cooking;
-    private Mix mix;
-    private double price;
+public abstract class Recipe {
+	private int _price;
+	private CookingType _cooking;
+	private MixType _mix;
+	public ArrayList<Item> _is_composed_of = new ArrayList<Item>();
+	public Store _creates;
+	public FranchiseMenu _offers;
+	public StoreMenu _offers;
+	public Dough _unnamed_Dough_;
+	public Topping _unnamed_Topping_;
+	public Flavour _unnamed_Flavour_;
+	public Flavour _is_made_of;
+	public ArrayList<Ingredient> _is_made_of_ = new ArrayList<Ingredient>();
 
-    public Recipe(String recipeName, Dough dough, Flavour flavours, Topping topping, Cooking cooking, Mix mix, double price) {
-        name = recipeName;
-        this.dough = dough;
-        this.flavours = flavours;
-        this.topping = topping;
-        this.cooking = cooking;
-        this.mix = mix;
-        this.price = price;
-    }
+	public List<Ingredient> getIngredients() {
+		throw new UnsupportedOperationException();
+	}
 
-    public double getPrice() {
-        return this.price;
-    }
+	public double getPrice() {
+		throw new UnsupportedOperationException();
+	}
 
-    /**
-     * @param price
-     */
-    public void setPrice(Double price) {
-        this.price = price;
-    }
+	public MixType getMixType() {
+		throw new UnsupportedOperationException();
+	}
 
-    public String getName() {
-        return name;
-    }
+	public CookingType getCookingType() {
+		throw new UnsupportedOperationException();
+	}
 }
