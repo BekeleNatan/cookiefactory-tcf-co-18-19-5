@@ -7,24 +7,28 @@ import fr.unice.polytech.cod.store.Store;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class Franchise {
     private String name;
-    private ArrayList<Store> stores = new ArrayList<>();
+    private List<Store> stores = new ArrayList<>();
 
     Franchise(String name) {
+        stores = new ArrayList<>();
         this.name = name;
     }
 
-    Store findStoreByName(String aStoreName) {
-        // todo FRANCHISE : choose store by name
-        throw new UnsupportedOperationException();
+    public void addStore(String name){
+        stores.add(new Store(name));
     }
 
-    Store findStoreById(int aStoreId) {
-        // todo FRANCHISE : choose store by id
-        throw new UnsupportedOperationException();
+    public void removeStore(String name) {
+        stores.removeIf(store -> store.getName().equals(name));
     }
+    public Optional<Store> getStoreByName(String name){
+        return getStores().stream().filter(store -> store.getName().equals(name)).findFirst();
+    }
+
 
     public List<Store> getStores() {
         return stores;
