@@ -1,6 +1,4 @@
-package fr.unice.polytech.cod.workinghours;
-
-import fr.unice.polytech.cod.store.Store;
+package fr.unice.polytech.cod.store.workinghours;
 
 import java.time.DayOfWeek;
 import java.time.LocalTime;
@@ -10,7 +8,7 @@ import java.util.List;
 public class WorkingHours {
     private List<OpeningFragment> openingFragments;
 
-    WorkingHours() {
+    public WorkingHours() {
         openingFragments = new ArrayList<>();
     }
 
@@ -37,8 +35,8 @@ public class WorkingHours {
 
     // ok
     public boolean deleteOpeningFragement(DayOfWeek day, LocalTime from, LocalTime to) {
-        for(OpeningFragment of : this.openingFragments){
-            if(of.getDay().equals(day) && of.getOpening().equals(from) && of.getClosing().equals(to)){
+        for (OpeningFragment of : this.openingFragments) {
+            if (of.getDay().equals(day) && of.getOpening().equals(from) && of.getClosing().equals(to)) {
                 this.openingFragments.remove(of);
                 return true;
             }
@@ -48,8 +46,8 @@ public class WorkingHours {
 
     // ok
     public boolean isOpenOn(DayOfWeek day, LocalTime at) {
-        for (OpeningFragment of : this.openingFragments){
-            if(day.equals(of.getDay()) && (inBetween(at, of.getOpening(), of.getClosing()))){
+        for (OpeningFragment of : this.openingFragments) {
+            if (day.equals(of.getDay()) && (inBetween(at, of.getOpening(), of.getClosing()))) {
                 return true;
             }
         }

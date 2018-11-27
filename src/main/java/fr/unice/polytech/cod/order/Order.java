@@ -3,7 +3,7 @@ package fr.unice.polytech.cod.order;
 import fr.unice.polytech.cod.order.states.OrderState;
 import fr.unice.polytech.cod.recipe.Recipe;
 import fr.unice.polytech.cod.store.Stock;
-import fr.unice.polytech.cod.workinghours.WorkingHours;
+import fr.unice.polytech.cod.store.workinghours.WorkingHours;
 
 import java.util.ArrayList;
 import java.util.Date;

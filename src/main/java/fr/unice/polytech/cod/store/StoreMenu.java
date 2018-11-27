@@ -3,6 +3,7 @@ package fr.unice.polytech.cod.store;
 import fr.unice.polytech.cod.Menu;
 import fr.unice.polytech.cod.franchise.FranchiseMenu;
 import fr.unice.polytech.cod.recipe.NormalRecipe;
+import fr.unice.polytech.cod.recipe.Recipe;
 
 import java.util.List;
 
@@ -18,7 +19,7 @@ public class StoreMenu implements Menu {
 		throw new UnsupportedOperationException();
 	}
 
-	public List<NormalRecipe> getMenu(Stock aStock) {
+	public List<Recipe> getMenu(Stock aStock) {
 		throw new UnsupportedOperationException();
 	}
 

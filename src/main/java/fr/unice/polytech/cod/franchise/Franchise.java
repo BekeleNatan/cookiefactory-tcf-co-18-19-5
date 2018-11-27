@@ -11,7 +11,7 @@ import java.util.Optional;
 
 public class Franchise {
     private String name;
-    private List<Store> stores = new ArrayList<>();
+    private List<Store> stores;
 
     Franchise(String name) {
         stores = new ArrayList<>();

@@ -11,7 +11,7 @@ public class OrderRegister {
     List<Order> orders;
     List<Stats> stats;
 
-    OrderRegister(){
+    public OrderRegister(){
 
     }
 
