@@ -13,7 +13,15 @@ public class CookieFactory {
     private int maxPossibleDough;
     private double specialMargin;
 
-    // todo RECIPE/COOKIE FACTORY  : Define the constructor with the right rules
+    CookieFactory(int minPossibleDough, int maxPossibleDough, int minPossibleFlavour, int maxPossibleFlavour, int minPossibleToppings, int maxPossibleToppings, double specialMargin){
+        this.specialMargin = specialMargin;
+        this.minPossibleDough = minPossibleDough;
+        this.maxPossibleDough = maxPossibleDough;
+        this.minPossibleFlavour = minPossibleFlavour;
+        this.maxPossibleFlavour = maxPossibleFlavour;
+        this.minPossibleToppings = minPossibleToppings;
+        this.maxPossibleToppings = maxPossibleToppings;
+    }
 
     public NormalRecipe createNormalRecipe(String name, double aPrice, CookingType aCookingType, MixType aMixType, List<Ingredient> aListIngredient) throws IllegalArgumentException {
         verifyIngredients(aListIngredient);
