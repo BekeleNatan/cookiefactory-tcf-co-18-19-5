@@ -10,7 +10,7 @@ import java.util.Date;
 
 public class Order {
     private int orderId;
-    private Date collecteTime;
+    private Date collectTime;
     private OrderState currentState;
     private boolean hasDiscount;
     private String bankTransactionNumber;
