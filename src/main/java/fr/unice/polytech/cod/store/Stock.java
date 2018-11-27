@@ -4,17 +4,17 @@ import fr.unice.polytech.cod.recipe.ingredients.Ingredient;
 import fr.unice.polytech.cod.recipe.ingredients.IngredientType;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class Stock {
-	public Store _manages;
-	public ArrayList<Ingredient> _stores = new ArrayList<Ingredient>();
+	public HashMap<Ingredient,Integer> ingredients = new HashMap<Ingredient, Integer>();
 
-	public void addIngredient(Ingredient aIngredient) {
+	public void addIngredient(Ingredient aIngredient, int quantity) {
 		throw new UnsupportedOperationException();
 	}
 
-	public void deleteIngredient(Ingredient aIngredient) {
+	public void removeIngredient(Ingredient aIngredient, int quantity) {
 		throw new UnsupportedOperationException();
 	}
 
