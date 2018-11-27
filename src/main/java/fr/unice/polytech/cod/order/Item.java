@@ -1,46 +1,30 @@
 package fr.unice.polytech.cod.order;
 
 import fr.unice.polytech.cod.recipe.Recipe;
+import fr.unice.polytech.cod.store.Stock;
 
 public class Item {
+	private int _quantity;
+	private int _price;
+	public Order _is_composed_of;
 
-    private int quantity;
-    private double price;
-    private Recipe recipe;
+	public Item(Recipe aRecipe, int aQuantity) {
+		throw new UnsupportedOperationException();
+	}
 
-    /**
-     * @param recipe
-     * @param quantity
-     */
-    public Item(Recipe recipe, int quantity) {
-        this.recipe = recipe;
-        this.quantity = quantity;
-        computePrice();
-    }
+	public int getQuantity() {
+		return this._quantity;
+	}
 
-    private void computePrice() {
-        this.price = recipe.getPrice() * this.quantity;
-    }
+	public void setQuantity(int aQuantity, Stock aStock) {
+		throw new UnsupportedOperationException();
+	}
 
-    /**
-     * @param quantity
-     */
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
-        computePrice();
-    }
+	public Recipe getRecipe() {
+		throw new UnsupportedOperationException();
+	}
 
-    public int getQuantity() {
-        return this.quantity;
-    }
-
-    public Recipe getRecipe() {
-
-        return this.recipe;
-    }
-
-    public double getPrice() {
-        return this.price;
-    }
-
+	public int getPrice() {
+		return this._price;
+	}
 }
