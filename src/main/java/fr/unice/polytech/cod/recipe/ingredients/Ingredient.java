@@ -6,16 +6,30 @@ import fr.unice.polytech.cod.store.Stock;
 import java.util.ArrayList;
 
 public class Ingredient {
-	private String name;
-	private IngredientType type;
-	private double pricePerUnit;
-	private double margin;
+    private String name;
+    private IngredientType type;
+    private double pricePerUnit;
 
-	public int addNbUnitsThatCanBeDone(int aNbUnitsToAdd) {
-		throw new UnsupportedOperationException();
-	}
+    public Ingredient(String name, IngredientType ingredientType, double pricePerUnit) {
+        this.name = name;
+        this.type = ingredientType;
+        this.pricePerUnit = pricePerUnit;
+    }
 
-	public int getUnitsOfCookies() {
-		throw new UnsupportedOperationException();
-	}
+
+    public String getName() {
+        return name;
+    }
+
+    public IngredientType getType() {
+        return type;
+    }
+
+    public double getPricePerUnit() {
+        return pricePerUnit;
+    }
+
+    public void setPricePerUnit(double pricePerUnit) {
+        this.pricePerUnit = pricePerUnit;
+    }
 }

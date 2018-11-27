@@ -18,14 +18,15 @@ public class Franchise {
         this.name = name;
     }
 
-    public void addStore(String name){
+    public void addStore(String name) {
         stores.add(new Store(name));
     }
 
     public void removeStore(String name) {
         stores.removeIf(store -> store.getName().equals(name));
     }
-    public Optional<Store> getStoreByName(String name){
+
+    public Optional<Store> getStoreByName(String name) {
         return getStores().stream().filter(store -> store.getName().equals(name)).findFirst();
     }
 
