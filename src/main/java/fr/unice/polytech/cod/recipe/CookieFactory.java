@@ -13,7 +13,7 @@ public class CookieFactory {
     private int maxPossibleDough;
     private double specialMargin;
 
-    CookieFactory(int minPossibleDough, int maxPossibleDough, int minPossibleFlavour, int maxPossibleFlavour, int minPossibleToppings, int maxPossibleToppings, double specialMargin){
+    public CookieFactory(int minPossibleDough, int maxPossibleDough, int minPossibleFlavour, int maxPossibleFlavour, int minPossibleToppings, int maxPossibleToppings, double specialMargin) {
         this.specialMargin = specialMargin;
         this.minPossibleDough = minPossibleDough;
         this.maxPossibleDough = maxPossibleDough;
@@ -28,7 +28,7 @@ public class CookieFactory {
         return new NormalRecipe(name, aPrice, aCookingType, aMixType, aListIngredient);
     }
 
-    public PersonnalizedRecipe createPersonnalizedRecipe(double aStoreMargin, CookingType aCookingType, MixType aMixType, List<Ingredient> aListIngredient) {
+    public PersonnalizedRecipe createPersonnalizedRecipe(CookingType aCookingType, MixType aMixType, List<Ingredient> aListIngredient) throws IllegalArgumentException {
         verifyIngredients(aListIngredient);
 
         // processing the price

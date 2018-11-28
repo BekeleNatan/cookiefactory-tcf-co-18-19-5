@@ -20,10 +20,10 @@ public class CookieFactoryTest {
     @Before
     public void initialize() {
         ingredientsSample = new ArrayList<>();
-        ingredientsSample.add(new Ingredient("Plain", IngredientType.Dough, 1));
-        ingredientsSample.add(new Ingredient("Vanilla", IngredientType.Flavour, 1));
-        ingredientsSample.add(new Ingredient("M&M's", IngredientType.Topping, 1));
-        ingredientsSample.add(new Ingredient("Milk chocolate", IngredientType.Topping, 1));
+        ingredientsSample.add(new Ingredient("Plain", IngredientType.Dough, 1, 1));
+        ingredientsSample.add(new Ingredient("Vanilla", IngredientType.Flavour, 1, 1));
+        ingredientsSample.add(new Ingredient("M&M's", IngredientType.Topping, 1, 1));
+        ingredientsSample.add(new Ingredient("Milk chocolate", IngredientType.Topping, 1, 1));
     }
 
     @Test
@@ -41,8 +41,8 @@ public class CookieFactoryTest {
 
     @Test
     public void createPersonnalizedRecipeSuccessfully() {
-        PersonnalizedRecipe myCookie = cookieFactory.createPersonnalizedRecipe(3, CookingType.Crunchy, MixType.Mixed, ingredientsSample);
-        assertEquals(6, myCookie.getPrice(), DELTA); // sum of ingredient prices = 4 + specialMargin = 2 donc total = 6
+        PersonnalizedRecipe myCookie = cookieFactory.createPersonnalizedRecipe(CookingType.Crunchy, MixType.Mixed, ingredientsSample);
+        assertEquals(10, myCookie.getPrice(), DELTA); // sum of ingredient prices = 8 + specialMargin = 2 donc total = 10
         assertEquals(CookingType.Crunchy, myCookie.getCookingType());
         assertEquals(MixType.Mixed, myCookie.getMixType());
         assertEquals(CookieType.personnalizedRecipe, myCookie.getCookieType());
@@ -53,9 +53,9 @@ public class CookieFactoryTest {
     public void createNormalRecipeFailedMoreDoughs() {
         ArrayList<String> illegalArgExceptionList = new ArrayList<>();
 
-        ingredientsSample.add(new Ingredient("Plain", IngredientType.Dough, 1));
+        ingredientsSample.add(new Ingredient("Plain", IngredientType.Dough, 1, 1));
         try {
-            PersonnalizedRecipe myCookie = cookieFactory.createPersonnalizedRecipe(3, CookingType.Crunchy, MixType.Mixed, ingredientsSample);
+            PersonnalizedRecipe myCookie = cookieFactory.createPersonnalizedRecipe(CookingType.Crunchy, MixType.Mixed, ingredientsSample);
         } catch (IllegalArgumentException e) {
             illegalArgExceptionList.add(e.getMessage());
         }
@@ -79,7 +79,7 @@ public class CookieFactoryTest {
         }
 
         try {
-            PersonnalizedRecipe myCookie = cookieFactory.createPersonnalizedRecipe(3, CookingType.Crunchy, MixType.Mixed, ingredientsSample);
+            PersonnalizedRecipe myCookie = cookieFactory.createPersonnalizedRecipe(CookingType.Crunchy, MixType.Mixed, ingredientsSample);
         } catch (IllegalArgumentException e) {
             illegalArgExceptionList.add(e.getMessage());
         }
@@ -91,9 +91,9 @@ public class CookieFactoryTest {
     public void createNormalRecipeFailedMoreFlavours() {
         ArrayList<String> illegalArgExceptionList = new ArrayList<>();
 
-        ingredientsSample.add(new Ingredient("Vanilla", IngredientType.Flavour, 1));
+        ingredientsSample.add(new Ingredient("Vanilla", IngredientType.Flavour, 1, 1));
         try {
-            PersonnalizedRecipe myCookie = cookieFactory.createPersonnalizedRecipe(3, CookingType.Crunchy, MixType.Mixed, ingredientsSample);
+            PersonnalizedRecipe myCookie = cookieFactory.createPersonnalizedRecipe(CookingType.Crunchy, MixType.Mixed, ingredientsSample);
         } catch (IllegalArgumentException e) {
             illegalArgExceptionList.add(e.getMessage());
         }
@@ -106,12 +106,12 @@ public class CookieFactoryTest {
     public void createNormalRecipeFailedMoreToppings() {
         ArrayList<String> illegalArgExceptionList = new ArrayList<>();
 
-        ingredientsSample.add(new Ingredient("MilkChocolate", IngredientType.Topping, 1));
-        ingredientsSample.add(new Ingredient("Buttercup", IngredientType.Topping, 1));
-        ingredientsSample.add(new Ingredient("Peanuts", IngredientType.Topping, 1));
+        ingredientsSample.add(new Ingredient("MilkChocolate", IngredientType.Topping, 1, 1));
+        ingredientsSample.add(new Ingredient("Buttercup", IngredientType.Topping, 1, 1));
+        ingredientsSample.add(new Ingredient("Peanuts", IngredientType.Topping, 1, 1));
 
         try {
-            PersonnalizedRecipe myCookie = cookieFactory.createPersonnalizedRecipe(3, CookingType.Crunchy, MixType.Mixed, ingredientsSample);
+            PersonnalizedRecipe myCookie = cookieFactory.createPersonnalizedRecipe(CookingType.Crunchy, MixType.Mixed, ingredientsSample);
         } catch (IllegalArgumentException e) {
             illegalArgExceptionList.add(e.getMessage());
         }
@@ -119,7 +119,6 @@ public class CookieFactoryTest {
         assertEquals(1, illegalArgExceptionList.size());
         assertEquals("You surpass the maximum of possible Toppings", illegalArgExceptionList.get(0));
     }
-
 
     @Test
     public void createNormalRecipeFailedLessToppings() {
@@ -136,7 +135,7 @@ public class CookieFactoryTest {
         }
 
         try {
-            PersonnalizedRecipe myCookie = cookieFactory.createPersonnalizedRecipe(3, CookingType.Crunchy, MixType.Mixed, ingredientsSample);
+            PersonnalizedRecipe myCookie = cookieFactory.createPersonnalizedRecipe(CookingType.Crunchy, MixType.Mixed, ingredientsSample);
         } catch (IllegalArgumentException e) {
             illegalArgExceptionList.add(e.getMessage());
         }
@@ -144,5 +143,6 @@ public class CookieFactoryTest {
         assertEquals("You have lower quantity than possible Toppings", illegalArgExceptionList.get(0));
     }
 
+    // TODO : CookieFactory Tests, to test personnalizedRecipeFailure
 
 }
