@@ -55,7 +55,7 @@ public class CookieFactoryTest {
 
         ingredientsSample.add(new Ingredient("Plain", IngredientType.Dough, 1, 1));
         try {
-            PersonnalizedRecipe myCookie = cookieFactory.createPersonnalizedRecipe(CookingType.Crunchy, MixType.Mixed, ingredientsSample);
+            NormalRecipe myCookie = cookieFactory.createNormalRecipe("chap", 12, CookingType.Crunchy, MixType.Mixed, ingredientsSample);
         } catch (IllegalArgumentException e) {
             illegalArgExceptionList.add(e.getMessage());
         }
@@ -79,7 +79,7 @@ public class CookieFactoryTest {
         }
 
         try {
-            PersonnalizedRecipe myCookie = cookieFactory.createPersonnalizedRecipe(CookingType.Crunchy, MixType.Mixed, ingredientsSample);
+            NormalRecipe myCookie = cookieFactory.createNormalRecipe("chap", 12, CookingType.Crunchy, MixType.Mixed, ingredientsSample);
         } catch (IllegalArgumentException e) {
             illegalArgExceptionList.add(e.getMessage());
         }
@@ -88,7 +88,7 @@ public class CookieFactoryTest {
     }
 
     @Test
-    public void createNormalRecipeFailedMoreFlavours() {
+    public void createPersonnalizedRecipeFailedMoreFlavours() {
         ArrayList<String> illegalArgExceptionList = new ArrayList<>();
 
         ingredientsSample.add(new Ingredient("Vanilla", IngredientType.Flavour, 1, 1));
@@ -103,7 +103,7 @@ public class CookieFactoryTest {
     }
 
     @Test
-    public void createNormalRecipeFailedMoreToppings() {
+    public void createPersonnalizedRecipeFailedMoreToppings() {
         ArrayList<String> illegalArgExceptionList = new ArrayList<>();
 
         ingredientsSample.add(new Ingredient("MilkChocolate", IngredientType.Topping, 1, 1));
@@ -121,7 +121,7 @@ public class CookieFactoryTest {
     }
 
     @Test
-    public void createNormalRecipeFailedLessToppings() {
+    public void createPersonnalizedRecipeFailedLessToppings() {
         ArrayList<String> illegalArgExceptionList = new ArrayList<>();
         ArrayList<Ingredient> ingredientToRemove = new ArrayList<>();
         for (Ingredient ingredient : ingredientsSample) {
@@ -142,7 +142,5 @@ public class CookieFactoryTest {
         assertEquals(1, illegalArgExceptionList.size());
         assertEquals("You have lower quantity than possible Toppings", illegalArgExceptionList.get(0));
     }
-
-    // TODO : CookieFactory Tests, to test personnalizedRecipeFailure
 
 }
