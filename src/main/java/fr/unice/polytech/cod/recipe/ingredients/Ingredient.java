@@ -8,16 +8,17 @@ import java.util.ArrayList;
 public class Ingredient {
     private String name;
     private IngredientType type;
-    private double pricePerUnit;
+    private double ingredientPrice;
+    private double priceMargin;
 
-    public Ingredient(String name, IngredientType ingredientType, double pricePerUnit) {
+    public Ingredient(String name, IngredientType ingredientType, double ingredientPrice, double priceMargin) {
         this.name = name;
         this.type = ingredientType;
-        this.pricePerUnit = pricePerUnit;
+        this.ingredientPrice = ingredientPrice;
+        this.priceMargin = priceMargin;
     }
 
-
-    public String getName() {
+        public String getName() {
         return name;
     }
 
@@ -26,10 +27,14 @@ public class Ingredient {
     }
 
     public double getPricePerUnit() {
-        return pricePerUnit;
+        return (ingredientPrice + priceMargin);
     }
 
-    public void setPricePerUnit(double pricePerUnit) {
-        this.pricePerUnit = pricePerUnit;
+    public void setIngredientPrice(double ingredientPrice) {
+        this.ingredientPrice = ingredientPrice;
+    }
+
+    public void setPriceMargin(double priceMargin) {
+        this.priceMargin = priceMargin;
     }
 }

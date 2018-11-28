@@ -18,8 +18,8 @@ public class Franchise {
         this.name = name;
     }
 
-    public void addStore(String name) {
-        stores.add(new Store(name));
+    public void addStore(String name, FranchiseMenu franchiseMenu) {
+        stores.add(new Store(name, franchiseMenu));
     }
 
     public void removeStore(String name) {

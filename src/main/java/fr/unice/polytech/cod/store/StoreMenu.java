@@ -5,33 +5,34 @@ import fr.unice.polytech.cod.franchise.FranchiseMenu;
 import fr.unice.polytech.cod.recipe.NormalRecipe;
 import fr.unice.polytech.cod.recipe.Recipe;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class StoreMenu extends Menu {
     private NormalRecipe monthlyRecipe;
-    public FranchiseMenu franchiseMenu;
+    private FranchiseMenu franchiseMenu;
 
-    public boolean setMonthlyRecipe(NormalRecipe aRecipe) {
-        throw new UnsupportedOperationException();
+    StoreMenu(FranchiseMenu franchiseMenu){
+        super();
+        this.monthlyRecipe = null;
+        this.franchiseMenu = franchiseMenu;
     }
 
-    public boolean deleteMonthlyRecipe() {
-        throw new UnsupportedOperationException();
+    public void setMonthlyRecipe(NormalRecipe aRecipe) {
+        this.monthlyRecipe = aRecipe;
+    }
+
+    public void deleteMonthlyRecipe() {
+        this.monthlyRecipe = null;
     }
 
     public List<Recipe> getMenu(Stock aStock) {
-        throw new UnsupportedOperationException();
+        // todo : STORE MENU : check availability with the stock
+        List<Recipe> storeMenu = new ArrayList<>(franchiseMenu.getMenu());
+        if(monthlyRecipe != null){
+            storeMenu.add(monthlyRecipe);
+        }
+        return storeMenu;
     }
 
-    public boolean addRecipe(NormalRecipe aRecipe) {
-        throw new UnsupportedOperationException();
-    }
-
-    public boolean deleteRecipe(NormalRecipe aRecipe) {
-        throw new UnsupportedOperationException();
-    }
-
-    public NormalRecipe getRecipeByName(String aRecipeName) {
-        throw new UnsupportedOperationException();
-    }
 }

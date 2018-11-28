@@ -1,5 +1,6 @@
 package fr.unice.polytech.cod.store;
 
+import fr.unice.polytech.cod.franchise.FranchiseMenu;
 import fr.unice.polytech.cod.order.OrderRegister;
 import fr.unice.polytech.cod.store.workinghours.WorkingHours;
 
@@ -14,10 +15,10 @@ public class Store {
     private Stock stock;
     private OrderRegister orderRegister;
 
-    public Store(String name) {
+    public Store(String name, FranchiseMenu franchiseMenu) {
         this.storeName = name;
         this.workingHours = new WorkingHours();
-        this.storeMenu = new StoreMenu();
+        this.storeMenu = new StoreMenu(franchiseMenu);
         this.taxeRate = 1;
         this.pointsToMoneyRate = 1;
         this.stock = new Stock();
