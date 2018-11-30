@@ -7,8 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FranchiseMenu extends Menu {
-
-    FranchiseMenu() {
+    public FranchiseMenu() {
         super();
     }
 

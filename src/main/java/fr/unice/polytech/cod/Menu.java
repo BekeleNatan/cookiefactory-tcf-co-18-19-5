@@ -15,16 +15,16 @@ abstract public class Menu {
         recipes = new ArrayList<>();
     }
 
+    public List<Recipe> getRecipes(){
+        return this.recipes;
+    }
+
     public void addRecipe(Recipe aRecipe) {
         recipes.add(aRecipe);
     }
 
     public void removeRecipe(Recipe aRecipe) {
         recipes.remove(aRecipe);
-    }
-
-    public List<Recipe> getRecipes(){
-        return this.recipes;
     }
 
     public Optional<Recipe> getRecipeByName(String aRecipeName){
