@@ -9,30 +9,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class StoreMenu extends Menu {
-    private NormalRecipe monthlyRecipe;
     private FranchiseMenu franchiseMenu;
 
     StoreMenu(FranchiseMenu franchiseMenu){
         super();
-        this.monthlyRecipe = null;
         this.franchiseMenu = franchiseMenu;
-    }
-
-    public void setMonthlyRecipe(NormalRecipe aRecipe) {
-        this.monthlyRecipe = aRecipe;
-    }
-
-    public void deleteMonthlyRecipe() {
-        this.monthlyRecipe = null;
     }
 
     public List<Recipe> getMenu(Stock aStock) {
         // todo : STORE MENU : check availability with the stock
+        // todo : STORE MENU : check if we don't have the same
         List<Recipe> storeMenu = new ArrayList<>(franchiseMenu.getMenu());
-        if(monthlyRecipe != null){
-            storeMenu.add(monthlyRecipe);
+        if(!super.getRecipes().isEmpty()){
+            storeMenu.addAll(super.getRecipes());
         }
         return storeMenu;
     }
-
 }
