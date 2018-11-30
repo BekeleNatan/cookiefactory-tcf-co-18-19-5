@@ -11,9 +11,10 @@ public class IngredientTest {
     private Ingredient ingredient;
 
     @Before
-    public void initialize(){
+    public void initialize() {
         ingredient = new Ingredient("M&Ms", IngredientType.Topping, 2, 1);
     }
+
     @Test
     public void getName() {
         assertEquals("M&Ms", ingredient.getName());
@@ -28,4 +29,24 @@ public class IngredientTest {
     public void getPricePerUnit() {
         assertEquals(3, ingredient.getPricePerUnit(), DELTA);
     }
+
+
+    @Test
+    public void setIngredientPrice() {
+        ingredient.setIngredientPrice(4);
+        assertEquals(5, ingredient.getPricePerUnit(), DELTA);
+    }
+
+    @Test
+    public void setPriceMargin() {
+        ingredient.setPriceMargin(2);
+        assertEquals(4, ingredient.getPricePerUnit(), DELTA);
+    }
+
+    @Test
+    public void equals() {
+        Ingredient ingredient2 = new Ingredient("M&Ms", IngredientType.Topping, 2, 1);
+        assertTrue(ingredient.equals(ingredient2));
+    }
+
 }
