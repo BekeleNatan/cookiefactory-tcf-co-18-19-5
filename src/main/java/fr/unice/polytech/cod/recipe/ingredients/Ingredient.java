@@ -4,6 +4,7 @@ import fr.unice.polytech.cod.recipe.Recipe;
 import fr.unice.polytech.cod.store.Stock;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class Ingredient {
     private String name;
@@ -18,16 +19,16 @@ public class Ingredient {
         this.priceMargin = priceMargin;
     }
 
-        public String getName() {
-        return name;
+    public String getName() {
+        return this.name;
     }
 
     public IngredientType getType() {
-        return type;
+        return this.type;
     }
 
     public double getPricePerUnit() {
-        return (ingredientPrice + priceMargin);
+        return (this.ingredientPrice + this.priceMargin);
     }
 
     public void setIngredientPrice(double ingredientPrice) {
@@ -36,5 +37,22 @@ public class Ingredient {
 
     public void setPriceMargin(double priceMargin) {
         this.priceMargin = priceMargin;
+    }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Ingredient that = (Ingredient) o;
+        return Double.compare(that.ingredientPrice, ingredientPrice) == 0 &&
+                Double.compare(that.priceMargin, priceMargin) == 0 &&
+                Objects.equals(name, that.name) &&
+                type == that.type;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, type, ingredientPrice, priceMargin);
     }
 }
