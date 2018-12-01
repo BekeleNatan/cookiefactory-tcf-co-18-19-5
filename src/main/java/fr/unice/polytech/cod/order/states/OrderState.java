@@ -1,12 +1,46 @@
 package fr.unice.polytech.cod.order.states;
 
+import fr.unice.polytech.cod.order.Order;
+import fr.unice.polytech.cod.recipe.Recipe;
 import fr.unice.polytech.cod.store.CashRegister;
+import fr.unice.polytech.cod.store.Stock;
+import fr.unice.polytech.cod.store.workinghours.WorkingHours;
+import org.json.JSONObject;
 
-public interface OrderState {
+import java.util.Date;
 
-	public void nextState();
+abstract public class OrderState {
+	protected Order context;
 
-	public void cancelState();
+	protected OrderState(Order order){
+		if(order == null){
+			throw new NullPointerException();
+		}
+		context = order;
+	}
 
-	public void getCurrentState();
+	abstract public void nextState();
+
+	public void cancelState(){
+		context.setCurrentState(new Refused(this.context));
+	}
+
+	// Default comportment of the states ( can be redifined )
+	public boolean addItem(Recipe aRecipe, int aQuantity, Stock stock){
+		return false;
+	}
+
+	public boolean addInfos(Date aDate, String aPhoneNumber, WorkingHours aWh) {
+		return false;
+	}
+
+	public boolean collect(){
+		return false;
+	}
+
+	public JSONObject showOrder(){
+		JSONObject error = new JSONObject();
+		error.put("status","error");
+		return error;
+	}
 }
