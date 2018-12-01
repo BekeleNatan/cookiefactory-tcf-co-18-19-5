@@ -105,7 +105,7 @@ public class Stock {
 	}
 
 
-    Stock() {
+    public Stock() {
         ingredients = new HashMap<>();
     }
 
