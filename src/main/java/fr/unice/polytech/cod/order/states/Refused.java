@@ -5,7 +5,7 @@ import fr.unice.polytech.cod.store.CashRegister;
 
 public class Refused extends OrderState {
 
-	protected Refused(Order order) {
+	public Refused(Order order) {
 		super(order);
 	}
 

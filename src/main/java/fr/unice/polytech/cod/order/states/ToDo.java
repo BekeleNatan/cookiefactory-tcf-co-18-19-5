@@ -5,7 +5,7 @@ import fr.unice.polytech.cod.store.CashRegister;
 
 public class ToDo extends OrderState {
 
-	protected ToDo(Order order) {
+	public ToDo(Order order) {
 		super(order);
 	}
 
