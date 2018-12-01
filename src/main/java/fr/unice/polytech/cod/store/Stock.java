@@ -29,6 +29,18 @@ public class Stock {
         }
     }
 
+    public boolean isEnough(Ingredient ingredient, int quantity){
+        if (ingredients.containsKey(ingredient)) {
+            int nbrIngredient = ingredients.get(ingredient);
+            if(nbrIngredient >= quantity){
+                return true;
+            }else{
+                return false;
+            }
+        }
+        return false;
+    }
+
     public void removeIngredient(Ingredient aIngredient, int quantity) throws IllegalArgumentException {
         if (quantity < 0) {
             throw new IllegalArgumentException("the minimum quantity of ingredients to remove is 0 or more");

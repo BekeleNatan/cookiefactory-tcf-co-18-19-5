@@ -3,6 +3,7 @@ package fr.unice.polytech.cod.order.states;
 import fr.unice.polytech.cod.order.Item;
 import fr.unice.polytech.cod.order.Order;
 import fr.unice.polytech.cod.recipe.Recipe;
+import fr.unice.polytech.cod.recipe.ingredients.Ingredient;
 import fr.unice.polytech.cod.store.CashRegister;
 import fr.unice.polytech.cod.store.Stock;
 import fr.unice.polytech.cod.store.workinghours.WorkingHours;
@@ -10,6 +11,7 @@ import fr.unice.polytech.cod.store.workinghours.WorkingHours;
 import java.time.*;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 public class OnCreation extends OrderState {
 
@@ -32,8 +34,16 @@ public class OnCreation extends OrderState {
 	}
 
 	public boolean addItem(Recipe recipe, int quantity, Stock stock){
-		recipe.getIngredients();
-		if(stock.removeIngredient(recipe,quantity)){
+		boolean canDoRecipe = true;
+		for(Ingredient ingredient : recipe.getIngredients()){
+			if(!stock.isEnough(ingredient,quantity)){
+				canDoRecipe = false;
+			}
+		}
+		if(canDoRecipe){
+			for(Ingredient ingredient : recipe.getIngredients()){
+				stock.removeIngredient(ingredient,quantity);
+			}
 			Item item = new Item(recipe, quantity);
 			context.items.add(item);
 			return true;
