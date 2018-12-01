@@ -15,9 +15,9 @@ public class Order {
     private UUID orderId;
     private Date collectTime = null;
     private OrderState currentState;
-    private String bankTransactionNumber;
+    private String bankTransactionNumber = null;
     public ArrayList<Item> items = new ArrayList<Item>();
-    public Customer customer;
+    private Customer customer;
 
     public Order() {
         orderId = UUID.randomUUID();
@@ -48,4 +48,17 @@ public class Order {
     public void setCurrentState(OrderState orderState) {
         currentState = orderState;
     }
+
+    public void setCollectTime(Date date) {
+        collectTime = date;
+    }
+
+    public Date getCollectTime() {
+        return collectTime;
+    }
+
+    public Customer getCustomer(){
+        return customer;
+    }
+
 }
