@@ -19,14 +19,16 @@ public class OnCreation extends OrderState {
 		super(order);
 	}
 
-	public void nextState() {
+	public boolean nextState() {
 		Order order = this.context;
 		if(order.getCollectTime()!= null &&
 			order.getCustomer().getPhoneNumber() != null &&
 			order.items != null )
 		{
 			order.setCurrentState(new ToDo(context));
+			return true;
 		}
+		return false;
 	}
 
 	public boolean addItem(Recipe recipe, int quantity, Stock stock){

@@ -9,7 +9,7 @@ public class Stock {
 
     Map<Ingredient, Integer> ingredients;
 
-    Stock() {
+    public Stock() {
         ingredients = new HashMap<>();
     }
 

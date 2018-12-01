@@ -19,7 +19,7 @@ abstract public class OrderState {
 		context = order;
 	}
 
-	abstract public void nextState();
+	abstract public boolean nextState();
 
 	public void refuseState(){
 		context.setCurrentState(new Refused(this.context));
