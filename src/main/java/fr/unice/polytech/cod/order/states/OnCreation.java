@@ -9,9 +9,7 @@ import fr.unice.polytech.cod.store.Stock;
 import fr.unice.polytech.cod.store.workinghours.WorkingHours;
 
 import java.time.*;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 public class OnCreation extends OrderState {
 
@@ -35,14 +33,22 @@ public class OnCreation extends OrderState {
 
 	public boolean addItem(Recipe recipe, int quantity, Stock stock){
 		boolean canDoRecipe = true;
-		for(Ingredient ingredient : recipe.getIngredients()){
-			if(!stock.isEnough(ingredient,quantity)){
+		Map<Ingredient,Integer> ingredients = new HashMap<>();
+		for(Ingredient ingredient : recipe.getIngredients()) {
+			if(ingredients.get(ingredient)!=null){
+				ingredients.put(ingredient,ingredients.get(ingredient)+quantity);
+			}else{
+				ingredients.put(ingredient,quantity);
+			}
+		}
+		for(Ingredient ingredient : ingredients.keySet()){
+			if(!stock.isEnough(ingredient,ingredients.get(ingredient))){
 				canDoRecipe = false;
 			}
 		}
 		if(canDoRecipe){
-			for(Ingredient ingredient : recipe.getIngredients()){
-				stock.removeIngredient(ingredient,quantity);
+			for(Ingredient ingredient : ingredients.keySet()){
+				stock.removeIngredient(ingredient,ingredients.get(ingredient));
 			}
 			Item item = new Item(recipe, quantity);
 			context.items.add(item);
