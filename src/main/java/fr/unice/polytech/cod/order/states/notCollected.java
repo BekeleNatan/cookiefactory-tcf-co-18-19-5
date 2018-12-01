@@ -5,7 +5,7 @@ import fr.unice.polytech.cod.store.CashRegister;
 
 public class notCollected extends OrderState {
 
-	protected notCollected(Order order) {
+	public notCollected(Order order) {
 		super(order);
 	}
 

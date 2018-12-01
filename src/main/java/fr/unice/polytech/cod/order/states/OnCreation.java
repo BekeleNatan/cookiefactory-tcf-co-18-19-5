@@ -5,7 +5,7 @@ import fr.unice.polytech.cod.store.CashRegister;
 
 public class OnCreation extends OrderState {
 
-	protected OnCreation(Order order) {
+	public OnCreation(Order order) {
 		super(order);
 	}
 
