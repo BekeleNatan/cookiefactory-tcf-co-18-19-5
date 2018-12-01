@@ -79,6 +79,5 @@ public class StockTest {
         for(Ingredient ingredient : expectedFlavours){
             assertTrue(stock.getIngredientsByType(IngredientType.Flavour).contains(ingredient));
         }
-        assertEquals(expectedFlavours, stock.getIngredientsByType(IngredientType.Flavour));
     }
 }

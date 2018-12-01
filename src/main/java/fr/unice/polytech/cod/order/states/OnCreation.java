@@ -32,12 +32,12 @@ public class OnCreation extends OrderState {
 	}
 
 	public boolean addItem(Recipe recipe, int quantity, Stock stock){
-		recipe.getIngredients();
-		if(stock.removeIngredient(recipe,quantity)){
-			Item item = new Item(recipe, quantity);
-			context.items.add(item);
-			return true;
-		}
+		// recipe.getIngredients();
+		// if(stock.removeIngredient(recipe,quantity)){
+		// 	Item item = new Item(recipe, quantity);
+		//	context.items.add(item);
+		//	return true;
+		//}
 		return false;
 	}
 
