@@ -11,7 +11,7 @@ import java.util.List;
 public class NormalRecipe extends Recipe {
     private String name;
 
-    NormalRecipe(String name, double price, CookingType cookingType, MixType mixType, List<Ingredient> ingredients) {
+    public NormalRecipe(String name, double price, CookingType cookingType, MixType mixType, List<Ingredient> ingredients) {
         super(price, cookingType, mixType, CookieType.NormalRecipe, ingredients);
         this.name = name;
     }

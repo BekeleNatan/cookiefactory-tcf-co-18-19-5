@@ -45,6 +45,10 @@ public class Order {
         return currentState.showOrder();
     }
 
+    public boolean changeState(){
+        return currentState.nextState();
+    }
+
     public void setCurrentState(OrderState orderState) {
         currentState = orderState;
     }

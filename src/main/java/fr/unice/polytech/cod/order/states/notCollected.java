@@ -9,7 +9,7 @@ public class notCollected extends OrderState {
 		super(order);
 	}
 
-	public void nextState() {
+	public boolean nextState() {
 		throw new UnsupportedOperationException();
 	}
 
