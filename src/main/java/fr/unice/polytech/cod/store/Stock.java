@@ -1,5 +1,6 @@
 package fr.unice.polytech.cod.store;
 
+import fr.unice.polytech.cod.recipe.Recipe;
 import fr.unice.polytech.cod.recipe.ingredients.Ingredient;
 import fr.unice.polytech.cod.recipe.ingredients.IngredientType;
 
@@ -20,38 +21,95 @@ public class Stock {
 
 	public  boolean removeIngredient(Ingredient aIngredient, int quantity) {
 
-		boolean isPossible = false;
+		if(isInStock(aIngredient,quantity)) {
 
-		if(aIngredient!= null & quantity > 0){
+			suppressIngredient(aIngredient, quantity);
 
-			 int oldQuantity = this.ingredients.get(aIngredient);
+			alertStockLow(aIngredient);
 
-			 int newQuantite =  oldQuantity - quantity ;
-
-			 if(newQuantite >= 0 ) {
-
-			 	  this.ingredients.replace(aIngredient,newQuantite);
-
-			 	  isPossible = true;
-			 }else{
-
-			 	System.out.println("Le stock est insuffisant pour satisfaire cette commande");
-			 	 isPossible = false;
-			 }
-
-
-		     if(newQuantite == 0 ){
-
-		     	System.out.println("Vous venez d'épuiser cet ingredient.Penser à vous approvisionner");
-			 }
-
-			 if(newQuantite < 25) {
-
-			 	System.out.println("Cet ingrédient tand à s'épuiser.Penser à vous approvisionner");
-			 }
+			return true;
 
 		}
+		return false;
+	}
 
+	private void alertStockLow(Ingredient aIngredient) {
+
+		int quantity = this.ingredients.get(aIngredient);
+
+		if(quantity == 0 ){
+
+			System.out.println("Vous venez d'épuiser cet ingredient.Penser à vous approvisionner");
+		}
+
+		if(quantity < 25) {
+
+			System.out.println("Cet ingrédient tand à s'épuiser.Penser à vous approvisionner");
+		}
+	}
+
+	public boolean removeIngredient(Recipe recipe, int quantity){
+		List<Ingredient> ingredients = recipe.getIngredients();
+
+		if(canDoRecipe(recipe,quantity)){
+
+			for (Ingredient ingredient : ingredients) {
+
+				suppressIngredient(ingredient, quantity);
+
+				alertStockLow(ingredient);
+			}
+
+			return true;
+		}
+		return false;
+	}
+
+	private void suppressIngredient(Ingredient ingredient, int quantity) {
+
+		int oldQuantity = this.ingredients.get(ingredient);
+
+		int newQuantite =  oldQuantity - quantity ;
+
+		if(newQuantite<0){throw new UnsupportedOperationException();}
+
+		this.ingredients.replace(ingredient,newQuantite);
+	}
+
+	private boolean canDoRecipe(Recipe recipe, int quantity){
+
+		List<Ingredient> ingredients = recipe.getIngredients();
+
+		boolean canDoRecipe = true;
+
+		for (Ingredient ingredient : ingredients) {
+
+			if(!isInStock(ingredient,quantity)){
+
+				canDoRecipe = false;
+			}
+		}
+		return canDoRecipe;
+	}
+
+	private boolean isInStock(Ingredient ingredient, int quantity) {
+		boolean isPossible = false;
+
+		if(ingredient!= null & quantity > 0) {
+
+			int oldQuantity = this.ingredients.get(ingredient);
+
+			int newQuantite = oldQuantity - quantity;
+
+			if (newQuantite >= 0) {
+
+				isPossible = true;
+			} else {
+
+				System.out.println("Le stock est insuffisant pour satisfaire cette commande");
+				isPossible = false;
+			}
+		}
 		return isPossible;
 	}
 

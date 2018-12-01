@@ -21,7 +21,7 @@ abstract public class OrderState {
 
 	abstract public void nextState();
 
-	public void cancelState(){
+	public void refuseState(){
 		context.setCurrentState(new Refused(this.context));
 	}
 
