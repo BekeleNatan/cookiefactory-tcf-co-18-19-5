@@ -1,36 +1,51 @@
 package fr.unice.polytech.cod.order;
 
+import fr.unice.polytech.cod.order.states.OnCreation;
 import fr.unice.polytech.cod.order.states.OrderState;
 import fr.unice.polytech.cod.recipe.Recipe;
 import fr.unice.polytech.cod.store.Stock;
 import fr.unice.polytech.cod.store.workinghours.WorkingHours;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.UUID;
 
 public class Order {
-    private int orderId;
-    private Date collectTime;
+    private UUID orderId;
+    private Date collectTime = null;
     private OrderState currentState;
-    private boolean hasDiscount;
     private String bankTransactionNumber;
-    private double price;
     public ArrayList<Item> items = new ArrayList<Item>();
     public Customer customer;
 
-    public Order(Stock aStock, WorkingHours aWorkingHours) {
-        throw new UnsupportedOperationException();
+    public Order() {
+        orderId = UUID.randomUUID();
+        customer = new Customer();
+        currentState = new OnCreation(this);
     }
 
-    public boolean addItem(Recipe aRecipe, int aQuantity) {
-        throw new UnsupportedOperationException();
+    public OrderState getCurrentState() {
+        return currentState;
     }
 
-    public void addInfos(Date aDate, String aPhoneNumber, WorkingHours aWh) {
-        throw new UnsupportedOperationException();
+    public boolean addItem(Recipe aRecipe, int aQuantity, Stock stock) {
+        return currentState.addItem(aRecipe, aQuantity, stock);
+    }
+
+    public boolean addInfos(Date aDate, String aPhoneNumber, WorkingHours aWh) {
+        return currentState.addInfos(aDate, aPhoneNumber, aWh);
     }
 
     public boolean collect() {
-        throw new UnsupportedOperationException();
+        return currentState.collect();
+    }
+
+    public JSONObject showOrder(){
+        return currentState.showOrder();
+    }
+
+    public void setCurrentState(OrderState orderState) {
+        currentState = orderState;
     }
 }

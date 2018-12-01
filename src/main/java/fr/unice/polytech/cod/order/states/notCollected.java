@@ -1,8 +1,13 @@
 package fr.unice.polytech.cod.order.states;
 
+import fr.unice.polytech.cod.order.Order;
 import fr.unice.polytech.cod.store.CashRegister;
 
-public class notCollected implements OrderState {
+public class notCollected extends OrderState {
+
+	public notCollected(Order order) {
+		super(order);
+	}
 
 	public void nextState() {
 		throw new UnsupportedOperationException();

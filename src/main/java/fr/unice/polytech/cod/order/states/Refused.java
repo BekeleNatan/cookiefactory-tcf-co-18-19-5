@@ -1,8 +1,13 @@
 package fr.unice.polytech.cod.order.states;
 
+import fr.unice.polytech.cod.order.Order;
 import fr.unice.polytech.cod.store.CashRegister;
 
-public class Refused implements OrderState {
+public class Refused extends OrderState {
+
+	public Refused(Order order) {
+		super(order);
+	}
 
 	public void nextState() {
 		throw new UnsupportedOperationException();
