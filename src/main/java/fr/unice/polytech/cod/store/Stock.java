@@ -21,7 +21,7 @@ public class Stock {
         if (quantity < 0) {
             throw new IllegalArgumentException("the minimum quantity of ingredients to add is 0 or more");
         } else {
-            if (this.ingredients.entrySet().isEmpty() || this.ingredients.containsKey(aIngredient)) {
+            if (this.ingredients.entrySet().isEmpty() || !this.ingredients.containsKey(aIngredient)) {
                 ingredients.put(aIngredient, quantity);
             } else {
                 this.ingredients.put(aIngredient, this.ingredients.get(aIngredient) + quantity);

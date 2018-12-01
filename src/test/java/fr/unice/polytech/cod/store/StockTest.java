@@ -48,7 +48,7 @@ public class StockTest {
         assertTrue(!optionalIngredient2.isPresent());
     }
 
-    @Ignore
+    @Test
     public void getIngredientsByType() {
         List<Ingredient> expectedToppings = new ArrayList<>();
         expectedToppings.add(ingredient1);
@@ -61,7 +61,10 @@ public class StockTest {
         stock.addIngredient(ingredientTopping3, 30);
         expectedToppings.add(ingredientTopping3);
 
-        assertEquals(expectedToppings, stock.getIngredientsByType(IngredientType.Topping));
+        assertTrue(expectedToppings.size() == stock.getIngredientsByType(IngredientType.Topping).size());
+        for(Ingredient ingredient : expectedToppings){
+            assertTrue(stock.getIngredientsByType(IngredientType.Topping).contains(ingredient));
+        }
 
 
         List<Ingredient> expectedFlavours = new ArrayList<>();
@@ -70,7 +73,12 @@ public class StockTest {
         stock.addIngredient(ingredientFlavour1, 20);
         expectedFlavours.add(ingredientFlavour1);
         stock.addIngredient(ingredientFlavour2, 30);
-        expectedToppings.add(ingredientFlavour2);
+        expectedFlavours.add(ingredientFlavour2);
+
+        assertTrue(expectedFlavours.size() == stock.getIngredientsByType(IngredientType.Flavour).size());
+        for(Ingredient ingredient : expectedFlavours){
+            assertTrue(stock.getIngredientsByType(IngredientType.Flavour).contains(ingredient));
+        }
         assertEquals(expectedFlavours, stock.getIngredientsByType(IngredientType.Flavour));
     }
 }
