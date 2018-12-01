@@ -33,4 +33,8 @@ public class Order {
     public boolean collect() {
         throw new UnsupportedOperationException();
     }
+
+    public void setCurrentState(OrderState orderState) {
+        currentState = orderState;
+    }
 }

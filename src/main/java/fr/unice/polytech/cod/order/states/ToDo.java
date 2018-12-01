@@ -1,8 +1,13 @@
 package fr.unice.polytech.cod.order.states;
 
+import fr.unice.polytech.cod.order.Order;
 import fr.unice.polytech.cod.store.CashRegister;
 
-public class ToDo implements OrderState {
+public class ToDo extends OrderState {
+
+	protected ToDo(Order order) {
+		super(order);
+	}
 
 	public void nextState() {
 		throw new UnsupportedOperationException();
