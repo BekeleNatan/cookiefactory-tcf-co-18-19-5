@@ -32,6 +32,10 @@ public class OnCreation extends OrderState {
 	}
 
 	public boolean addItem(Recipe recipe, int quantity, Stock stock){
+		if(recipe == null || quantity <= 0 || stock == null){
+			return false;
+		}
+
 		boolean canDoRecipe = true;
 		Map<Ingredient,Integer> ingredients = new HashMap<>();
 		for(Ingredient ingredient : recipe.getIngredients()) {
