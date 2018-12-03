@@ -9,6 +9,7 @@ import fr.unice.polytech.cod.recipe.ingredients.Ingredient;
 import fr.unice.polytech.cod.recipe.ingredients.IngredientType;
 import fr.unice.polytech.cod.store.Stock;
 import fr.unice.polytech.cod.store.workinghours.WorkingHours;
+import org.json.JSONObject;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
@@ -249,5 +250,25 @@ public class OnCreationTest {
     public void addBadPhoneNumber(){
         assertFalse(onCreation.addInfos(date,"a",wo));
         assertFalse(onCreation.addInfos(date,"1275a45",wo));
+    }
+
+    //  *************************************
+    //              COLLECT                 *
+    //  *************************************
+
+    @Test
+    public void collect(){
+        assertFalse(onCreation.collect());
+    }
+
+    //  *************************************
+    //              SHOW ORDER              *
+    //  *************************************
+
+    @Test
+    public void showOrder(){
+        JSONObject error = new JSONObject();
+        error.put("status","error");
+        assertEquals(onCreation.showOrder().toString(),error.toString());
     }
 }
