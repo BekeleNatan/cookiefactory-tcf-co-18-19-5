@@ -23,7 +23,7 @@ public class OnCreation extends OrderState {
 		Order order = this.context;
 		if(order.getCollectTime()!= null &&
 			order.getCustomer().getPhoneNumber() != null &&
-			order.items != null )
+			order.items.size() != 0 )
 		{
 			order.setCurrentState(new ToDo(context));
 			return true;
