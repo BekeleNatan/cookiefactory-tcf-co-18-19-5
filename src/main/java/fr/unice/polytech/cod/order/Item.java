@@ -5,10 +5,12 @@ import fr.unice.polytech.cod.store.Stock;
 
 public class Item {
 	private int quantity;
+	private Recipe recipe;
 	private int price;
 
 	public Item(Recipe aRecipe, int aQuantity) {
-		throw new UnsupportedOperationException();
+		quantity = aQuantity;
+		recipe = aRecipe;
 	}
 
 	public int getQuantity() {

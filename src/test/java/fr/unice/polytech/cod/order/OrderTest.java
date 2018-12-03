@@ -1,5 +1,6 @@
 package fr.unice.polytech.cod.order;
 
+import fr.unice.polytech.cod.order.states.OnCreation;
 import fr.unice.polytech.cod.order.states.OrderState;
 import fr.unice.polytech.cod.recipe.CookingType;
 import fr.unice.polytech.cod.recipe.MixType;
@@ -49,6 +50,10 @@ public class OrderTest {
         order.setCurrentState(mock);
     }
 
+    @Test(expected = NullPointerException.class)
+    public void constructorNull(){
+        OrderState os = new OnCreation(null);
+    }
     //Test that it appeal the orderStateEachTime
     @Test
     public void addItem() {
