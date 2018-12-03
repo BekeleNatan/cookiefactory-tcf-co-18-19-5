@@ -28,7 +28,7 @@ public class OnCreationTest {
     Stock stock;
     Recipe recipe;
     WorkingHours wo;
-    Date date = new Date();
+    Date date;
     Ingredient ing1;
     Ingredient ing2;
     Ingredient ing3;
@@ -36,6 +36,7 @@ public class OnCreationTest {
 
     @Before
     public void setup(){
+        date = new Date();
         onCreation = new OnCreation(order);
         stock = Mockito.mock(Stock.class);
         recipe = Mockito.mock(Recipe.class);
@@ -184,8 +185,69 @@ public class OnCreationTest {
         assertFalse(onCreation.addItem(recipe,1, null));
     }
 
+    //  *************************************
+    //              ADD INFOS               *
+    //  *************************************
 
     @Test
-    public void addInfos() {
+    public void addInfosBasic() {
+        assertTrue(onCreation.addInfos(date,"03456",wo));
+    }
+
+    @Test
+    public void addInfosBadArgs() {
+        assertFalse(onCreation.addInfos(null,"03456",wo));
+        assertFalse(onCreation.addInfos(date,null,wo));
+        assertFalse(onCreation.addInfos(date,"03456",null));
+    }
+
+    @Test
+    public void addInfosOutOfWorkingHours(){
+        date.setHours(date.getHours()+3);
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        Instant instant = Instant.ofEpochMilli(calendar.getTimeInMillis());
+        LocalTime localTime = LocalDateTime.ofInstant(instant, ZoneId.systemDefault()).toLocalTime();
+
+        int dayOfTheWeek = calendar.get(Calendar.DAY_OF_WEEK)-1;
+        Mockito.when(wo.isOpenOn(DayOfWeek.of(dayOfTheWeek),localTime)).thenReturn(false);
+
+        assertFalse(onCreation.addInfos(date,"03456",wo));
+    }
+
+    @Test
+    public void addDateTooCloseToNow(){
+        date = new Date();
+        date.setHours(date.getHours()+1);
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        Instant instant = Instant.ofEpochMilli(calendar.getTimeInMillis());
+        LocalTime localTime = LocalDateTime.ofInstant(instant, ZoneId.systemDefault()).toLocalTime();
+
+        int dayOfTheWeek = calendar.get(Calendar.DAY_OF_WEEK)-1;
+        Mockito.when(wo.isOpenOn(DayOfWeek.of(dayOfTheWeek),localTime)).thenReturn(true);
+
+        assertFalse(onCreation.addInfos(date,"03456",wo));
+    }
+
+    @Test
+    public void addDatePassed(){
+        date = new Date();
+        date.setHours(date.getHours()-1);
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        Instant instant = Instant.ofEpochMilli(calendar.getTimeInMillis());
+        LocalTime localTime = LocalDateTime.ofInstant(instant, ZoneId.systemDefault()).toLocalTime();
+
+        int dayOfTheWeek = calendar.get(Calendar.DAY_OF_WEEK)-1;
+        Mockito.when(wo.isOpenOn(DayOfWeek.of(dayOfTheWeek),localTime)).thenReturn(true);
+
+        assertFalse(onCreation.addInfos(date,"03456",wo));
+    }
+
+    @Test
+    public void addBadPhoneNumber(){
+        assertFalse(onCreation.addInfos(date,"a",wo));
+        assertFalse(onCreation.addInfos(date,"1275a45",wo));
     }
 }
