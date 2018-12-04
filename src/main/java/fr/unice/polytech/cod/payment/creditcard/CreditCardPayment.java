@@ -22,6 +22,11 @@ public class CreditCardPayment implements PaymentMethod {
         throw new UnsupportedOperationException();
     }
 
+    @Override
+    public boolean refund(Double aAmount) {
+        return false; // todo
+    }
+
     public String getNameOnCard() {
         return nameOnCard;
     }
