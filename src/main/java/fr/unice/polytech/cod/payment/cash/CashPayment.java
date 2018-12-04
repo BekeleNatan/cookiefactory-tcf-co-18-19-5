@@ -8,4 +8,9 @@ public class CashPayment implements PaymentMethod {
 		// todo save the amount payed
 		throw new UnsupportedOperationException();
 	}
+
+	@Override
+	public boolean refund(Double aAmount) {
+		return false; // todo
+	}
 }

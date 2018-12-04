@@ -21,9 +21,11 @@ public class OnCreation extends OrderState {
 
 	public boolean nextState() {
 		Order order = this.context;
+		context.setPrice(computePrice());
 		if(order.getCollectTime()!= null &&
 			order.getCustomer().getPhoneNumber() != null &&
-			order.items != null )
+			order.items.size() != 0  &&
+			context.paymentConditionOk())
 		{
 			order.setCurrentState(new ToDo(context));
 			return true;
@@ -31,7 +33,17 @@ public class OnCreation extends OrderState {
 		return false;
 	}
 
+	private double computePrice() {
+		// TODO compute price
+		// attention c'est possible d'avoir 0 items
+		return 0;
+	}
+
 	public boolean addItem(Recipe recipe, int quantity, Stock stock){
+		if(recipe == null || quantity <= 0 || stock == null){
+			return false;
+		}
+
 		boolean canDoRecipe = true;
 		Map<Ingredient,Integer> ingredients = new HashMap<>();
 		for(Ingredient ingredient : recipe.getIngredients()) {
@@ -58,6 +70,9 @@ public class OnCreation extends OrderState {
 	}
 
 	public boolean addInfos(Date collectTime, String phoneNumber, WorkingHours wh) {
+		if(collectTime == null || phoneNumber == null || wh == null){
+			return false;
+		}
 		if(dateIsCorrect(collectTime, wh) && phoneNumberIsCorrect(phoneNumber)){
 			this.context.setCollectTime(collectTime);
 			this.context.getCustomer().setPhoneNumber(phoneNumber);
@@ -71,7 +86,8 @@ public class OnCreation extends OrderState {
 	}
 
 	private boolean dateIsCorrect(Date collectTime, WorkingHours wo) {
-		Date date = new Date();
+		Calendar minTime = Calendar.getInstance();
+		minTime.setTime(new Date());
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTime(collectTime);
 
@@ -81,8 +97,8 @@ public class OnCreation extends OrderState {
 		int dayOfTheWeek = calendar.get(Calendar.DAY_OF_WEEK)-1;
 		if (dayOfTheWeek==0)dayOfTheWeek=7;
 
-		calendar.add(calendar.HOUR,minTimeToMakeOrder);
-		return collectTime.after(date) && wo.isOpenOn(DayOfWeek.of(dayOfTheWeek),convert);
+		minTime.add(calendar.HOUR,minTimeToMakeOrder);
+		return collectTime.after(minTime.getTime()) && wo.isOpenOn(DayOfWeek.of(dayOfTheWeek),convert);
 	}
 
 }

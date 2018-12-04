@@ -1,5 +1,6 @@
 package fr.unice.polytech.cod.order;
 
+import fr.unice.polytech.cod.order.states.OnCreation;
 import fr.unice.polytech.cod.order.states.OrderState;
 import fr.unice.polytech.cod.recipe.CookingType;
 import fr.unice.polytech.cod.recipe.MixType;
@@ -26,7 +27,6 @@ public class OrderTest {
     Order order;
     Recipe recipe;
     Stock stock = new Stock();
-    JSONObject json = new JSONObject();
     Date date = new Date();
     String phoneNumber = "062578";
     WorkingHours wo = new WorkingHours();
@@ -41,14 +41,15 @@ public class OrderTest {
         Ingredient ingredient = new Ingredient("ing", IngredientType.Topping,1,1);
         recipe = new NormalRecipe("name",1, CookingType.Crunchy, MixType.Mixed,new ArrayList<Ingredient>(Collections.singleton(ingredient)));
         Mockito.when(mock.addItem(recipe,5,stock)).thenReturn(true);
-        Mockito.when(mock.collect()).thenReturn(true);
 
-        json.put("status","ok");
-        Mockito.when(mock.showOrder()).thenReturn(json);
 
         order.setCurrentState(mock);
     }
 
+    @Test(expected = NullPointerException.class)
+    public void constructorNull(){
+        OrderState os = new OnCreation(null);
+    }
     //Test that it appeal the orderStateEachTime
     @Test
     public void addItem() {
@@ -57,14 +58,6 @@ public class OrderTest {
     @Test
     public void addInfos() {
         assertTrue(order.addInfos(date,phoneNumber,wo));
-    }
-    @Test
-    public void collect() {
-        assertTrue(order.collect());
-    }
-    @Test
-    public void showOrder() {
-        assertEquals(json,order.showOrder());
     }
     @Test
     public void changeState(){

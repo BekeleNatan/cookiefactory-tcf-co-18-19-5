@@ -12,6 +12,7 @@ import java.util.Date;
 abstract public class OrderState {
 	protected Order context;
 
+
 	protected OrderState(Order order){
 		if(order == null){
 			throw new NullPointerException();
@@ -34,13 +35,4 @@ abstract public class OrderState {
 		return false;
 	}
 
-	public boolean collect(){
-		return false;
-	}
-
-	public JSONObject showOrder(){
-		JSONObject error = new JSONObject();
-		error.put("status","error");
-		return error;
-	}
 }
