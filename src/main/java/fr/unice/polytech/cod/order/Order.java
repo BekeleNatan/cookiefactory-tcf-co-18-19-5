@@ -12,12 +12,18 @@ import java.util.Date;
 import java.util.UUID;
 
 public class Order {
+
     private UUID orderId;
     private Date collectTime = null;
     private OrderState currentState;
-    private String bankTransactionNumber = null;
-    public ArrayList<Item> items = new ArrayList<Item>();
     private Customer customer;
+    private double price;
+    private double remainToPay;
+    private double limitWithoutPayementOrder = 100;
+
+    public String bankTransactionNumber = null;
+    public ArrayList<Item> items = new ArrayList<Item>();
+    public boolean payed = false;
 
     public Order() {
         orderId = UUID.randomUUID();
@@ -65,4 +71,24 @@ public class Order {
         return customer;
     }
 
+    public double getRemainToPay(){
+        return remainToPay;
+    }
+
+    public void setPrice(double new_price){
+        price = new_price;
+        remainToPay = new_price;
+    }
+
+    public void setRemainToPay(double new_to_pay){
+        remainToPay = new_to_pay;
+    }
+
+    public boolean paymentConditionOk() {
+        if(price<limitWithoutPayementOrder || payed){
+            return true;
+        }else{
+            return false;
+        }
+    }
 }
