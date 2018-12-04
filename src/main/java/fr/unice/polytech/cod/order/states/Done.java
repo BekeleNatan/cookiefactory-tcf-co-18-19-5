@@ -10,14 +10,14 @@ public class Done extends OrderState {
 	}
 
 	public boolean nextState() {
-		throw new UnsupportedOperationException();
+		if (context.payed){
+			context.setCurrentState(new Collected(context));
+			return true;
+		}
+		return false;
 	}
 
 	public void cancelState() {
-		throw new UnsupportedOperationException();
-	}
-
-	public void getCurrentState() {
-		throw new UnsupportedOperationException();
+		context.setCurrentState(new NotCollected(context));
 	}
 }

@@ -20,6 +20,7 @@ public class Order {
     private double price;
     private double remainToPay;
     private double limitWithoutPayementOrder = 100;
+    private PaymentInfos paymentInfos = new PaymentInfos();
 
     public String bankTransactionNumber = null;
     public ArrayList<Item> items = new ArrayList<Item>();
@@ -82,5 +83,9 @@ public class Order {
         }else{
             return false;
         }
+    }
+
+    public double getPrice() {
+        return price;
     }
 }
