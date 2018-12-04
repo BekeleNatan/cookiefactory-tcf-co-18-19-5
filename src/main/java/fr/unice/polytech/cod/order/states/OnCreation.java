@@ -21,14 +21,22 @@ public class OnCreation extends OrderState {
 
 	public boolean nextState() {
 		Order order = this.context;
+		context.setPrice(computePrice());
 		if(order.getCollectTime()!= null &&
 			order.getCustomer().getPhoneNumber() != null &&
-			order.items.size() != 0 )
+			order.items.size() != 0  &&
+			context.paymentConditionOk())
 		{
 			order.setCurrentState(new ToDo(context));
 			return true;
 		}
 		return false;
+	}
+
+	private double computePrice() {
+		// TODO compute price
+		// attention c'est possible d'avoir 0 items
+		return 0;
 	}
 
 	public boolean addItem(Recipe recipe, int quantity, Stock stock){

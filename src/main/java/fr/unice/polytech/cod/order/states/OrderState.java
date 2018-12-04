@@ -12,6 +12,7 @@ import java.util.Date;
 abstract public class OrderState {
 	protected Order context;
 
+
 	protected OrderState(Order order){
 		if(order == null){
 			throw new NullPointerException();
