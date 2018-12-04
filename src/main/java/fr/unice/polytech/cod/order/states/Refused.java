@@ -7,18 +7,17 @@ public class Refused extends OrderState {
 
 	public Refused(Order order) {
 		super(order);
+		if(context.getPrice() != context.getRemainToPay()){
+			context.getCustomer().sendMessage("Votre commande à été annulé");
+			CashRegister cashRegister = new CashRegister();
+			cashRegister.refund(order);
+		}
 	}
 
 	public boolean nextState() {
-		throw new UnsupportedOperationException();
+		return false;
 	}
 
-	public void cancelState() {
-		throw new UnsupportedOperationException();
-	}
-
-	public void getCurrentState() {
-		throw new UnsupportedOperationException();
-	}
+	public void cancelState() { }
 
 }

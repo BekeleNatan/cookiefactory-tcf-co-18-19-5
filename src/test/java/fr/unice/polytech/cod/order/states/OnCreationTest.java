@@ -253,15 +253,6 @@ public class OnCreationTest {
     }
 
     //  *************************************
-    //              COLLECT                 *
-    //  *************************************
-
-    @Test
-    public void collect(){
-        assertFalse(onCreation.collect());
-    }
-
-    //  *************************************
     //              SHOW ORDER              *
     //  *************************************
 
@@ -269,6 +260,5 @@ public class OnCreationTest {
     public void showOrder(){
         JSONObject error = new JSONObject();
         error.put("status","error");
-        assertEquals(onCreation.showOrder().toString(),error.toString());
     }
 }

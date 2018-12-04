@@ -17,4 +17,8 @@ public class CashRegister {
 	public boolean applyDiscount(Order aOrder, Double aDiscountRate) {
 		throw new UnsupportedOperationException();
 	}
+
+	public void refund(Order order) {
+		// todo implement this method using PaymentInfos
+	}
 }

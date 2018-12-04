@@ -20,6 +20,7 @@ public class Order {
     private double price;
     private double remainToPay;
     private double limitWithoutPayementOrder = 100;
+    private PaymentInfos paymentInfos = new PaymentInfos();
 
     public String bankTransactionNumber = null;
     public ArrayList<Item> items = new ArrayList<Item>();
@@ -41,14 +42,6 @@ public class Order {
 
     public boolean addInfos(Date aDate, String aPhoneNumber, WorkingHours aWh) {
         return currentState.addInfos(aDate, aPhoneNumber, aWh);
-    }
-
-    public boolean collect() {
-        return currentState.collect();
-    }
-
-    public JSONObject showOrder(){
-        return currentState.showOrder();
     }
 
     public boolean changeState(){
@@ -90,5 +83,9 @@ public class Order {
         }else{
             return false;
         }
+    }
+
+    public double getPrice() {
+        return price;
     }
 }
