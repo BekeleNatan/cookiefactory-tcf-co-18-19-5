@@ -1,7 +1,8 @@
 package fr.unice.polytech.cod.order.states;
 
+import fr.unice.polytech.cod.order.Item;
 import fr.unice.polytech.cod.order.Order;
-import fr.unice.polytech.cod.store.CashRegister;
+import org.json.JSONObject;
 
 public class ToDo extends OrderState {
 
@@ -9,16 +10,9 @@ public class ToDo extends OrderState {
 		super(order);
 	}
 
-	public boolean nextState() {
-		throw new UnsupportedOperationException();
-	}
-
-	public void cancelState() {
-		throw new UnsupportedOperationException();
-	}
-
-	public void getCurrentState() {
-		throw new UnsupportedOperationException();
+	public boolean nextState(){
+		context.setCurrentState(new Done(context));
+		return true;
 	}
 
 }

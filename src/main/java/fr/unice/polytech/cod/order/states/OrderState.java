@@ -35,13 +35,4 @@ abstract public class OrderState {
 		return false;
 	}
 
-	public boolean collect(){
-		return false;
-	}
-
-	public JSONObject showOrder(){
-		JSONObject error = new JSONObject();
-		error.put("status","error");
-		return error;
-	}
 }

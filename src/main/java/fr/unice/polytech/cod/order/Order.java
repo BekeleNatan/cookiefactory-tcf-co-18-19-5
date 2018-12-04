@@ -43,14 +43,6 @@ public class Order {
         return currentState.addInfos(aDate, aPhoneNumber, aWh);
     }
 
-    public boolean collect() {
-        return currentState.collect();
-    }
-
-    public JSONObject showOrder(){
-        return currentState.showOrder();
-    }
-
     public boolean changeState(){
         return currentState.nextState();
     }
