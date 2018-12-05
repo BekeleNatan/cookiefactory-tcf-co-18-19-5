@@ -1,8 +1,8 @@
 package fr.unice.polytech.cod;
 
-import fr.unice.polytech.cod.recipe.CookieType;
-import fr.unice.polytech.cod.recipe.NormalRecipe;
-import fr.unice.polytech.cod.recipe.Recipe;
+import recipe.CookieType;
+import recipe.NormalRecipe;
+import recipe.Recipe;
 
 import java.util.ArrayList;
 import java.util.List;
