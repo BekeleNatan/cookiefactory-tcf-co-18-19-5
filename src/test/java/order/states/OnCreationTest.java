@@ -50,6 +50,7 @@ public class OnCreationTest {
         ing4 = new Ingredient("ing4", IngredientType.Topping, 1.5, 0.8);
         ingredients.add(ing1);ingredients.add(ing2);ingredients.add(ing3);ingredients.add(ing4);
         Mockito.when(recipe.getIngredients()).thenReturn(ingredients);
+        Mockito.when(recipe.getPrice()).thenReturn(1.5);
 
         Mockito.when(stock.isEnough(ing1,1)).thenReturn(true);
         Mockito.when(stock.isEnough(ing2,1)).thenReturn(true);
@@ -97,6 +98,20 @@ public class OnCreationTest {
         assertTrue(onCreation.nextState());
         assertFalse(order.getCurrentState() instanceof OnCreation);
         assertTrue(order.getCurrentState() instanceof ToDo);
+    }
+
+    @Test
+    public void nextStatePriceToHigh(){
+        Mockito.when(stock.isEnough(ing1,67)).thenReturn(true);
+        Mockito.when(stock.isEnough(ing2,67)).thenReturn(true);
+        Mockito.when(stock.isEnough(ing3,67)).thenReturn(true);
+        Mockito.when(stock.isEnough(ing4,67)).thenReturn(true);
+        onCreation.addItem(recipe,67, stock);
+        onCreation.addInfos(date, "0623862099",wo);
+        assertFalse(onCreation.nextState());
+        assertEquals(order.getPrice(),100.5,0);
+        assertTrue(order.getCurrentState() instanceof OnCreation);
+        assertFalse(order.getCurrentState() instanceof ToDo);
     }
 
     //  *************************************

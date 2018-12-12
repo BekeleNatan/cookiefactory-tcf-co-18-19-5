@@ -33,9 +33,11 @@ public class OnCreation extends OrderState {
 	}
 
 	private double computePrice() {
-		// TODO compute price
-		// attention c'est possible d'avoir 0 items
-		return 0;
+		double price = 0;
+		for (Item item : context.items){
+			price += item.getPrice();
+		}
+		return price;
 	}
 
 	public boolean addItem(Recipe recipe, int quantity, Stock stock){

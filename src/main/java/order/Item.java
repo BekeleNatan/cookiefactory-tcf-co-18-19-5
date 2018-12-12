@@ -8,13 +8,8 @@ public class Item {
 	private int price;
 
 	public Item(Recipe aRecipe, int aQuantity) {
-
-
-
 		this.recipe = aRecipe;
 		this.quantity = aQuantity;
-
-
 	}
 
 	public int getQuantity()
@@ -68,7 +63,7 @@ public class Item {
 		return this.recipe;
 	}
 
-	public int getPrice() {
-		return this.price;
+	public double getPrice() {
+		return recipe.getPrice()*quantity;
 	}
 }
