@@ -2,7 +2,7 @@ package payment;
 
 public interface PaymentMethod {
 
-	public boolean pay(Double aAmount);
+	public void pay(Double aAmount) throws InsufficientFundsExcpetion;
 
-	public boolean refund(Double aAmount);
+	public void refund(Double aAmount);
 }
