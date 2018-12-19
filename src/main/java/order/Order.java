@@ -8,13 +8,9 @@ import store.workinghours.WorkingHours;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.UUID;
 
 public class Order {
-
-    private static double remainingPaymentThreshold = 0.01;
-    private static double limitForCashPayment = 100;
 
     private UUID orderId;
     private Date collectTime = null;
@@ -22,14 +18,12 @@ public class Order {
     private Customer customer;
     private double price;
     private double remainToPay;
-
+    private double limitWithoutPayementOrder = 100;
     private PaymentInfos paymentInfos = new PaymentInfos();
 
     public String bankTransactionNumber = null;
-    public List<Item> items = new ArrayList<>();
-
-
-    private boolean isPayed = false;
+    public ArrayList<Item> items = new ArrayList<Item>();
+    public boolean payed = false;
 
     public Order() {
         orderId = UUID.randomUUID();
@@ -78,14 +72,12 @@ public class Order {
         remainToPay = new_price;
     }
 
-    public void deductPayedAmount(double payedAmount){
-        remainToPay = remainToPay - payedAmount;
-        if(price - remainToPay < remainingPaymentThreshold)
-            this.setPayed(true);
+    public void setRemainToPay(double new_to_pay){
+        remainToPay = new_to_pay;
     }
 
     public boolean paymentConditionOk() {
-        if(price< limitForCashPayment || this.isPayed()){
+        if(price<limitWithoutPayementOrder || payed){
             return true;
         }else{
             return false;
@@ -96,11 +88,7 @@ public class Order {
         return price;
     }
 
-    public boolean isPayed() {
-        return isPayed;
-    }
-
-    public void setPayed(boolean payed) {
-        isPayed = payed;
+    public UUID getOrderId() {
+        return orderId;
     }
 }
