@@ -4,6 +4,7 @@ import fr.unice.polytech.cod.stats.Stats;
 import store.Stock;
 
 import java.util.List;
+import java.util.UUID;
 
 public class OrderRegister {
     List<Order> orders;
@@ -13,19 +14,18 @@ public class OrderRegister {
 
     }
 
-    public Order findOrder(int aOrderId) {
-        throw new UnsupportedOperationException();
+    public Order findOrder(UUID aOrderId) {
+        for (Order order : orders){
+            if(order.getOrderId()==aOrderId){
+                return order;
+            }
+        }
+        return null;
     }
 
-    public void printPeekHoursStat() {
-        throw new UnsupportedOperationException();
-    }
-
-    public Order createNewOrder(Stock aStock) {
-        throw new UnsupportedOperationException();
-    }
-
-    public void computeStats() {
-        throw new UnsupportedOperationException();
+    public Order createNewOrder() {
+        Order order = new Order();
+        orders.add(order);
+        return order;
     }
 }

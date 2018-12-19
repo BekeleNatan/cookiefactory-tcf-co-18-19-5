@@ -96,6 +96,10 @@ public class Order {
         return price;
     }
 
+    public UUID getOrderId() {
+        return orderId;
+    }
+
     public boolean isPayed() {
         return isPayed;
     }
