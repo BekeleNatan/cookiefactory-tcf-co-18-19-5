@@ -125,19 +125,7 @@ public class WorkingHoursStepdefs implements En {
 
         // ok
         And("^we have an order to be collected on \"([^\"]*)\" from \"([^\"]*)\":\"([^\"]*)\"$", (String arg0, String arg1, String arg2) -> {
-            Order order = new Order();
-            Date date = new Date();
-            String phoneNumber = "062578";
-            OrderState mock = Mockito.mock(OrderState.class);
-            Mockito.when(mock.addInfos(new Date(),phoneNumber,wo)).thenReturn(true);
-            Mockito.when(mock.nextState()).thenReturn(true);
-
-            Ingredient ingredient = new Ingredient("ing", IngredientType.Topping,1,1);
-            recipe = new NormalRecipe("name",1, CookingType.Crunchy, MixType.Mixed,new ArrayList<Ingredient>(Collections.singleton(ingredient)));
-            Mockito.when(mock.addItem(recipe,5,stock)).thenReturn(true);
-
-
-            order.setCurrentState(mock);
+            throw new PendingException();
         });
     }
 }
