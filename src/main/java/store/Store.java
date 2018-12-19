@@ -6,9 +6,12 @@ import store.workinghours.WorkingHours;
 
 
 public class Store {
+
+
     private String storeName;
     private double taxeRate;
-    private double pointsToMoneyRate;
+    private double pointsToMoneyRate;  // used to pay with points
+    private double moneyToPointsRate; // used to give points to clients who paid
 
     private WorkingHours workingHours;
     private StoreMenu storeMenu;
@@ -20,7 +23,8 @@ public class Store {
         this.workingHours = new WorkingHours();
         this.storeMenu = new StoreMenu(franchiseMenu);
         this.taxeRate = 1;
-        this.pointsToMoneyRate = 1;
+        this.pointsToMoneyRate = 0.5;
+        this.moneyToPointsRate= 0.25;
         this.stock = new Stock();
         this.orderRegister = new OrderRegister();
     }
@@ -74,4 +78,11 @@ public class Store {
         return this.stock;
     }
 
+    public double getMoneyToPointsRate() {
+        return moneyToPointsRate;
+    }
+
+    public void setMoneyToPointsRate(double moneyToPointsRate) {
+        this.moneyToPointsRate = moneyToPointsRate;
+    }
 }
