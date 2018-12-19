@@ -40,6 +40,7 @@ public class WorkingHours {
                 this.openingFragments.remove(of);
                 return true;
             }
+            // todo : check if there's no order dans cette date
         }
         return false;
     }

@@ -10,7 +10,7 @@ public class Franchise {
     private String name;
     private List<Store> stores;
 
-    Franchise(String name) {
+    public Franchise(String name) {
         stores = new ArrayList<>();
         this.name = name;
     }
