@@ -6,5 +6,7 @@ public class RecipeSteps implements En {
     public RecipeSteps() {
         Then("^the cookie is create$", () -> {
         });
+        Given("^a recipe with the name of \"([^\"]*)\" was manufactured$", (String arg0) -> {
+        });
     }
 }
