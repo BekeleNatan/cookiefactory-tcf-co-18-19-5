@@ -9,7 +9,7 @@ public class Done extends OrderState {
 	}
 
 	public boolean nextState() {
-		if (context.payed){
+		if (context.isPayed()){
 			context.setCurrentState(new Collected(context));
 			return true;
 		}
