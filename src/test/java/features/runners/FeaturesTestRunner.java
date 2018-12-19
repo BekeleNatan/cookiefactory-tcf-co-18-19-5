@@ -8,7 +8,7 @@ import cucumber.api.CucumberOptions;
 
 @CucumberOptions(plugin = {"pretty"}, dryRun = true, strict = false, monochrome = true,
         features = "src/test/resources/features",
-        glue = "src/test/java/features/stepdefs")
+        glue = "src/test/java/step_definition")
 
 public class FeaturesTestRunner { // will run all features found on the classpath in the same package as this class
 
