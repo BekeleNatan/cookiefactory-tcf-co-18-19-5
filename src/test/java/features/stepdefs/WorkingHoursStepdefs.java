@@ -5,21 +5,10 @@ import cucumber.api.java8.En;
 import franchise.Franchise;
 import franchise.FranchiseMenu;
 import helpers.TestingFailureException;
-import order.Order;
-import order.states.OrderState;
-import org.mockito.Mockito;
-import recipe.CookingType;
-import recipe.MixType;
-import recipe.NormalRecipe;
-import recipe.ingredients.Ingredient;
-import recipe.ingredients.IngredientType;
 import store.Store;
 
 import java.time.DayOfWeek;
 import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Date;
 
 import static java.lang.Integer.parseInt;
 import static org.junit.Assert.assertFalse;
@@ -99,7 +88,7 @@ public class WorkingHoursStepdefs implements En {
 
         // ok
         When("^the manager of the store \"([^\"]*)\" deletes an opening hours on \"([^\"]*)\" from \"([^\"]*)\":\"([^\"]*)\" to \"([^\"]*)\":\"([^\"]*)\"$", (String storeName, String openingDay, String fromHH, String fromMM, String toHH, String toMM) -> {
-            this.store = getStoreByName(franchise, storeName);
+            this.store = franchise.getStoreByName(storeName).get();
             DayOfWeek day = fromStringToDayOfWeek(openingDay);
             LocalTime opening = LocalTime.of(parseInt(fromHH), parseInt(fromMM));
             LocalTime closing = LocalTime.of(parseInt(toHH), parseInt(toMM));
@@ -112,7 +101,7 @@ public class WorkingHoursStepdefs implements En {
 
         // ok
         And("^the manager of the store \"([^\"]*)\" adds a new opening hours to the store on \"([^\"]*)\" from \"([^\"]*)\":\"([^\"]*)\" to \"([^\"]*)\":\"([^\"]*)\"$", (String storeName, String openingDay, String fromHH, String fromMM, String toHH, String toMM) -> {
-            this.store = getStoreByName(franchise, storeName);
+            this.store = franchise.getStoreByName(storeName).get();
             DayOfWeek day = fromStringToDayOfWeek(openingDay);
             LocalTime opening = LocalTime.of(parseInt(fromHH), parseInt(fromMM));
             LocalTime closing = LocalTime.of(parseInt(toHH), parseInt(toMM));
