@@ -10,7 +10,7 @@ public class CreditCardPayment implements PaymentMethod {
     private String expirationDate;
     private CreditCardType creditCardType;
 
-    public CreditCardPayment(String nameOnCard, String number, String cvv, String expirationDate, CreditCardType creditCardType) {
+    public CreditCardPayment(Double moneyToPointRate, String nameOnCard, String number, String cvv, String expirationDate, CreditCardType creditCardType) {
         this.nameOnCard = nameOnCard;
         this.number = number;
         this.cvv = cvv;
@@ -18,13 +18,14 @@ public class CreditCardPayment implements PaymentMethod {
         this.creditCardType = creditCardType;
     }
 
-    public boolean pay(Double aAmount) {
+    public void pay(Double aAmount) {
+        // call bank api to pay
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public boolean refund(Double aAmount) {
-        return false; // todo
+    public void refund(Double aAmount) {
+        throw new UnsupportedOperationException();
     }
 
     public String getNameOnCard() {

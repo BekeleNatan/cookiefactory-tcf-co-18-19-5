@@ -11,7 +11,8 @@ public class PaymentMethodFactory {
     private String visaRegex = "^4[0-9]{12}(?:[0-9]{3})?$";
     private String masterCardRegex = "^(5[1-5][0-9]{14}|2(22[1-9][0-9]{12}|2[3-9][0-9]{13}|[3-6][0-9]{14}|7[0-1][0-9]{13}|720[0-9]{12}))$";
 
-    public CreditCardPayment createCreditCard(String aNameOnCard, String aNumber, String aCvv, String aExpirationDate) {
+
+    public CreditCardPayment createCreditCard(Double moneyToPointRate,String aNameOnCard, String aNumber, String aCvv, String aExpirationDate) {
 
         if (!aNameOnCard.matches("^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$")) {
             throw new IllegalArgumentException("Wrong format for name on card");
@@ -23,19 +24,19 @@ public class PaymentMethodFactory {
             throw new IllegalArgumentException("Wrong format for ExpirationDate on card");
         }
 
-        return new CreditCardPayment(aNameOnCard, aNumber, aCvv, aExpirationDate, getTypeCard(aNumber));
+        return new CreditCardPayment( moneyToPointRate, aNameOnCard, aNumber, aCvv, aExpirationDate, getTypeCard(aNumber));
     }
 
-    public CashPayment createCash() {
-        return new CashPayment();
+    public CashPayment createCash(Double moneyToPointRate) {
+        return new CashPayment(moneyToPointRate);
     }
 
     public UnfaithPassMoney createUnfaithPassMoney(String aQrCode) {
-        return new UnfaithPassMoney();
+        return new UnfaithPassMoney(aQrCode);
     }
 
-    public UnfaithPassPoints createUnfaithPassPoints(String aQrCode) {
-        return new UnfaithPassPoints();
+    public UnfaithPassPoints createUnfaithPassPoints(String aQrCode, Double conversionRate) {
+        return new UnfaithPassPoints(aQrCode, conversionRate);
     }
 
     private CreditCardType getTypeCard(String aNumber) {
