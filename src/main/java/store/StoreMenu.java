@@ -15,6 +15,13 @@ public class StoreMenu extends Menu {
         this.franchiseMenu = franchiseMenu;
     }
 
+    @Override
+    public List<Recipe> getRecipes(){
+        List<Recipe> toReturn = super.getRecipes();
+        toReturn.addAll(franchiseMenu.getMenu());
+        return toReturn;
+    }
+
     public List<Recipe> getMenu(Stock aStock) {
         // todo : STORE MENU : check availability with the stock
         // todo : STORE MENU : check if we don't have the same
