@@ -23,8 +23,8 @@ public class Store {
         this.workingHours = new WorkingHours();
         this.storeMenu = new StoreMenu(franchiseMenu);
         this.taxeRate = 1;
-        this.pointsToMoneyRate = 0.5;
-        this.moneyToPointsRate= 0.25;
+        this.pointsToMoneyRate = 0.1;
+        this.moneyToPointsRate= 0.01;
         this.stock = new Stock();
         this.orderRegister = new OrderRegister();
     }
