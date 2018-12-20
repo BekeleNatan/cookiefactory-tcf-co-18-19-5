@@ -3,6 +3,8 @@ package features.stepdefs;
 import cucumber.api.java8.En;
 import franchise.FranchiseMenu;
 import order.Order;
+import order.states.Collected;
+import order.states.Done;
 import order.states.OnCreation;
 import recipe.CookingType;
 import recipe.MixType;
@@ -56,6 +58,14 @@ public class CreatingNewOrdersStepDefs implements En {
                     NormalRecipe nr = new NormalRecipe(recipeName, Double.parseDouble(price), CookingType.valueOf(cooking), MixType.valueOf(mix), ingredients);
                     fm.addRecipe(nr);
                 });
+        Given("I have a done order",()->{
+            order = new Order();
+            order.setCurrentState(new Done(order));
+        });
+
+        And("I have paid the order", ()->{
+            order.setPayed(true);
+        });
 
         And("^A store opening every day from (.+)h(.+) to (.+)h(.+)$", (String openingHour, String openingMinutes, String closingHour, String closingMinutes) -> {
             WorkingHours workingHours = store.getWorkingHours();
@@ -87,8 +97,16 @@ public class CreatingNewOrdersStepDefs implements En {
             order.changeState();
         });
 
+        When("The staff gives me my order", () -> {
+            order.changeState();
+        });
+
         Then("^The order is in the state onCreation$",()-> {
             assertTrue(order.getCurrentState() instanceof OnCreation);
+        });
+
+        Then("^The order is in the state collected$",()-> {
+            assertTrue(order.getCurrentState() instanceof Collected);
         });
     }
 }
