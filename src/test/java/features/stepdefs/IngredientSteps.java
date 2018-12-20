@@ -8,8 +8,10 @@ import recipe.ingredients.IngredientType;
 import store.Stock;
 import store.Store;
 
+
+
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+
 
 public class IngredientSteps implements En {
 
@@ -22,6 +24,8 @@ public class IngredientSteps implements En {
     private FranchiseMenu franchiseMenu = null;
     private Store store = null;
     private Stock stock = null;
+    private Ingredient ingredient =null;
+    private double newMarginPrice;
 
     private IngredientType getIngredientType(String type){
 
@@ -40,17 +44,21 @@ public class IngredientSteps implements En {
     }
 
     public IngredientSteps() {
+        Given("^the franchise \"([^\"]*)\" have a store \"([^\"]*)\"$", (String franchiseName, String storeName) -> {
+            franchise = new Franchise(franchiseName);
+            FranchiseMenu franchiseMenu = new FranchiseMenu();
+            franchise.addStore(storeName, franchiseMenu);
+            this.store = franchise.getStoreByName(storeName).get();
+            this.stock = this.store.getStock();
+        });
         Given("^some ingredients exist with a name \"([^\"]*)\" ,a type \"([^\"]*)\" , a price of \"([^\"]*)\" and a priceMargin of \"([^\"]*)\":$", (String name, String type ,String price ,String MarginPrice) -> {
             Ingredient ingredient = new Ingredient(name,getIngredientType(type),Double.parseDouble(price),Double.parseDouble(MarginPrice));
         });
         Given("^the type \"([^\"]*)\" of ingredient is known$", (String type) -> {
              this.type = getIngredientType(type);
         });
-        When("^the store \"([^\"]*)\" of franchise \"([^\"]*)\" has ingredient and he doesn't know the name and price and margin price$", (String franchiseName, String storeName) -> {
-            franchise = new Franchise(franchiseName);
-            FranchiseMenu franchiseMenu = new FranchiseMenu();
-            franchise.addStore(storeName, franchiseMenu);
-            this.store = franchise.getStoreByName(storeName).get();
+        When("^the store of franchise  has ingredient and he doesn't know the name and price and margin price$", () -> {
+
             this.name = "";
              this.price = 0;
              this.marginPrice = 0;
@@ -59,13 +67,26 @@ public class IngredientSteps implements En {
 
              Ingredient ingredient = new Ingredient(this.name,this.type,this.price,this.marginPrice);
 
-             this.stock = this.store.getStock();
+
              this.oldQuantiy = this.stock.getQuantity(ingredient);
              this.stock.addIngredient(ingredient,(this.stock.getQuantity(ingredient))+1);
              int newQuantity = this.stock.getQuantity(ingredient);
              assertEquals(oldQuantiy+1,newQuantity);
 
         });
+        Given("^the ingredient \"([^\"]*)\" exists and it is a \"([^\"]*)\"$", (String ingredientName, String ingredientType) -> {
+              Ingredient ingredient = new Ingredient(ingredientName,getIngredientType(ingredientType),3.0 , 0);
+              this.stock.addIngredient(ingredient,2);
+        });
+        When("^he sets the new margin price of ingredient \"([^\"]*)\" to \"([^\"]*)\"$", (String ingredientName, String marginPrice) -> {
+            this.newMarginPrice = Double.parseDouble(marginPrice);
+            this.ingredient = this.stock.getIngredientByName(ingredientName).get();
+            this.ingredient.setPriceMargin(Double.parseDouble(marginPrice));
+        });
+        Then("^the ingredient's margin price is updated and the new margin price is \"([^\"]*)\"$", (String marginPrice) -> {
+            assertEquals(this.newMarginPrice,this.ingredient.getPriceMargin(),0.0001);
+        });
+
 
 
     }
