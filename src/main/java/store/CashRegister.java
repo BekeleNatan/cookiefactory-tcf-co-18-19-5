@@ -6,11 +6,13 @@ import payment.PaymentMethodFactory;
 
 public class CashRegister {
 
-	PaymentMethodFactory paymentMethodFactory;
+
 
 	public void pay(Order aOrder, PaymentMethod aPaymentMethod, Double aAmount) {
 		try{
-			aPaymentMethod.pay(aAmount);
+			if(aPaymentMethod.pay(aAmount)){
+				aOrder.deductPayedAmount(aAmount);
+			}
 		}
 		catch (Exception e){
 
@@ -20,10 +22,6 @@ public class CashRegister {
 
 	}
 
-	//toRemove
-	public Double remainToPay(Order aOrder) {
-		throw new UnsupportedOperationException();
-	}
 
 
 	// can be done before we only have tha amount here

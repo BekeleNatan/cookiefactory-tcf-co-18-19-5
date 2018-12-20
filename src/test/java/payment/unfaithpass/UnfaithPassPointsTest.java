@@ -1,6 +1,6 @@
 package payment.unfaithpass;
 
-import external.UnfaithPassService;
+import payment.services.UnfaithPassService;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
@@ -28,6 +28,6 @@ public class UnfaithPassPointsTest {
     @Test
     public void paywithSufficiantsPoints() throws InsufficientFundsExcpetion{
         Mockito.when(unfaithPassService.getPointsLeft(unfaithPassPoints.getQrCode())).thenReturn(200.0);
-        unfaithPassPoints.pay(100.0);
+        assertTrue(unfaithPassPoints.pay(100.0));
     }
 }

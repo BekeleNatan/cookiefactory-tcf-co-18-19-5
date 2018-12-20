@@ -1,6 +1,6 @@
 package payment.unfaithpass;
 
-import external.UnfaithPassService;
+import payment.services.UnfaithPassService;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
@@ -18,6 +18,7 @@ public class UnfaithPassMoneyTest {
         unfaithPassService = Mockito.mock(UnfaithPassService.class);
         unfaithPassMoney.setUnfaithPassService(unfaithPassService);
         Mockito.when(unfaithPassService.getCashLeft(unfaithPassMoney.getQrCode())).thenReturn(100.0);
+        Mockito.when(unfaithPassService.removeCash(unfaithPassMoney.getQrCode(),80.0)).thenReturn(Boolean.TRUE);
     }
     @Test(expected = InsufficientFundsExcpetion.class)
     public void payWithInsufficiantFunds() throws InsufficientFundsExcpetion {
@@ -26,8 +27,7 @@ public class UnfaithPassMoneyTest {
 
     @Test
     public void payWithSufficientFunds() throws  InsufficientFundsExcpetion {
-        unfaithPassMoney.pay(80.0);
-
+        assertTrue(unfaithPassMoney.pay(80.0));
     }
 
 }
