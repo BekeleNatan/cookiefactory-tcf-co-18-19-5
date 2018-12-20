@@ -12,7 +12,6 @@ import java.util.*;
 
 public class OnCreation extends OrderState {
 
-	private int minTimeToMakeOrder = 2;
 
 	public OnCreation(Order order) {
 		super(order);
@@ -74,7 +73,7 @@ public class OnCreation extends OrderState {
 		if(collectTime == null || phoneNumber == null || wh == null){
 			return false;
 		}
-		if(dateIsCorrect(collectTime, wh) && phoneNumberIsCorrect(phoneNumber)){
+		if(context.dateIsCorrect(collectTime, wh) && phoneNumberIsCorrect(phoneNumber)){
 			this.context.setCollectTime(collectTime);
 			this.context.getCustomer().setPhoneNumber(phoneNumber);
 			return true;
@@ -86,20 +85,5 @@ public class OnCreation extends OrderState {
 		return phoneNumber.matches("[0-9]*");
 	}
 
-	private boolean dateIsCorrect(Date collectTime, WorkingHours wo) {
-		Calendar minTime = Calendar.getInstance();
-		minTime.setTime(new Date());
-		Calendar calendar = Calendar.getInstance();
-		calendar.setTime(collectTime);
-
-		Instant instant = Instant.ofEpochMilli(calendar.getTimeInMillis());
-		LocalTime convert = LocalDateTime.ofInstant(instant, ZoneId.systemDefault()).toLocalTime();
-
-		int dayOfTheWeek = calendar.get(Calendar.DAY_OF_WEEK)-1;
-		if (dayOfTheWeek==0)dayOfTheWeek=7;
-
-		minTime.add(calendar.HOUR,minTimeToMakeOrder);
-		return collectTime.after(minTime.getTime()) && wo.isOpenOn(DayOfWeek.of(dayOfTheWeek),convert);
-	}
 
 }

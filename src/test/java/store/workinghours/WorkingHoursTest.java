@@ -1,8 +1,11 @@
 package store.workinghours;
 
+import order.Order;
+import order.OrderRegister;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.mockito.Mockito;
 
 import java.time.DayOfWeek;
 import java.time.LocalTime;
@@ -15,13 +18,15 @@ public class WorkingHoursTest {
 
     List<OpeningFragment> openingFragments = new ArrayList<>();
     WorkingHours workingHours = new WorkingHours();
+    OrderRegister or;
 
     @Before
     public void initialization() throws Exception {
         workingHours.addOpeningFragement(DayOfWeek.MONDAY, LocalTime.of(9, 00), LocalTime.of(12, 0));
         workingHours.addOpeningFragement(DayOfWeek.TUESDAY, LocalTime.of(9, 00), LocalTime.of(12, 0));
         workingHours.addOpeningFragement(DayOfWeek.WEDNESDAY, LocalTime.of(9, 00), LocalTime.of(12, 0));
-
+        or = Mockito.mock(OrderRegister.class);
+        Mockito.when(or.getOrders()).thenReturn(new ArrayList<Order>());
     }
 
     @Test
@@ -51,17 +56,17 @@ public class WorkingHoursTest {
     public void deleteOpeningFragment() {
         // the manager do not work on monday morning anymore
         assertTrue(workingHours.isOpenOn(DayOfWeek.MONDAY, LocalTime.of(9, 0))); // check before deleting
-        assertTrue(workingHours.deleteOpeningFragement(DayOfWeek.MONDAY, LocalTime.of(9, 0), LocalTime.of(12, 00))); // deleting
+        assertTrue(workingHours.deleteOpeningFragement(DayOfWeek.MONDAY, LocalTime.of(9, 0), LocalTime.of(12, 00),or)); // deleting
         assertFalse(workingHours.isOpenOn(DayOfWeek.MONDAY, LocalTime.of(9, 0))); // check after deleting
 
         // the manager will try to delete a fragment that don't exist (mistake on day)
         assertFalse(workingHours.isOpenOn(DayOfWeek.THURSDAY, LocalTime.of(9, 0))); // check before deleting
-        assertFalse(workingHours.deleteOpeningFragement(DayOfWeek.THURSDAY, LocalTime.of(9, 0), LocalTime.of(12, 00))); // deleting
+        assertFalse(workingHours.deleteOpeningFragement(DayOfWeek.THURSDAY, LocalTime.of(9, 0), LocalTime.of(12, 00),or)); // deleting
         assertFalse(workingHours.isOpenOn(DayOfWeek.THURSDAY, LocalTime.of(9, 0))); // check after deleting
 
         // the manager will try to delete a fragment that don't exist (mistake on hour)
         assertTrue(workingHours.isOpenOn(DayOfWeek.TUESDAY, LocalTime.of(9, 0))); // check before deleting
-        assertFalse(workingHours.deleteOpeningFragement(DayOfWeek.TUESDAY, LocalTime.of(9, 0), LocalTime.of(12, 12))); // deleting
+        assertFalse(workingHours.deleteOpeningFragement(DayOfWeek.TUESDAY, LocalTime.of(9, 0), LocalTime.of(12, 12),or)); // deleting
         assertTrue(workingHours.isOpenOn(DayOfWeek.TUESDAY, LocalTime.of(9, 0))); // check after deleting
     }
 

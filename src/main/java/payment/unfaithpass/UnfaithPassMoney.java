@@ -9,14 +9,15 @@ public class UnfaithPassMoney extends UnfaithPassPayment {
         super(qrCode);
     }
 
-    public void pay(Double aAmount) throws InsufficientFundsExcpetion {
-        Double pointsLeftOnAccount = this.getUnfaithPassService().getPointsLeft(this.getQrCode());
-        if (pointsLeftOnAccount < aAmount) {
-            double neededAmount = aAmount - pointsLeftOnAccount;
+    public boolean pay(Double aAmount) throws InsufficientFundsExcpetion {
+        Double moneyLeftOnAccount = this.getUnfaithPassService().getCashLeft(this.getQrCode());
+        if (Double.compare(moneyLeftOnAccount,aAmount)< 0) {
+            double neededAmount = aAmount - moneyLeftOnAccount;
             String errMsg = "Not enough Money! Money needed : " + neededAmount;
             throw new InsufficientFundsExcpetion(errMsg, neededAmount);
         } else {
-            this.getUnfaithPassService().removeCash(this.getQrCode(), aAmount);
+            return this.getUnfaithPassService().removeCash(this.getQrCode(), aAmount);
+
         }
 
     }

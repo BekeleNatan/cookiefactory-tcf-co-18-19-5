@@ -87,7 +87,7 @@ public class Stock {
         return ingredientByType;
     }
 
-    Integer getQuantity(Ingredient ingredient) {
+   public Integer getQuantity(Ingredient ingredient) {
         Optional<Ingredient> optionalIngredient = getIngredientByName(ingredient.getName());
         if (optionalIngredient.isPresent()) {
             return ingredients.get(optionalIngredient.get());

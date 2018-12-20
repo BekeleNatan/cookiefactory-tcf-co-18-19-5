@@ -10,7 +10,7 @@ public class UnfaithPassPoints extends UnfaithPassPayment {
         this.conversionRate = conversionRate;
     }
 
-    public void pay(Double aAmount) throws InsufficientFundsExcpetion {
+    public boolean pay(Double aAmount) throws InsufficientFundsExcpetion {
         Double pointsLeftOnAccount = this.getUnfaithPassService().getPointsLeft(this.getQrCode());
         Double pointsNeeded = aAmount * conversionRate;
         if (Double.compare(pointsLeftOnAccount, pointsNeeded) < 0) {
@@ -18,6 +18,7 @@ public class UnfaithPassPoints extends UnfaithPassPayment {
             throw new InsufficientFundsExcpetion(errMsg, pointsNeeded);
         } else {
             this.getUnfaithPassService().removePoints(this.getQrCode(), pointsNeeded);
+            return true;
         }
     }
 

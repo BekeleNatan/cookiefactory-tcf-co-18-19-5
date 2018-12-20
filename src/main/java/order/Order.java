@@ -6,10 +6,8 @@ import recipe.Recipe;
 import store.Stock;
 import store.workinghours.WorkingHours;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
+import java.time.*;
+import java.util.*;
 
 public class Order {
 
@@ -22,6 +20,7 @@ public class Order {
     private Customer customer;
     private double price;
     private double remainToPay;
+    private int minTimeToMakeOrder = 2;
 
     private PaymentInfos paymentInfos = new PaymentInfos();
 
@@ -49,7 +48,7 @@ public class Order {
         return currentState.addInfos(aDate, aPhoneNumber, aWh);
     }
 
-    public boolean changeState(){
+    public boolean changeState() {
         return currentState.nextState();
     }
 
@@ -65,31 +64,49 @@ public class Order {
         return collectTime;
     }
 
-    public Customer getCustomer(){
+    public Customer getCustomer() {
         return customer;
     }
 
-    public double getRemainToPay(){
+    public double getRemainToPay() {
         return remainToPay;
     }
 
-    public void setPrice(double new_price){
+    public void setPrice(double new_price) {
         price = new_price;
         remainToPay = new_price;
     }
 
-    public void deductPayedAmount(double payedAmount){
-        remainToPay = remainToPay - payedAmount;
-        if(price - remainToPay < remainingPaymentThreshold)
-            this.setPayed(true);
+    public void deductPayedAmount(double payedAmount) {
+        if (Double.compare(remainToPay, 0.0)>0) {
+            remainToPay = remainToPay - payedAmount;
+            if (price - remainToPay < remainingPaymentThreshold)
+                this.setPayed(true);
+        }
     }
 
     public boolean paymentConditionOk() {
-        if(price< limitForCashPayment || this.isPayed()){
+        if (price < limitForCashPayment || this.isPayed()) {
             return true;
-        }else{
+        } else {
             return false;
         }
+    }
+
+    public boolean dateIsCorrect(Date collectTime, WorkingHours wo) {
+        Calendar minTime = Calendar.getInstance();
+        minTime.setTime(new Date());
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(collectTime);
+
+        Instant instant = Instant.ofEpochMilli(calendar.getTimeInMillis());
+        LocalTime convert = LocalDateTime.ofInstant(instant, ZoneId.systemDefault()).toLocalTime();
+
+        int dayOfTheWeek = calendar.get(Calendar.DAY_OF_WEEK)-1;
+        if (dayOfTheWeek==0)dayOfTheWeek=7;
+
+        minTime.add(calendar.HOUR,minTimeToMakeOrder);
+        return collectTime.after(minTime.getTime()) && wo.isOpenOn(DayOfWeek.of(dayOfTheWeek),convert);
     }
 
     public double getPrice() {

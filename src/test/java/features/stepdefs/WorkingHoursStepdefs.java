@@ -5,10 +5,14 @@ import cucumber.api.java8.En;
 import franchise.Franchise;
 import franchise.FranchiseMenu;
 import helpers.TestingFailureException;
+import order.Order;
+import org.mockito.Mockito;
 import store.Store;
 
 import java.time.DayOfWeek;
 import java.time.LocalTime;
+import java.util.Calendar;
+import java.util.Date;
 
 import static java.lang.Integer.parseInt;
 import static org.junit.Assert.assertFalse;
@@ -93,7 +97,7 @@ public class WorkingHoursStepdefs implements En {
             LocalTime opening = LocalTime.of(parseInt(fromHH), parseInt(fromMM));
             LocalTime closing = LocalTime.of(parseInt(toHH), parseInt(toMM));
             try {
-                store.getWorkingHours().deleteOpeningFragement(day, opening, closing);
+                store.getWorkingHours().deleteOpeningFragement(day, opening, closing,store.getOrderRegister());
             } catch (RuntimeException e) {
                 testingFailureException.add(e);
             }
@@ -113,8 +117,19 @@ public class WorkingHoursStepdefs implements En {
         });
 
         // ok
-        And("^we have an order to be collected on \"([^\"]*)\" from \"([^\"]*)\":\"([^\"]*)\"$", (String arg0, String arg1, String arg2) -> {
-            throw new PendingException();
+        Given("^we have an order to be collected on \"([^\"]*)\" from \"([^\"]*)\":\"([^\"]*)\"$", (String day_of_the_week, String hours, String minutes) -> {
+            Order o = store.getOrderRegister().createNewOrder();
+            DayOfWeek day = fromStringToDayOfWeek(day_of_the_week);
+            LocalTime collect_time = LocalTime.of(parseInt(hours), parseInt(minutes));
+            Date date = Mockito.mock(Date.class);
+            Mockito.when(date.getHours()).thenReturn(parseInt(hours));
+            Mockito.when(date.getMinutes()).thenReturn(parseInt(minutes));
+
+            int dayOfTheWeek = fromStringToDayOfWeek(day_of_the_week).getValue();
+            if (dayOfTheWeek==0)dayOfTheWeek=7;
+            Mockito.when(date.getDay()).thenReturn(dayOfTheWeek);
+
+            o.setCollectTime(date);
         });
     }
 }

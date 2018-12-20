@@ -38,6 +38,6 @@ Feature: Working hours of a store
 
   Scenario: The manager deletes an opening hour without respecting the rule 3 (existing order in the fragment)
     * a failure is expected
+    Given we have an order to be collected on "Friday" from "11":"00"
     When the manager of the store "COD Antibes" deletes an opening hours on "Friday" from "8":"00" to "12":"00"
-    And we have an order to be collected on "Friday" from "11":"00"
     And it fails

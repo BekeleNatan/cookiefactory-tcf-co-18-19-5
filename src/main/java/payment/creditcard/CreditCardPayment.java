@@ -1,26 +1,33 @@
 package payment.creditcard;
 
+import payment.CreditCard;
 import payment.CreditCardType;
 import payment.PaymentMethod;
+import payment.services.BankPaymentService;
+import payment.services.UnfaithPassService;
 
 public class CreditCardPayment implements PaymentMethod {
-    private String nameOnCard;
-    private String number;
-    private String cvv;
-    private String expirationDate;
-    private CreditCardType creditCardType;
+    private Double moneyToPointRate;
+    private String unfaithPassQrCode;
+    private BankPaymentService bankPaymentService;
+    private CreditCard creditCard;
 
-    public CreditCardPayment(Double moneyToPointRate, String nameOnCard, String number, String cvv, String expirationDate, CreditCardType creditCardType) {
-        this.nameOnCard = nameOnCard;
-        this.number = number;
-        this.cvv = cvv;
-        this.expirationDate = expirationDate;
-        this.creditCardType = creditCardType;
+    public CreditCardPayment(Double moneyToPointRate, CreditCard creditCard, String unfaithPassQrCode) {
+        this.creditCard = creditCard;
+        this.moneyToPointRate = moneyToPointRate;
+        this.unfaithPassQrCode = unfaithPassQrCode;
     }
 
-    public void pay(Double aAmount) {
-        // call bank api to pay
-        throw new UnsupportedOperationException();
+    public boolean pay(Double aAmount) {
+        return this.bankPaymentService.makePayment(creditCard,aAmount);
+    }
+
+    public BankPaymentService getUnfaithPassService() {
+        return bankPaymentService;
+    }
+
+    public void setUnfaithPassService(BankPaymentService bankPaymentService) {
+        this.bankPaymentService = bankPaymentService;
     }
 
     @Override
@@ -28,23 +35,7 @@ public class CreditCardPayment implements PaymentMethod {
         throw new UnsupportedOperationException();
     }
 
-    public String getNameOnCard() {
-        return nameOnCard;
-    }
-
-    public String getNumber() {
-        return number;
-    }
-
-    public String getCvv() {
-        return cvv;
-    }
-
-    public String getExpirationDate() {
-        return expirationDate;
-    }
-
-    public CreditCardType getCreditCardType() {
-        return creditCardType;
+    public CreditCard getCreditCard() {
+        return creditCard;
     }
 }

@@ -1,7 +1,6 @@
 package payment.unfaithpass;
 
-import external.UnfaithPassService;
-import payment.InsufficientFundsExcpetion;
+import payment.services.UnfaithPassService;
 import payment.PaymentMethod;
 
 public abstract class UnfaithPassPayment implements PaymentMethod {
@@ -11,8 +10,6 @@ public abstract class UnfaithPassPayment implements PaymentMethod {
 	public UnfaithPassPayment(String qrCode){
 		this.qrCode=qrCode;
 	}
-
-	public abstract void pay(Double aAmount) throws InsufficientFundsExcpetion;
 
 	public String getQrCode() {
 		return qrCode;

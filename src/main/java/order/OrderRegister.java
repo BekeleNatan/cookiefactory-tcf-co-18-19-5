@@ -3,6 +3,7 @@ package order;
 import fr.unice.polytech.cod.stats.Stats;
 import store.Stock;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -11,7 +12,7 @@ public class OrderRegister {
     List<Stats> stats;
 
     public OrderRegister(){
-
+        orders = new ArrayList<>();
     }
 
     public Order findOrder(UUID aOrderId) {
@@ -21,6 +22,10 @@ public class OrderRegister {
             }
         }
         return null;
+    }
+
+    public List<Order> getOrders() {
+        return orders;
     }
 
     public Order createNewOrder() {

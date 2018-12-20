@@ -60,4 +60,16 @@ public class OrderTest {
     public void changeState(){
         assertTrue(order.changeState());
     }
+
+      @Test
+    public  void correctDeductionFromPayment(){
+        order.setPrice(10.0);
+        Double expected = order.getRemainToPay() -  5;
+
+        order.deductPayedAmount(5);
+        Double actual = order.getRemainToPay();
+        assertEquals(expected,actual,0.001);
+    }
+
+
 }
