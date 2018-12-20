@@ -54,9 +54,9 @@ public class Store {
         return true;
     }
 
-    public double getPointsToMoneyRate() {
-        return this.pointsToMoneyRate;
-    }
+    public double getPointsToMoneyRate() { return this.pointsToMoneyRate;}
+
+
 
     // Name
     public String getName() {
