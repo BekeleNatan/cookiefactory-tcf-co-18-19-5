@@ -6,10 +6,8 @@ import recipe.Recipe;
 import store.Stock;
 import store.workinghours.WorkingHours;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
+import java.time.*;
+import java.util.*;
 
 public class Order {
 
@@ -22,6 +20,7 @@ public class Order {
     private Customer customer;
     private double price;
     private double remainToPay;
+    private int minTimeToMakeOrder = 2;
 
     private PaymentInfos paymentInfos = new PaymentInfos();
 
@@ -90,6 +89,22 @@ public class Order {
         }else{
             return false;
         }
+    }
+
+    public boolean dateIsCorrect(Date collectTime, WorkingHours wo) {
+        Calendar minTime = Calendar.getInstance();
+        minTime.setTime(new Date());
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(collectTime);
+
+        Instant instant = Instant.ofEpochMilli(calendar.getTimeInMillis());
+        LocalTime convert = LocalDateTime.ofInstant(instant, ZoneId.systemDefault()).toLocalTime();
+
+        int dayOfTheWeek = calendar.get(Calendar.DAY_OF_WEEK)-1;
+        if (dayOfTheWeek==0)dayOfTheWeek=7;
+
+        minTime.add(calendar.HOUR,minTimeToMakeOrder);
+        return collectTime.after(minTime.getTime()) && wo.isOpenOn(DayOfWeek.of(dayOfTheWeek),convert);
     }
 
     public double getPrice() {
