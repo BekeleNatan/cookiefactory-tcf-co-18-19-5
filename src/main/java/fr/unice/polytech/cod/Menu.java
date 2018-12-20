@@ -19,6 +19,7 @@ abstract public class Menu {
         return this.recipes;
     }
 
+
     public void addRecipe(Recipe aRecipe) {
         recipes.add(aRecipe);
     }
@@ -29,7 +30,9 @@ abstract public class Menu {
 
     public Optional<Recipe> getRecipeByName(String aRecipeName){
         Recipe returnRecipe = null;
+        List<Recipe> recipes = this.getRecipes();
         for(Recipe r : recipes){
+            System.out.println("**************");
             if(r.getCookieType().equals(CookieType.NormalRecipe)){
                 if(((NormalRecipe)r).getName().equals(aRecipeName)){
                     return Optional.of(r);
