@@ -6,6 +6,7 @@ import order.Order;
 import order.states.Collected;
 import order.states.Done;
 import order.states.OnCreation;
+import order.states.ToDo;
 import recipe.CookingType;
 import recipe.MixType;
 import recipe.NormalRecipe;
@@ -78,7 +79,7 @@ public class CreatingNewOrdersStepDefs implements En {
             workingHours.addOpeningFragement(DayOfWeek.SUNDAY, LocalTime.of(Integer.parseInt(openingHour), Integer.parseInt(openingMinutes)), LocalTime.of(Integer.parseInt(closingHour), Integer.parseInt(closingMinutes)));
         });
 
-        Given("^I order (.+) \"([^\"]*)\" for (.+)h(.+) with the phone number \"([^\"]*)\"$",
+        Given("^I order (.+) \"([^\"]*)\" for (.+)h(.+) tomorrow with the phone number \"([^\"]*)\"$",
                 (String quantity, String recipeName, String hour, String minute, String telephoneNumber) -> {
                     System.out.println(store.getStoreMenu().getMenu(stock).size());
                     for (Recipe recipe : store.getStoreMenu().getMenu(stock)){
@@ -88,6 +89,9 @@ public class CreatingNewOrdersStepDefs implements En {
                     order = new Order();
                     order.addItem(recipe, Integer.parseInt(quantity), stock);
                     Date date = new Date();
+                    if(date.getMonth()+1==13)date.setYear(date.getYear()+1);
+                    if(date.getDate()+1==28)date.setMonth((date.getMonth()+1)%12);
+                    date.setDate((date.getDate()%28)+1); // c'est dans le but d'avoir une date toujours correct
                     date.setHours(Integer.parseInt(hour));
                     date.setMinutes(Integer.parseInt(minute));
                     order.addInfos(date,telephoneNumber,store.getWorkingHours());
@@ -95,6 +99,10 @@ public class CreatingNewOrdersStepDefs implements En {
 
         When("^I validate my order$",()-> {
             order.changeState();
+        });
+
+        When("^I pay my order$",()-> {
+            order.setPayed(true); //todo make the right way to pay
         });
 
         When("The staff gives me my order", () -> {
@@ -105,8 +113,16 @@ public class CreatingNewOrdersStepDefs implements En {
             assertTrue(order.getCurrentState() instanceof OnCreation);
         });
 
+        Then("^The order is in the state toDo$",()-> {
+            assertTrue(order.getCurrentState() instanceof ToDo);
+        });
+
         Then("^The order is in the state collected$",()-> {
             assertTrue(order.getCurrentState() instanceof Collected);
+        });
+
+        Then("^The order is paid$",()-> {
+            assertTrue(order.isPayed());
         });
     }
 }
