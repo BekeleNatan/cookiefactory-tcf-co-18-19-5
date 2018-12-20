@@ -13,3 +13,9 @@ Feature: order creation
     Given I order 1 "hardChocolate" for 19h00 with the phone number "0623862099"
     When I validate my order
     Then The order is in the state onCreation
+
+  Scenario: I come to get my cookies
+    Given I have a done order
+    And I have paid the order
+    When The staff gives me my order
+    Then The order is in the state collected
