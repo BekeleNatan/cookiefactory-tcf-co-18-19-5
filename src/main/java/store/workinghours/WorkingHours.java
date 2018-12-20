@@ -1,5 +1,8 @@
 package store.workinghours;
 
+import order.Order;
+import order.OrderRegister;
+
 import java.time.DayOfWeek;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -34,13 +37,18 @@ public class WorkingHours {
     }
 
     // ok
-    public boolean deleteOpeningFragement(DayOfWeek day, LocalTime from, LocalTime to) {
+    public boolean deleteOpeningFragement(DayOfWeek day, LocalTime from, LocalTime to, OrderRegister or) {
         for (OpeningFragment of : this.openingFragments) {
             if (of.getDay().equals(day) && of.getOpening().equals(from) && of.getClosing().equals(to)) {
                 this.openingFragments.remove(of);
+                for (Order order : or.getOrders()){
+                    if(!order.dateIsCorrect(order.getCollectTime(),this)) {
+                        this.openingFragments.add(of);
+                        throw new UnsupportedOperationException();
+                    }
+                }
                 return true;
             }
-            // todo : check if there's no order dans cette date
         }
         return false;
     }
