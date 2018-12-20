@@ -43,7 +43,7 @@ public class CreatingNewOrdersStepDefs implements En {
         Ingredient caramel_topping = new Ingredient("Caramel", IngredientType.Topping, 1.5, 0.8);
         stock.addIngredient(caramel_topping, 15);
 
-        Given("^Une recette generale \"([^\"]*)\" avec Dough : \"([^\"]*)\", Flavour : \"([^\"]*)\", Topping : \"([^\"]*)\", Cooking : \"([^\"]*)\", Mix : \"([^\"]*)\", Price : (.+)$",
+        Given("^A general recipe \"([^\"]*)\" with Dough : \"([^\"]*)\", Flavour : \"([^\"]*)\", Topping : \"([^\"]*)\", Cooking : \"([^\"]*)\", Mix : \"([^\"]*)\", Price : (.+)$",
                 (String recipeName, String dough, String flavour, String topping, String cooking, String mix, String price) -> // besoin de refactorer int en Integer car utilisation de la généricité par Cucumber Java 8
                 {
                     List<Ingredient> ingredients = new ArrayList<>();
@@ -57,7 +57,7 @@ public class CreatingNewOrdersStepDefs implements En {
                     fm.addRecipe(nr);
                 });
 
-        And("^Un magasin ouvert tous les jours de (.+)h(.+) à (.+)h(.+)$", (String openingHour, String openingMinutes, String closingHour, String closingMinutes) -> {
+        And("^A store opening every day from (.+)h(.+) to (.+)h(.+)$", (String openingHour, String openingMinutes, String closingHour, String closingMinutes) -> {
             WorkingHours workingHours = store.getWorkingHours();
             workingHours.addOpeningFragement(DayOfWeek.MONDAY, LocalTime.of(Integer.parseInt(openingHour), Integer.parseInt(openingMinutes)), LocalTime.of(Integer.parseInt(closingHour), Integer.parseInt(closingMinutes)));
             workingHours.addOpeningFragement(DayOfWeek.TUESDAY, LocalTime.of(Integer.parseInt(openingHour), Integer.parseInt(openingMinutes)), LocalTime.of(Integer.parseInt(closingHour), Integer.parseInt(closingMinutes)));
@@ -68,7 +68,7 @@ public class CreatingNewOrdersStepDefs implements En {
             workingHours.addOpeningFragement(DayOfWeek.SUNDAY, LocalTime.of(Integer.parseInt(openingHour), Integer.parseInt(openingMinutes)), LocalTime.of(Integer.parseInt(closingHour), Integer.parseInt(closingMinutes)));
         });
 
-        Given("^Je commande (.+) \"([^\"]*)\" pour (.+)h(.+) avec le numéro de téléphone \"([^\"]*)\"$",
+        Given("^I order (.+) \"([^\"]*)\" for (.+)h(.+) with the phone number \"([^\"]*)\"$",
                 (String quantity, String recipeName, String hour, String minute, String telephoneNumber) -> {
                     System.out.println(store.getStoreMenu().getMenu(stock).size());
                     for (Recipe recipe : store.getStoreMenu().getMenu(stock)){
@@ -83,11 +83,11 @@ public class CreatingNewOrdersStepDefs implements En {
                     order.addInfos(date,telephoneNumber,store.getWorkingHours());
                 });
 
-        When("^Je valide ma commande$",()-> {
+        When("^I validate my order$",()-> {
             order.changeState();
         });
 
-        Then("^La commande est dans l'état onCreation$",()-> {
+        Then("^The order is in the state onCreation$",()-> {
             assertTrue(order.getCurrentState() instanceof OnCreation);
         });
     }
