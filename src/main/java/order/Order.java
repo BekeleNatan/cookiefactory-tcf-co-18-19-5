@@ -48,7 +48,7 @@ public class Order {
         return currentState.addInfos(aDate, aPhoneNumber, aWh);
     }
 
-    public boolean changeState(){
+    public boolean changeState() {
         return currentState.nextState();
     }
 
@@ -64,29 +64,31 @@ public class Order {
         return collectTime;
     }
 
-    public Customer getCustomer(){
+    public Customer getCustomer() {
         return customer;
     }
 
-    public double getRemainToPay(){
+    public double getRemainToPay() {
         return remainToPay;
     }
 
-    public void setPrice(double new_price){
+    public void setPrice(double new_price) {
         price = new_price;
         remainToPay = new_price;
     }
 
-    public void deductPayedAmount(double payedAmount){
-        remainToPay = remainToPay - payedAmount;
-        if(price - remainToPay < remainingPaymentThreshold)
-            this.setPayed(true);
+    public void deductPayedAmount(double payedAmount) {
+        if (Double.compare(remainToPay, 0.0)>0) {
+            remainToPay = remainToPay - payedAmount;
+            if (price - remainToPay < remainingPaymentThreshold)
+                this.setPayed(true);
+        }
     }
 
     public boolean paymentConditionOk() {
-        if(price< limitForCashPayment || this.isPayed()){
+        if (price < limitForCashPayment || this.isPayed()) {
             return true;
-        }else{
+        } else {
             return false;
         }
     }
