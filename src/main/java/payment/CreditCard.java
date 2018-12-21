@@ -1,5 +1,7 @@
 package payment;
 
+import payment.information.CreditCardType;
+
 public class CreditCard {
 
     private String nameOnCard;

@@ -14,7 +14,7 @@ public class CashPayment implements PaymentMethod {
     }
 
     public boolean pay(Double aAmount) {
-        if (!this.unfaithPassQrCode.isEmpty()) {
+        if (this.unfaithPassQrCode != null) {
             Double pointsGained = aAmount * this.moneyToPointRate;
             return this.unfaithPassService.addPoints(this.unfaithPassQrCode,pointsGained);
         }
