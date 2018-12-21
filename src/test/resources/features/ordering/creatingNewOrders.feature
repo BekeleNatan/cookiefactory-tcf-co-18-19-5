@@ -10,7 +10,7 @@ Feature: order creation
     And A store opening every day from 8h00 to 18h00
 
   Scenario: I can't order outside the opening hours
-    Given I order 1 "hardChocolate" for 19h00 with the phone number "0623862099"
+    Given I order 1 "hardChocolate" for 19h00 tomorrow with the phone number "0623862099"
     When I validate my order
     Then The order is in the state onCreation
 
@@ -19,3 +19,13 @@ Feature: order creation
     And I have paid the order
     When The staff gives me my order
     Then The order is in the state collected
+
+  Scenario: I know an order is paid
+    Given I order 1 "hardChocolate" for 19h00 tomorrow with the phone number "0623862099"
+    When I pay my order
+    Then The order is paid
+
+  Scenario: I order correctly without account
+    Given I order 1 "hardChocolate" for 17h00 tomorrow with the phone number "0623862099"
+    When I validate my order
+    Then The order is in the state toDo
