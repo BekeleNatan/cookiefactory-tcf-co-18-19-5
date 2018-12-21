@@ -81,8 +81,8 @@ public class CreatingNewOrdersStepDefs implements En {
 
         Given("^I order (.+) \"([^\"]*)\" for (.+)h(.+) tomorrow with the phone number \"([^\"]*)\"$",
                 (String quantity, String recipeName, String hour, String minute, String telephoneNumber) -> {
-                    System.out.println(store.getStoreMenu().getMenu(stock).size());
-                    for (Recipe recipe : store.getStoreMenu().getMenu(stock)){
+                    System.out.println(store.getStoreMenu().getMenu().size());
+                    for (Recipe recipe : store.getStoreMenu().getMenu()){
                         System.out.println(((NormalRecipe)recipe).getName());
                     }
                     Recipe recipe = store.getStoreMenu().getRecipeByName(recipeName).get();

@@ -5,6 +5,7 @@ import franchise.FranchiseMenu;
 import recipe.CookieType;
 import recipe.NormalRecipe;
 import recipe.Recipe;
+import recipe.ingredients.Ingredient;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,7 +39,7 @@ public class StoreMenu extends Menu {
         return Optional.empty();
     }
 
-    public List<Recipe> getMenu(Stock aStock) {
+    public List<Recipe> getMenu() {
         // todo : STORE MENU : check availability with the stock
         // todo : STORE MENU : check if we don't have the same
         List<Recipe> storeMenu = new ArrayList<>(franchiseMenu.getMenu());
@@ -46,5 +47,22 @@ public class StoreMenu extends Menu {
             storeMenu.addAll(super.getRecipes());
         }
         return storeMenu;
+    }
+
+    public List<Recipe> displayMenu(Stock aStock){
+        List<Recipe> recipesToDisplay = new ArrayList<>();
+
+        for (Recipe recipe : this.getMenu()){
+            boolean toAdd = true;
+            for (Ingredient ingredient : recipe.getIngredients()){
+                if(!aStock.isStockContains(ingredient)){
+                    toAdd = false;
+                }
+            }
+            if(toAdd == true){
+                recipesToDisplay.add(recipe);
+            }
+        }
+        return recipesToDisplay;
     }
 }

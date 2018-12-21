@@ -26,14 +26,10 @@ public class StoreMenuTest {
 
     @Before
     public void initialize() {
-        cookieFactory = new CookieFactory(1, 1, 0,
-                1, 1, 3, 2);
+        cookieFactory = new CookieFactory(0, 1, 0,
+                1, 0, 3, 2);
 
         ingredientsSample = new ArrayList<>();
-        ingredientsSample.add(new Ingredient("Chocolate", IngredientType.Dough, 1, 1));
-        ingredientsSample.add(new Ingredient("Cinnamon", IngredientType.Flavour, 1, 1));
-        ingredientsSample.add(new Ingredient("White chocolate", IngredientType.Topping, 1, 1));
-        ingredientsSample.add(new Ingredient("Milk chocolate", IngredientType.Topping, 1, 1));
 
         franchiseMenu = new FranchiseMenu();
 
@@ -50,21 +46,21 @@ public class StoreMenuTest {
         store.getStoreMenu().addRecipe(monthly);
         List<Recipe> expected = new ArrayList<>();
         expected.add(monthly);
-        assertEquals(expected, store.getStoreMenu().getMenu(new Stock()));
+        assertEquals(expected, store.getStoreMenu().getMenu());
 
         store.getStoreMenu().removeRecipe(monthly);
-        assertTrue(store.getStoreMenu().getMenu(new Stock()).isEmpty());
+        assertTrue(store.getStoreMenu().getMenu().isEmpty());
     }
 
 
     @Test
     public void getMenuWithOnlyFranchiseRecipe() {
-        assertTrue(store.getStoreMenu().getMenu(new Stock()).isEmpty());
+        assertTrue(store.getStoreMenu().getMenu().isEmpty());
         franchiseMenu.getMenu().add(recipe1);
-        store.getStoreMenu().getMenu(new Stock());
+        store.getStoreMenu().getMenu();
         ArrayList<Recipe> expected = new ArrayList<>();
         expected.add(recipe1);
-        assertEquals(expected, store.getStoreMenu().getMenu(new Stock()));
+        assertEquals(expected, store.getStoreMenu().getMenu());
     }
 
     @Test
@@ -75,6 +71,23 @@ public class StoreMenuTest {
         ArrayList<Recipe> expected = new ArrayList<>();
         expected.add(recipe1);
         expected.add(recipe2);
-        assertEquals(expected, store.getStoreMenu().getMenu(new Stock()));
+        assertEquals(expected, store.getStoreMenu().getMenu());
+    }
+
+    @Test
+    public void getMenuThatDoNotContainsRecipesWithIngredientsOutOfStock(){
+
+        // creating a recipe that contains ingredients out of stock
+        List<Ingredient> listIngredientsOutOfStock  = new ArrayList<>();
+        listIngredientsOutOfStock.add(new Ingredient("ChocoBlanco", IngredientType.Topping, 2, 2));
+        Recipe recipe = cookieFactory.createNormalRecipe("BlancoChocoladaCookie", 2, CookingType.Crunchy, MixType.Mixed, listIngredientsOutOfStock);
+
+        store.getStoreMenu().addRecipe(recipe);
+        // franchiseMenu.addRecipe(recipe1);
+        ArrayList<Recipe> expected = new ArrayList<>();
+
+        // trying to display a recipe that have ingredients, but using a empty stock
+        List<Recipe> listOfDisplayedIngredients = store.getStoreMenu().displayMenu(new Stock());
+        assertTrue(!listOfDisplayedIngredients.contains(recipe));
     }
 }
