@@ -3,20 +3,20 @@ Feature: Every store can manage its own menu
   - The menu don't display recipes containing missing ingredient (out of stock)
 
   Background:
-    Given a store "COD Antibes" of the franchise
+    Given "COD Antibes" a store of the franchise
+    And "COD Montpellier" a store of the franchise
 
   Scenario: Setting the store's monthly recipe
     When the manager of the store "COD Antibes" set a new monthly recipe called "Bananana"
-    Then "Bananana" is the monthly recipe
-    And "Bananana" do appear in the store's menu
+    Then "Bananana" is contained in the menu of "COD Antibes"
+    And "Bananana" is not contained in the menu of "COD Montpellier"
 
   Scenario: Deleting the store's monthly recipe
+    Given the manager of the store "COD Antibes" set a new monthly recipe called "Bananana"
     When the manager of the store "COD Antibes" deletes the monthly recipe called "Bananana"
-    Then There's no monthly recipe
-    And "Bananana" do not appear in the store's menu
+    And "Bananana" is not contained in the menu of "COD Antibes"
 
   Scenario: The menu don't display recipes that contains ingredients out of stock
-    Given the store "COD Antibes" has the following list of ingredients in its stock
-
-    Then There's no monthly recipe
-    And "Bananana" do not appear in the store's menu
+    Given "COD Antibes" have an empty stock
+    When We add a recipe called "Kokoloco" to the menu of the store "COD Antibes"
+    Then "Kokoloco" do not appear in the menu of "COD Antibes"
