@@ -56,7 +56,9 @@ public class Store {
 
     public double getPointsToMoneyRate() { return this.pointsToMoneyRate;}
 
-
+    public void setStock(Stock stock){
+        this.stock = stock;
+    }
 
     // Name
     public String getName() {

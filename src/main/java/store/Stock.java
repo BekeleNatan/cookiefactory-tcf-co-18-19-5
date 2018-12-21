@@ -29,6 +29,10 @@ public class Stock {
         }
     }
 
+    public boolean isStockContains(Ingredient ingredient){
+        return ingredients.containsKey(ingredient);
+    }
+
     public boolean isEnough(Ingredient ingredient, int quantity){
         if (ingredients.containsKey(ingredient)) {
             int nbrIngredient = ingredients.get(ingredient);
