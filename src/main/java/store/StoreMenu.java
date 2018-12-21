@@ -14,7 +14,7 @@ import java.util.Optional;
 public class StoreMenu extends Menu {
     private FranchiseMenu franchiseMenu;
 
-    StoreMenu(FranchiseMenu franchiseMenu) {
+    public StoreMenu(FranchiseMenu franchiseMenu) {
         super();
         this.franchiseMenu = franchiseMenu;
     }
