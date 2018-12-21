@@ -1,10 +1,8 @@
 package payment.creditcard;
 
 import payment.CreditCard;
-import payment.CreditCardType;
 import payment.PaymentMethod;
 import payment.services.BankPaymentService;
-import payment.services.UnfaithPassService;
 
 public class CreditCardPayment implements PaymentMethod {
     private Double moneyToPointRate;

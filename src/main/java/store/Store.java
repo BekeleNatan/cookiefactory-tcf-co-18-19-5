@@ -1,8 +1,11 @@
 package store;
 
 import franchise.FranchiseMenu;
+import order.Order;
 import order.OrderRegister;
 import store.workinghours.WorkingHours;
+
+import java.util.UUID;
 
 
 public class Store {
@@ -17,6 +20,7 @@ public class Store {
     private StoreMenu storeMenu;
     private Stock stock;
     private OrderRegister orderRegister;
+    private CashRegister cashRegister;
 
     public Store(String name, FranchiseMenu franchiseMenu) {
         this.storeName = name;
@@ -27,6 +31,7 @@ public class Store {
         this.moneyToPointsRate= 0.01;
         this.stock = new Stock();
         this.orderRegister = new OrderRegister();
+        cashRegister= new CashRegister();
     }
 
     // taxeRate
@@ -84,5 +89,17 @@ public class Store {
 
     public void setMoneyToPointsRate(double moneyToPointsRate) {
         this.moneyToPointsRate = moneyToPointsRate;
+    }
+
+    public Order createOrder() {
+        return orderRegister.createNewOrder();
+    }
+
+    public Order collectOrder(UUID orderId) {
+        return orderRegister.findOrder(orderId);
+    }
+
+    public CashRegister getCashRegister() {
+        return cashRegister;
     }
 }

@@ -2,6 +2,9 @@ package order;
 
 import order.states.OnCreation;
 import order.states.OrderState;
+import payment.information.PaymentLocation;
+import payment.information.PaymentType;
+import payment.UnAuthorisedPaymentException;
 import recipe.Recipe;
 import store.Stock;
 import store.workinghours.WorkingHours;
@@ -11,8 +14,8 @@ import java.util.*;
 
 public class Order {
 
-    private static double remainingPaymentThreshold = 0.01;
-    private static double limitForCashPayment = 100;
+
+    private double limitForCashPayment = 100;
 
     private UUID orderId;
     private Date collectTime = null;
@@ -21,6 +24,8 @@ public class Order {
     private double price;
     private double remainToPay;
     private int minTimeToMakeOrder = 2;
+    private PaymentType paymentType;
+    private PaymentLocation paymentLocation;
 
     private PaymentInfos paymentInfos = new PaymentInfos();
 
@@ -34,6 +39,7 @@ public class Order {
         orderId = UUID.randomUUID();
         customer = new Customer();
         currentState = new OnCreation(this);
+        paymentLocation = PaymentLocation.ONLINE;
     }
 
     public OrderState getCurrentState() {
@@ -78,9 +84,9 @@ public class Order {
     }
 
     public void deductPayedAmount(double payedAmount) {
-        if (Double.compare(remainToPay, 0.0)>0) {
+        if (Double.compare(remainToPay, 0.0) > 0) {
             remainToPay = remainToPay - payedAmount;
-            if (price - remainToPay < remainingPaymentThreshold)
+            if (Double.compare(0.0,remainToPay)==0)
                 this.setPayed(true);
         }
     }
@@ -102,11 +108,11 @@ public class Order {
         Instant instant = Instant.ofEpochMilli(calendar.getTimeInMillis());
         LocalTime convert = LocalDateTime.ofInstant(instant, ZoneId.systemDefault()).toLocalTime();
 
-        int dayOfTheWeek = calendar.get(Calendar.DAY_OF_WEEK)-1;
-        if (dayOfTheWeek==0)dayOfTheWeek=7;
+        int dayOfTheWeek = calendar.get(Calendar.DAY_OF_WEEK) - 1;
+        if (dayOfTheWeek == 0) dayOfTheWeek = 7;
 
-        minTime.add(calendar.HOUR,minTimeToMakeOrder);
-        return collectTime.after(minTime.getTime()) && wo.isOpenOn(DayOfWeek.of(dayOfTheWeek),convert);
+        minTime.add(calendar.HOUR, minTimeToMakeOrder);
+        return collectTime.after(minTime.getTime()) && wo.isOpenOn(DayOfWeek.of(dayOfTheWeek), convert);
     }
 
     public double getPrice() {
@@ -123,5 +129,26 @@ public class Order {
 
     public void setPayed(boolean payed) {
         isPayed = payed;
+    }
+
+    public void changePaymentType(PaymentType paymentType) throws UnAuthorisedPaymentException {
+        if (Double.compare(this.limitForCashPayment, this.getPrice()) < 0 &&
+                this.paymentLocation==PaymentLocation.COUNTER) {
+            String errMsg = "The limit for ordering online and paying at the counter is: " + this.limitForCashPayment;
+            throw new UnAuthorisedPaymentException(limitForCashPayment,errMsg );
+        }
+        this.paymentType = paymentType;
+    }
+
+    public PaymentType getPaymentType() {
+        return this.paymentType;
+    }
+
+    public PaymentLocation getPaymentLocation() {
+        return paymentLocation;
+    }
+
+    public void setPaymentLocation(PaymentLocation paymentLocation) {
+        this.paymentLocation = paymentLocation;
     }
 }
