@@ -29,6 +29,8 @@ public class ManageFranchiseStoresStepdefs implements En {
             if (franchise.getStoreByName(storeName).isPresent()) {
                 franchise.removeStore(storeName);
             }
+        });
+        Then("^the store \"([^\"]*)\" do not exist on the system$", (String storeName) -> {
             assertTrue(!franchise.getStoreByName(storeName).isPresent());
         });
     }
