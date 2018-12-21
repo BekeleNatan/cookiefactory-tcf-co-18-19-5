@@ -19,8 +19,7 @@ Feature: Ingredient management
      When he sets the new margin price of ingredient "<ingredient>" to "<marginPrice>"
      Then the ingredient's margin price is updated and the new margin price is "<marginPrice>"
      Examples:
-
-           | ingredient | type | marginPrice |
-           | Vanilla    | Flavour      | 0.5 |
-           | Plain      | Dough        | 1.5 |
-           | white chocolate | Topping | 2.0 |
+           | ingredient       | type          | marginPrice |
+           | Vanilla          | Flavour       | 0.5         |
+           | Plain            | Dough         | 1.5         |
+           | white chocolate  | Topping       | 2.0         |
