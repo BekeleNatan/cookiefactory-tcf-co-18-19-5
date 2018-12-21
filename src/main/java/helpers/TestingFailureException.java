@@ -18,6 +18,13 @@ public class TestingFailureException {
         exceptions.add(e);
     }
 
+    public void addIllegalArgumentException(IllegalArgumentException e) {
+        if (!expectException) {
+            throw e;
+        }
+        exceptions.add(e);
+    }
+
     public boolean aFailureIsDetected(){
         return exceptions.size() == 1;
     }
