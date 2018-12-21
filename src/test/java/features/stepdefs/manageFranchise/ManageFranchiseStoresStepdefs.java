@@ -1,4 +1,4 @@
-package features.stepdefs;
+package features.stepdefs.manageFranchise;
 
 import cucumber.api.PendingException;
 import cucumber.api.java8.En;
