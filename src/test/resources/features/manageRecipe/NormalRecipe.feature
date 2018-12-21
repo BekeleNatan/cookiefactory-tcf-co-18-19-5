@@ -34,4 +34,4 @@ Feature: recipe management
      Given the store menu as create
      When the store create the recipe that was added to the menu
      Then the month's recipe is define
-
+ 
