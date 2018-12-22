@@ -143,6 +143,10 @@ public class Order {
         this.paymentType = paymentType;
     }
 
+    public List<Item> getItems() {
+        return items;
+    }
+
     public PaymentType getPaymentType() {
         return this.paymentType;
     }
