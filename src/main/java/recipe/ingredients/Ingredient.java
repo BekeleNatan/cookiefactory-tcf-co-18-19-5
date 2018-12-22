@@ -32,6 +32,10 @@ public class Ingredient {
          return this.priceMargin;
     }
 
+    public double getTotalPrice(){
+        return this.priceMargin + this.ingredientPrice;
+    }
+
     public void setIngredientPrice(double ingredientPrice) {
         this.ingredientPrice = ingredientPrice;
     }

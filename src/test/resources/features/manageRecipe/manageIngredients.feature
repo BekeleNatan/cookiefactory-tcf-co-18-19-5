@@ -1,25 +1,13 @@
-Feature: Ingredient management
-  as  a store I want to manage my ingredients
+Feature: Managing ingredients
+  for every ingredient, we can modifiy its price, and its margin.
 
   Background:
-     Given the franchise "COD" have a store "LaMer"
+    Given an ingredient called "chocolatDough" of type "Dough", the price of the ingredient is 0.2 and the price margin 0.2
 
-  Scenario Outline: add an unknown ingredient
-    Given the type "<type>" of ingredient is known
-    When the store of franchise  has ingredient and he doesn't know the name and price and margin price
-    Then the ingredient is had to store like an unknown ingredient
-    Examples:
-              | type     |
-              | Flavour  |
-              | Dough    |
-              | Topping  |
+  Scenario: changing the price exclusive of taxes
+    When the manager changes the price exclusive of taxes of the ingredient to 0.3
+    Then the total price of the ingredient is 0.5
 
-   Scenario Outline: ingredients margin management
-     Given the ingredient "<ingredient>" exists and it is a "<type>"
-     When he sets the new margin price of ingredient "<ingredient>" to "<marginPrice>"
-     Then the ingredient's margin price is updated and the new margin price is "<marginPrice>"
-     Examples:
-           | ingredient       | type          | marginPrice |
-           | Vanilla          | Flavour       | 0.5         |
-           | Plain            | Dough         | 1.5         |
-           | white chocolate  | Topping       | 2.0         |
+  Scenario: changing the margin price of an ingredient
+    When the manager changes the price margin of the ingredient to 0.1
+    Then the total price of the ingredient is 0.3
