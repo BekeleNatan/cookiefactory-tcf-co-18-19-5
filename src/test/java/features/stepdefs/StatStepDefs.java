@@ -55,8 +55,8 @@ public class StatStepDefs implements En {
         });
 
         Given("^I have a order register with (\\d+) personalised cookies$", (Integer sum) -> {
-            Order order1 = store.getOrderRegister().createNewOrder();
-            Order order2 = store.getOrderRegister().createNewOrder();
+            Order order1 = store.getOrderRegister().createNewOrder(store);
+            Order order2 = store.getOrderRegister().createNewOrder(store);
             order1.addItem(franchiseMenu.getRecipes().get(0), 5, stock);
             order1.addItem(franchiseMenu.getRecipes().get(1), 2, stock); // order 1 has 2 personalized cookies
             order2.addItem(franchiseMenu.getRecipes().get(1), 3, stock); // order 2 has 3 personalized cookies
@@ -73,8 +73,8 @@ public class StatStepDefs implements En {
         });
 
         Given("^I have a order register with (\\d+) cookies$", (Integer arg0) -> {
-            Order order1 = store.getOrderRegister().createNewOrder();
-            Order order2 = store.getOrderRegister().createNewOrder();
+            Order order1 = store.getOrderRegister().createNewOrder(store);
+            Order order2 = store.getOrderRegister().createNewOrder(store);
             order1.addItem(franchiseMenu.getRecipes().get(0), 5, stock);
             order1.setCollectTime(new Date());
             order2.setCollectTime(new Date());
@@ -97,14 +97,14 @@ public class StatStepDefs implements En {
 
         });
         And("^Store one has sold (\\d+) personalized cookies$", (Integer arg0) -> {
-            Order order1 = store.getOrderRegister().createNewOrder();
+            Order order1 = store.getOrderRegister().createNewOrder(store);
 
             order1.addItem(franchiseMenu.getRecipes().get(0), 5, stock);
             order1.addItem(franchiseMenu.getRecipes().get(1), 10, stock);
 
         });
         And("^Store two has sold (\\d+) personalized cookies$", (Integer arg0) -> {
-            Order order2 = store2.getOrderRegister().createNewOrder();
+            Order order2 = store2.getOrderRegister().createNewOrder(store2);
             order2.addItem(franchiseMenu.getRecipes().get(1), 5, stock);
         });
         And("^I want to see the number of cookies sold for every store$", () -> {
