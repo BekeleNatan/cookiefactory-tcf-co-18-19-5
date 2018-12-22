@@ -5,7 +5,8 @@ Feature: order creation
   as a client of cod, I want to order cookies
 
   Background:
-    Given A general recipe "hardChocolate" with Dough : "Plain", Flavour : "Vanilla", Topping : "MandMs", Cooking : "Crunchy", Mix : "Mixed", Price : 3.4
+    Given The store stocks are 15 of each
+    And A general recipe "hardChocolate" with Dough : "Plain", Flavour : "Vanilla", Topping : "MandMs", Cooking : "Crunchy", Mix : "Mixed", Price : 3.4
     And A general recipe "whiteChocolate" with Dough : "Oatmeal", Flavour : "Cinnamon", Topping : "MandMs", Cooking : "Crunchy", Mix : "Mixed", Price : 3.5
     And A store opening every day from 8h00 to 18h00
 
@@ -29,3 +30,22 @@ Feature: order creation
     Given I order 1 "hardChocolate" for 17h00 tomorrow with the phone number "0623862099"
     When I validate my order
     Then The order is in the state toDo
+
+  Scenario: I order something that can not be done (stock too short)
+    Given The store stocks are 3 of each
+    When I order 4 "hardChocolate" for 17h00 tomorrow with the phone number "0623862099"
+    Then The order contains 0 items
+
+  Scenario: I order personalized cookies along with normal ones
+    Given I order 1 "hardChocolate" for 17h00 tomorrow with the phone number "0623862099"
+    And I compose a "Personalized" recipe called "OurPersonalizedRecipe" with mix type "Mixed", cooking type "Chewy"
+    And I add the ingredient called "Oatmeal"
+    And I add the ingredient called "MandMs"
+    And I add the ingredient called "Vanilla"
+    And I make my recipe
+    And I add 3 cookies of my recipe to the order
+    When I validate my order
+    Then The order is in the state toDo
+    And The order contains 2 items
+    And The order contains 4 cookies
+
