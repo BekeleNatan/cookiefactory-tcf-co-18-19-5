@@ -51,8 +51,9 @@ Feature: order creation
 
   Scenario: I order correctly with discount
     Given I order 1 "hardChocolate" for 17h00 tomorrow with the phone number "0623862099"
+    And The store tax rate is 1.23
     And I add a discount because I have already ordered 30 cookies or more
     When I validate my order
     Then The order is in the state toDo
-    And The price is 3.06
+    And The price is 3.76
 

@@ -67,6 +67,10 @@ public class CreatingNewOrdersStepDefs implements En {
             order.setCurrentState(new Done(order));
         });
 
+        And("The store tax rate is (.+)",(String taxRate)->{
+            store.setTaxeRate(Double.parseDouble(taxRate));
+        });
+
         And("I have paid the order", ()->{
             order.setPayed(true);
         });
@@ -181,7 +185,7 @@ public class CreatingNewOrdersStepDefs implements En {
         });
 
         And("^The price is (.+)$",(String priceString)->{
-            assertEquals(Double.parseDouble(priceString),order.getPrice(),0.0001);
+            assertEquals(Double.parseDouble(priceString),order.getPrice(),0.01);
         });
     }
 }
