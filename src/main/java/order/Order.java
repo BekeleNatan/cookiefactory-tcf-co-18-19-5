@@ -28,6 +28,7 @@ public class Order {
     private int minTimeToMakeOrder = 2;
     private Set<PaymentType> paymentType;
     private PaymentLocation paymentLocation;
+    private boolean hasReduction = false;
 
     private PaymentInfos paymentInfos = new PaymentInfos();
 
@@ -167,5 +168,13 @@ public class Order {
 
     public void setPaymentLocation(PaymentLocation paymentLocation) {
         this.paymentLocation = paymentLocation;
+    }
+
+    public void setHasReduction(boolean hasReduction) {
+        this.hasReduction = hasReduction;
+    }
+
+    public boolean isHasReduction() {
+        return hasReduction;
     }
 }

@@ -33,4 +33,6 @@ abstract public class OrderState {
 		return false;
 	}
 
+	public void setRightToVoucher(boolean right){throw new UnsupportedOperationException();}
+
 }
