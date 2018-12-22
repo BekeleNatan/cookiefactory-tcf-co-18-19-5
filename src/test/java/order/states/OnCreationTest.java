@@ -220,19 +220,7 @@ public class OnCreationTest {
         assertFalse(onCreation.addInfos(date,"03456",null));
     }
 
-    @Test
-    public void addInfosOutOfWorkingHours(){
-        date.setHours(date.getHours()+3);
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(date);
-        Instant instant = Instant.ofEpochMilli(calendar.getTimeInMillis());
-        LocalTime localTime = LocalDateTime.ofInstant(instant, ZoneId.systemDefault()).toLocalTime();
 
-        int dayOfTheWeek = calendar.get(Calendar.DAY_OF_WEEK)-1;
-        Mockito.when(wo.isOpenOn(DayOfWeek.of(dayOfTheWeek),localTime)).thenReturn(false);
-
-        assertFalse(onCreation.addInfos(date,"03456",wo));
-    }
 
     @Test
     public void addDateTooCloseToNow(){
