@@ -15,6 +15,7 @@ public class CashRegister {
 			}
 		}
 		catch (Exception e){
+			e.printStackTrace();
 
 		}
 

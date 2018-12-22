@@ -16,8 +16,8 @@ public class PaymentMethodFactory {
     private Double pointToMoneyRate;
 
     public PaymentMethodFactory(Double pointToMoneyRate, Double moneyToPointRate) {
-        moneyToPointRate = moneyToPointRate;
-        pointToMoneyRate = pointToMoneyRate;
+        this.moneyToPointRate = moneyToPointRate;
+        this.pointToMoneyRate = pointToMoneyRate;
     }
 
     public CreditCardPayment createCreditCard(String aNameOnCard, String aNumber, String aCvv, String aExpirationDate) {
