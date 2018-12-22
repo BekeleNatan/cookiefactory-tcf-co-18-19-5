@@ -86,8 +86,11 @@ public class Order {
     public void deductPayedAmount(double payedAmount) {
         if (Double.compare(remainToPay, 0.0) > 0) {
             remainToPay = remainToPay - payedAmount;
-            if (Double.compare(0.0,remainToPay)==0)
+            if (Double.compare(0.0,remainToPay)==0) {
                 this.setPayed(true);
+                if(paymentLocation == PaymentLocation.COUNTER)
+                    this.changeState();
+            }
         }
     }
 
@@ -138,6 +141,10 @@ public class Order {
             throw new UnAuthorisedPaymentException(limitForCashPayment,errMsg );
         }
         this.paymentType = paymentType;
+    }
+
+    public List<Item> getItems() {
+        return items;
     }
 
     public PaymentType getPaymentType() {
