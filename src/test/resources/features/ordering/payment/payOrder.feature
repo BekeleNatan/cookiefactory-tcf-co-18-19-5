@@ -16,3 +16,18 @@ Feature: Pay for an order
     And I choose to pay at the counter using my UnFaithpass Points
     When I come to collect my order I should pay with points on my UnFaithPass of qrcode "QrCode"
     Then My order should be paid and collected
+
+
+  Scenario: Pay for an order using UnfaithPass Money and cash at the counter
+    Given I have an order with 5 "hardChoclolate" from store "A"
+    And I choose to pay at the counter using my money on my UnfaithPass
+    And I pay the rest by cash
+    When I come to collect my order I should pay with money on my UnFaithPass of qrcode "QrCode" "0.7" of the price of the order
+    And "0.3" of the price of the order by cash
+    Then My order should be paid and collected
+
+  Scenario: Pay for an order using my credit card
+    Given I have an order with 4 "hardChoclolate" from store "A"
+    And I choose to pay online using my credit card
+    When I finish my order I should pay by credit card
+    Then when i come to collect my order should be paid

@@ -24,7 +24,7 @@ public class Order {
     private double price;
     private double remainToPay;
     private int minTimeToMakeOrder = 2;
-    private PaymentType paymentType;
+    private Set<PaymentType> paymentType;
     private PaymentLocation paymentLocation;
 
     private PaymentInfos paymentInfos = new PaymentInfos();
@@ -40,6 +40,7 @@ public class Order {
         customer = new Customer();
         currentState = new OnCreation(this);
         paymentLocation = PaymentLocation.ONLINE;
+        paymentType = new HashSet<>();
     }
 
     public OrderState getCurrentState() {
@@ -134,22 +135,24 @@ public class Order {
         isPayed = payed;
     }
 
-    public void changePaymentType(PaymentType paymentType) throws UnAuthorisedPaymentException {
+    public void addPaymentType(PaymentType paymentType) throws UnAuthorisedPaymentException {
         if (Double.compare(this.limitForCashPayment, this.getPrice()) < 0 &&
                 this.paymentLocation==PaymentLocation.COUNTER) {
             String errMsg = "The limit for ordering online and paying at the counter is: " + this.limitForCashPayment;
             throw new UnAuthorisedPaymentException(limitForCashPayment,errMsg );
         }
-        this.paymentType = paymentType;
+        this.paymentType.add(paymentType);
     }
 
+    public Set<PaymentType> getPaymentType() {
+            return this.paymentType;
+
+    }
     public List<Item> getItems() {
         return items;
     }
 
-    public PaymentType getPaymentType() {
-        return this.paymentType;
-    }
+
 
     public PaymentLocation getPaymentLocation() {
         return paymentLocation;

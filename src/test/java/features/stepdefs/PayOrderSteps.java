@@ -1,22 +1,25 @@
 package features.stepdefs;
 
-import cucumber.api.PendingException;
 import cucumber.api.java8.En;
 import franchise.FranchiseMenu;
 import order.Order;
 import order.states.Collected;
 import order.states.Done;
 import org.mockito.Mockito;
+import payment.CreditCard;
 import payment.PaymentMethod;
 import payment.PaymentMethodFactory;
+import payment.creditcard.CreditCardPayment;
+import payment.information.CreditCardType;
 import payment.information.PaymentLocation;
 import payment.information.PaymentType;
+import payment.services.BankPaymentService;
 import payment.services.UnfaithPassService;
+import payment.unfaithpass.UnfaithPassMoney;
 import payment.unfaithpass.UnfaithPassPoints;
 import recipe.CookingType;
 import recipe.MixType;
 import recipe.NormalRecipe;
-import recipe.Recipe;
 import recipe.ingredients.Ingredient;
 import recipe.ingredients.IngredientType;
 import store.Stock;
@@ -24,7 +27,6 @@ import store.Store;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import static junit.framework.TestCase.assertTrue;
 
@@ -63,7 +65,7 @@ public class PayOrderSteps implements En {
 
         And("^I choose to pay at the counter by cash$", () -> {
             order.setPaymentLocation(PaymentLocation.COUNTER);
-            order.changePaymentType(PaymentType.CASH);
+            order.addPaymentType(PaymentType.CASH);
             order.changeState();
             order.setCurrentState(new Done(order));
         });
@@ -82,7 +84,7 @@ public class PayOrderSteps implements En {
 
         Given("^I choose to pay at the counter using my UnFaithpass Points$", () -> {
             order.setPaymentLocation(PaymentLocation.COUNTER);
-            order.changePaymentType(PaymentType.UNFAITHPASS_POINTS);
+            order.addPaymentType(PaymentType.UNFAITHPASS_POINTS);
             order.changeState();
             order.setCurrentState(new Done(order));
         });
@@ -97,6 +99,51 @@ public class PayOrderSteps implements En {
             Mockito.when(unfaithPassService.removePoints(qrcode,pointsToRemove)).thenReturn(Boolean.TRUE);
             ((UnfaithPassPoints) paymentMethod).setUnfaithPassService(unfaithPassService);
             store.getCashRegister().pay(order,paymentMethod , order.getRemainToPay());
+        });
+        And("^I choose to pay at the counter using my money on my UnfaithPass$", () -> {
+            order.setPaymentLocation(PaymentLocation.COUNTER);
+            order.addPaymentType(PaymentType.UNFAITHPASS_MONEY);
+        });
+
+        And("^I pay the rest by cash$", () -> {
+            order.addPaymentType(PaymentType.CASH);
+            order.changeState();
+            order.setCurrentState(new Done(order));
+        });
+
+        When("^I come to collect my order I should pay with money on my UnFaithPass of qrcode \"([^\"]*)\" \"([^\"]*)\" of the price of the order$", (String qrcode, String proportion) -> {
+            order = store.collectOrder(order.getOrderId());
+            PaymentMethod paymentMethod = paymentMethodFactory.createUnfaithPassMoney(qrcode);
+            UnfaithPassService unfaithPassService;
+            unfaithPassService = Mockito.mock(UnfaithPassService.class);
+            Mockito.when(unfaithPassService.getCashLeft(qrcode)).thenReturn(10000.0);
+            Double cashToRemove = order.getPrice() * Double.parseDouble(proportion);
+            Mockito.when(unfaithPassService.removeCash(qrcode,cashToRemove)).thenReturn(Boolean.TRUE);
+            ((UnfaithPassMoney) paymentMethod).setUnfaithPassService(unfaithPassService);
+            store.getCashRegister().pay(order,paymentMethod , cashToRemove);
+        });
+        And("^\"([^\"]*)\" of the price of the order by cash$", (String proportion) -> {
+            PaymentMethod paymentMethod = paymentMethodFactory.createCash();
+            store.getCashRegister().pay(order,paymentMethod , order.getRemainToPay());
+        });
+        And("^I choose to pay online using my credit card$", () -> {
+            order.setPaymentLocation(PaymentLocation.ONLINE);
+            order.addPaymentType(PaymentType.CREDIT_CARD);
+            order.changeState();
+        });
+        When("^I finish my order I should pay by credit card$", () -> {
+            order = store.collectOrder(order.getOrderId());
+            CreditCardPayment paymentMethod = paymentMethodFactory.createCreditCard("John", "5468994925020925", "123", "12/22","");
+            BankPaymentService bankPaymentService;
+            bankPaymentService = Mockito.mock(BankPaymentService.class);
+            paymentMethod.setBankPaymentService(bankPaymentService);
+            Mockito.when(bankPaymentService.makePayment(paymentMethod.getCreditCard(),order.getRemainToPay())).thenReturn(true);
+
+            store.getCashRegister().pay(order,paymentMethod , order.getRemainToPay());
+        });
+        Then("^when i come to collect my order should be paid$", () -> {
+            order.setCurrentState(new Done(order));
+            assertTrue(order.isPayed());
         });
 
 
