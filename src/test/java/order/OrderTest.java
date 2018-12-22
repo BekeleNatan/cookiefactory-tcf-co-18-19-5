@@ -9,6 +9,7 @@ import recipe.Recipe;
 import recipe.ingredients.Ingredient;
 import recipe.ingredients.IngredientType;
 import store.Stock;
+import store.Store;
 import store.workinghours.WorkingHours;
 import org.junit.Before;
 import org.junit.Test;
@@ -22,6 +23,7 @@ import static org.junit.Assert.*;
 
 public class OrderTest {
     Order order;
+    Store store = new Store("store",null);
     Recipe recipe;
     Stock stock = new Stock();
     Date date = new Date();
@@ -29,7 +31,7 @@ public class OrderTest {
     WorkingHours wo = new WorkingHours();
     @Before
     public void setup(){
-        order = new Order();
+        order = new Order(store);
 
         OrderState mock = Mockito.mock(OrderState.class);
         Mockito.when(mock.addInfos(date,phoneNumber,wo)).thenReturn(true);

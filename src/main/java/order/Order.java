@@ -7,6 +7,7 @@ import payment.information.PaymentType;
 import payment.UnAuthorisedPaymentException;
 import recipe.Recipe;
 import store.Stock;
+import store.Store;
 import store.workinghours.WorkingHours;
 
 import java.time.*;
@@ -15,6 +16,7 @@ import java.util.*;
 public class Order {
 
 
+    private Store store;
     private double limitForCashPayment = 100;
 
     private UUID orderId;
@@ -35,7 +37,8 @@ public class Order {
 
     private boolean isPayed = false;
 
-    public Order() {
+    public Order(Store store) {
+        this.store = store;
         orderId = UUID.randomUUID();
         customer = new Customer();
         currentState = new OnCreation(this);
@@ -53,6 +56,10 @@ public class Order {
 
     public boolean addInfos(Date aDate, String aPhoneNumber, WorkingHours aWh) {
         return currentState.addInfos(aDate, aPhoneNumber, aWh);
+    }
+
+    public double getTaxRate(){
+        return store.getTaxeRate();
     }
 
     public boolean changeState() {

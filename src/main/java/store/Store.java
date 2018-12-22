@@ -95,7 +95,7 @@ public class Store {
     }
 
     public Order createOrder() {
-        return orderRegister.createNewOrder();
+        return orderRegister.createNewOrder(this);
     }
 
     public Order collectOrder(UUID orderId) {
