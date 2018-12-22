@@ -33,7 +33,7 @@ Feature: Pay for an order
     When I finish my order I should pay by credit card
     Then when i come to collect my order should be paid
 
-    Scenario: Collect points on my Unfaithpass from my order
-      Given I have an order with 7 "hardChoclolate" from store "A"
-      When I pay for my order I have an Unfaithpass with qrcode "qrcode"
-      Then I should be credited with some points on my Unfaitpass
+  Scenario: Collect points on my Unfaithpass from my order
+    Given I have an order with 7 "hardChoclolate" from store "A"
+    When I pay for my order I have an Unfaithpass with qrcode "qrcode"
+    Then I should be credited with some points on my Unfaitpass
