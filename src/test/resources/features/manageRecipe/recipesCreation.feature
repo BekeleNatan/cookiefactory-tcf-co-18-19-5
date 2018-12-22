@@ -47,3 +47,4 @@ Feature: Creation of recipes
     And a failure is beign expected
     When we make our recipe
     Then we fail making our recipe
+
