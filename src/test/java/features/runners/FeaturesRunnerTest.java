@@ -10,7 +10,7 @@ import cucumber.api.CucumberOptions;
         features = "src/test/resources/features",
         glue = "")
 
-public class FeaturesTestRunner { // will run all features found on the classpath in the same package as this class
+public class FeaturesRunnerTest { // will run all features found on the classpath in the same package as this class
 
 }
 
