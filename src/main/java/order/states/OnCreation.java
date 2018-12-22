@@ -13,6 +13,8 @@ import java.util.*;
 public class OnCreation extends OrderState {
 
 
+	private double reductionRate = 0.9;
+
 	public OnCreation(Order order) {
 		super(order);
 	}
@@ -36,8 +38,16 @@ public class OnCreation extends OrderState {
 		for (Item item : context.items){
 			price += item.getPrice();
 		}
+		if(context.isHasReduction()){
+			price *= reductionRate;
+		}
 		price *= context.getTaxRate();
 		return price;
+	}
+
+	@Override
+	public void setRightToVoucher(boolean right){
+		context.setHasReduction(right);
 	}
 
 	public boolean addItem(Recipe recipe, int quantity, Stock stock){
