@@ -63,7 +63,7 @@ public class CreatingNewOrdersStepDefs implements En {
                     fm.addRecipe(nr);
                 });
         Given("I have a done order",()->{
-            order = new Order();
+            order = new Order(store);
             order.setCurrentState(new Done(order));
         });
 
@@ -122,7 +122,7 @@ public class CreatingNewOrdersStepDefs implements En {
                         System.out.println(((NormalRecipe)recipe).getName());
                     }
                     Recipe recipe = store.getStoreMenu().getRecipeByName(recipeName).get();
-                    order = new Order();
+                    order = new Order(store);
                     order.addItem(recipe, Integer.parseInt(quantity), stock);
                     Date date = new Date();
                     if(date.getMonth()+1==13)date.setYear(date.getYear()+1);

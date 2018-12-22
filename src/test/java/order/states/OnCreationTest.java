@@ -8,6 +8,7 @@ import recipe.Recipe;
 import recipe.ingredients.Ingredient;
 import recipe.ingredients.IngredientType;
 import store.Stock;
+import store.Store;
 import store.workinghours.WorkingHours;
 import org.json.JSONObject;
 import org.junit.Before;
@@ -25,7 +26,8 @@ import static org.junit.Assert.*;
 public class OnCreationTest {
 
     OrderState onCreation;          // OrderState type because manipulate as OrderState in the code
-    Order order = new Order();
+    Store store =new Store("store",null);
+    Order order = new Order(store);
     Stock stock;
     Recipe recipe;
     WorkingHours wo;
@@ -108,8 +110,9 @@ public class OnCreationTest {
         Mockito.when(stock.isEnough(ing4,67)).thenReturn(true);
         onCreation.addItem(recipe,67, stock);
         onCreation.addInfos(date, "0623862099",wo);
+        store.setTaxeRate(1.1);
         assertFalse(onCreation.nextState());
-        assertEquals(order.getPrice(),100.5,0);
+        assertEquals(order.getPrice(),110.55,0.00001);
         assertTrue(order.getCurrentState() instanceof OnCreation);
         assertFalse(order.getCurrentState() instanceof ToDo);
     }

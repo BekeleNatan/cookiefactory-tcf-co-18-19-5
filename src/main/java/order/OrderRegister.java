@@ -2,6 +2,7 @@ package order;
 
 import fr.unice.polytech.cod.stats.Stats;
 import store.Stock;
+import store.Store;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,8 +29,8 @@ public class OrderRegister {
         return orders;
     }
 
-    public Order createNewOrder() {
-        Order order = new Order();
+    public Order createNewOrder(Store store) {
+        Order order = new Order(store);
         orders.add(order);
         return order;
     }

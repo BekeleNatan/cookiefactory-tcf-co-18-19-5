@@ -118,7 +118,7 @@ public class WorkingHoursStepdefs implements En {
 
         // ok
         Given("^we have an order to be collected on \"([^\"]*)\" from \"([^\"]*)\":\"([^\"]*)\"$", (String day_of_the_week, String hours, String minutes) -> {
-            Order o = store.getOrderRegister().createNewOrder();
+            Order o = store.getOrderRegister().createNewOrder(store);
             DayOfWeek day = fromStringToDayOfWeek(day_of_the_week);
             LocalTime collect_time = LocalTime.of(parseInt(hours), parseInt(minutes));
             Date date = Mockito.mock(Date.class);

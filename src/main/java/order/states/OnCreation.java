@@ -36,6 +36,7 @@ public class OnCreation extends OrderState {
 		for (Item item : context.items){
 			price += item.getPrice();
 		}
+		price *= context.getTaxRate();
 		return price;
 	}
 
