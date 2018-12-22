@@ -133,6 +133,10 @@ public class CreatingNewOrdersStepDefs implements En {
                     order.addInfos(date,telephoneNumber,store.getWorkingHours());
                 });
 
+        And("I add a discount because I have already ordered 30 cookies or more", ()->{
+            order.setRightToVoucher(true);
+        });
+
         When("^I validate my order$",()-> {
             order.changeState();
         });
@@ -174,6 +178,10 @@ public class CreatingNewOrdersStepDefs implements En {
                 System.out.println(item.getQuantity());
             }
             assertEquals(nbrCookies,nbrCounted);
+        });
+
+        And("^The price is (.+)$",(String priceString)->{
+            assertEquals(Double.parseDouble(priceString),order.getPrice(),0.0001);
         });
     }
 }
