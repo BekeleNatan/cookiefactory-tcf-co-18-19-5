@@ -3,6 +3,7 @@ package store;
 import franchise.FranchiseMenu;
 import order.Order;
 import order.OrderRegister;
+import payment.information.PaymentLocation;
 import store.workinghours.WorkingHours;
 
 import java.util.UUID;
@@ -98,7 +99,10 @@ public class Store {
     }
 
     public Order collectOrder(UUID orderId) {
-        return orderRegister.findOrder(orderId);
+        Order order = orderRegister.findOrder(orderId);
+        if(order.getPaymentLocation()== PaymentLocation.ONLINE)
+            order.changeState();
+        return order;
     }
 
     public CashRegister getCashRegister() {
