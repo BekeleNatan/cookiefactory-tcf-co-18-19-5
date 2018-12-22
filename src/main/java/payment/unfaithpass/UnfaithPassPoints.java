@@ -22,8 +22,4 @@ public class UnfaithPassPoints extends UnfaithPassPayment {
         }
     }
 
-    @Override
-    public void refund(Double aAmount) {
-        throw new UnsupportedOperationException();
-    }
 }

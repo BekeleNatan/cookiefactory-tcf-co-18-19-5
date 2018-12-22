@@ -29,8 +29,5 @@ public class CashPayment implements PaymentMethod {
         this.unfaithPassService = unfaithPassService;
     }
 
-    @Override
-    public void refund(Double aAmount) {
 
-    }
 }
