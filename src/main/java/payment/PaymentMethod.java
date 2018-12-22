@@ -5,5 +5,4 @@ public interface PaymentMethod {
 
 	public boolean pay(Double aAmount) throws InsufficientFundsExcpetion;
 
-	public void refund(Double aAmount);
 }

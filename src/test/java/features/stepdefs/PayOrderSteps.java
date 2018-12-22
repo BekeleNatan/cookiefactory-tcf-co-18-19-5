@@ -1,5 +1,6 @@
 package features.stepdefs;
 
+import cucumber.api.PendingException;
 import cucumber.api.java8.En;
 import franchise.FranchiseMenu;
 import order.Order;
@@ -36,6 +37,7 @@ public class PayOrderSteps implements En {
     private List<Ingredient> ingredients = new ArrayList<>();
     Order order;
     PaymentMethodFactory paymentMethodFactory;
+    UnfaithPassService unfaithPassService;
 
 
     public PayOrderSteps() {
@@ -49,6 +51,7 @@ public class PayOrderSteps implements En {
         stock.addIngredient(plain_dough, 15);
         Double moneyToPoint = 1.0;
         Double pointToMoney = 1.0;
+
         paymentMethodFactory = new PaymentMethodFactory(pointToMoney, moneyToPoint);
 
 
@@ -133,10 +136,12 @@ public class PayOrderSteps implements En {
         });
         When("^I finish my order I should pay by credit card$", () -> {
             order = store.collectOrder(order.getOrderId());
+            unfaithPassService = Mockito.mock(UnfaithPassService.class);
             CreditCardPayment paymentMethod = paymentMethodFactory.createCreditCard("John", "5468994925020925", "123", "12/22","");
             BankPaymentService bankPaymentService;
             bankPaymentService = Mockito.mock(BankPaymentService.class);
             paymentMethod.setBankPaymentService(bankPaymentService);
+            paymentMethod.setUnfaithPassService(unfaithPassService);
             Mockito.when(bankPaymentService.makePayment(paymentMethod.getCreditCard(),order.getRemainToPay())).thenReturn(true);
 
             store.getCashRegister().pay(order,paymentMethod , order.getRemainToPay());
@@ -147,5 +152,25 @@ public class PayOrderSteps implements En {
         });
 
 
+        When("^I pay for my order I have an Unfaithpass with qrcode \"([^\"]*)\"$", (String qrcode) -> {
+            order = store.collectOrder(order.getOrderId());
+
+            unfaithPassService = Mockito.mock(UnfaithPassService.class);
+
+            CreditCardPayment paymentMethod = paymentMethodFactory.createCreditCard("John", "5468994925020925", "123", "12/22",qrcode);
+            BankPaymentService bankPaymentService;
+            bankPaymentService = Mockito.mock(BankPaymentService.class);
+            paymentMethod.setUnfaithPassService(unfaithPassService);
+            paymentMethod.setBankPaymentService(bankPaymentService);
+            Mockito.when(bankPaymentService.makePayment(paymentMethod.getCreditCard(),order.getRemainToPay())).thenReturn(true);
+
+            store.getCashRegister().pay(order,paymentMethod , order.getRemainToPay());
+
+        });
+
+        Then("^I should be credited with some points on my Unfaitpass$", () -> {
+            Mockito.verify(unfaithPassService,Mockito.times(1)).addPoints("qrcode",order.getPrice() * moneyToPoint);
+
+        });
     }
 }
