@@ -24,7 +24,7 @@ public class CreditCardPayment implements PaymentMethod {
         return bankPaymentService;
     }
 
-    public void setUnfaithPassService(BankPaymentService bankPaymentService) {
+    public void setBankPaymentService(BankPaymentService bankPaymentService) {
         this.bankPaymentService = bankPaymentService;
     }
 
