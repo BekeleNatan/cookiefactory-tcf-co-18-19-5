@@ -177,4 +177,8 @@ public class Order {
     public boolean isHasReduction() {
         return hasReduction;
     }
+
+    public void setRightToVoucher(boolean right){
+        currentState.setRightToVoucher(right);
+    }
 }

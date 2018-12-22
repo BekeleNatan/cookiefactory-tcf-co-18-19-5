@@ -49,3 +49,10 @@ Feature: order creation
     And The order contains 2 items
     And The order contains 4 cookies
 
+  Scenario: I order correctly with discount
+    Given I order 1 "hardChocolate" for 17h00 tomorrow with the phone number "0623862099"
+    And I add a discount because I have already ordered 30 cookies or more
+    When I validate my order
+    Then The order is in the state toDo
+    And The price is 3.06
+
